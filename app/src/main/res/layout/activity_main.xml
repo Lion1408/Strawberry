@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    tools:context=".Activities.MainActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpaper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_menu"
+        app:mbn_shadowColor="#E91E63"
+        app:mbn_circleColor="#66FFFFFF"
+        app:mbn_defaultIconColor="@color/black"
+        app:mbn_selectedIconColor="#071D39"
+        app:mbn_countTextColor="#FFFFFF"
+        app:mbn_backgroundBottomColor="#FFB6C1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+    </com.etebarian.meowbottomnavigation.MeowBottomNavigation>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

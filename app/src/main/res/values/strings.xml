@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Strawberry</string>
+    <string name="ten_tai_khoan">Email hoặc số điện thoại</string>
+    <string name="mat_khau">Mật khẩu</string>
+    <string name="ghi_nho_mat_khau">Ghi nhớ mật khẩu</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="forget_password">Quên mật khẩu</string>
+    <string name="have_account">Bạn chưa có tài khoản?</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="create_a_new_account">Tạo tài khoản mới</string>
+    <string name="first_name">Họ</string>
+    <string name="confirm_password">Nhập lại mật khẩu</string>
+    <string name="code">Nhập mã xác thực</string>
+    <string name="describe_active">Vui lòng kiểm tra mã xác thực từ email hoặc số điện thoại của bạn!</string>
+    <string name="sendcode">Gửi lại mã</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="enter_email_phonenumber">Nhập email hoặc số điện thoại</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Trang chủ</string>
+    <string name="watch">Watch</string>
+    <string name="group">Nhóm</string>
+    <string name="notification">Thông báo</string>
+    <string name="menu">Menu</string>
+    <string name="react">Bày tỏ</string>
+    <string name="share">Chia sẻ</string>
+    <string name="like">Thích</string>
+    <string name="love">Tim</string>
+    <string name="haha">Haha</string>
+    <string name="sad">Buồn</string>
+    <string name="angry">Tức giận</string>
+    <string name="care">Thương</string>
+    <string name="wow">Wow</string>
+</resources>
