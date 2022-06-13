@@ -43,9 +43,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         User user = getActivity().getIntent().getParcelableExtra("User");
         List<Post> list = new ArrayList<>();
-        FragmentTransaction Frag = getActivity().getSupportFragmentManager().beginTransaction();
-        Frag.add(R.id.frame, new ProfileUserFragment());
-        Frag.commit();
 //        ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Post>>>() {
 //            @Override
 //            public void onResponse(Call<ResponseObject<List<Post>>> call, Response<ResponseObject<List<Post>>> response) {
