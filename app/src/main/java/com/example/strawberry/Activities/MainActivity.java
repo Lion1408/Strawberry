@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.strawberry.Adapters.StrawberryAdapter;
 

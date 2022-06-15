@@ -109,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Intent intent = new Intent(getApplicationContext(), ActiveAcountActivity.class);
                         User user1 = response.body().getData();
-                        intent.putExtra("User", user1);
+                        intent.putExtra("Data", user1);
                         startActivity(intent);
                         loading(false);
                     } else {

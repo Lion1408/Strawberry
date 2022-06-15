@@ -4,16 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class User implements Parcelable {
+public class User  implements Parcelable{
     private String firstName, lastName, fullName, email, password, phoneNumber, linkAvt,
                     gender, birthday, address, biography;
-    private Integer id;
+    private Integer idUser;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String fullName, String email, String password, String phoneNumber, String linkAvt, String gender, String birthday, String address, String biography, Integer id) {
+    public User(String firstName, String lastName, String fullName, String email, String password, String phoneNumber, String linkAvt, String gender, String birthday, String address, String biography, Integer idUser) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
@@ -25,7 +26,7 @@ public class User implements Parcelable {
         this.birthday = birthday;
         this.address = address;
         this.biography = biography;
-        this.id = id;
+        this.idUser = idUser;
     }
 
     protected User(Parcel in) {
@@ -41,10 +42,36 @@ public class User implements Parcelable {
         address = in.readString();
         biography = in.readString();
         if (in.readByte() == 0) {
-            id = null;
+            idUser = null;
         } else {
-            id = in.readInt();
+            idUser = in.readInt();
         }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(fullName);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(phoneNumber);
+        dest.writeString(linkAvt);
+        dest.writeString(gender);
+        dest.writeString(birthday);
+        dest.writeString(address);
+        dest.writeString(biography);
+        if (idUser == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(idUser);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -147,12 +174,12 @@ public class User implements Parcelable {
         this.biography = biography;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     @Override
@@ -169,33 +196,7 @@ public class User implements Parcelable {
                 ", birthday='" + birthday + '\'' +
                 ", address='" + address + '\'' +
                 ", biography='" + biography + '\'' +
-                ", id=" + id +
+                ", idUser=" + idUser +
                 '}';
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(firstName);
-        parcel.writeString(lastName);
-        parcel.writeString(fullName);
-        parcel.writeString(email);
-        parcel.writeString(password);
-        parcel.writeString(phoneNumber);
-        parcel.writeString(linkAvt);
-        parcel.writeString(gender);
-        parcel.writeString(birthday);
-        parcel.writeString(address);
-        parcel.writeString(biography);
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(id);
-        }
     }
 }

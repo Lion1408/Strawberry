@@ -31,4 +31,8 @@
     <string name="angry">Tức giận</string>
     <string name="care">Thương</string>
     <string name="wow">Wow</string>
+    <string name="thingking">Bạn đang nghĩ gì ?</string>
+    <string name="infor_user">Thông tin cá nhân</string>
+    <string name="friend">Bạn bè</string>
+    <string name="image">Ảnh</string>
 </resources>

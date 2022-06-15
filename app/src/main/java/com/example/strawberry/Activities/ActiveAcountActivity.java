@@ -42,7 +42,7 @@ public class ActiveAcountActivity extends AppCompatActivity {
                     + binding.num2.getText().toString().trim()
                     + binding.num3.getText().toString().trim()
                     + binding.num4.getText().toString().trim();
-            ApiService.apiService.activeUser(user.getId(), code).enqueue(new Callback<ResponseObject<User>>() {
+            ApiService.apiService.activeUser(user.getIdUser(), code).enqueue(new Callback<ResponseObject<User>>() {
                 @Override
                 public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
                     if (response.isSuccessful()) {
@@ -65,8 +65,8 @@ public class ActiveAcountActivity extends AppCompatActivity {
         });
         binding.sendcode.setOnClickListener(vv -> {
             loading(true);
-            User user1 = getIntent().getParcelableExtra("User");
-            ApiService.apiService.sendCode(user1.getId()).enqueue(new Callback<ResponseObject<User>>() {
+            User user1 = getIntent().getParcelableExtra("Data");
+            ApiService.apiService.sendCode(user1.getIdUser()).enqueue(new Callback<ResponseObject<User>>() {
                 @Override
                 public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
                     if (response.isSuccessful()) {

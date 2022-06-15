@@ -127,7 +127,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/list_react"
+                android:id="@+id/listReact"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -215,7 +215,7 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:text="Lượt react"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_haha"
+                app:layout_constraintStart_toEndOf="@+id/actionHaha"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
@@ -230,7 +230,7 @@
                 app:srcCompat="@drawable/ic_strawberry" />
 
             <ImageView
-                android:id="@+id/react_default"
+                android:id="@+id/actionDefault"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -239,80 +239,80 @@
                 app:srcCompat="@drawable/ic_strawberry" />
 
             <ImageView
-                android:id="@+id/react_like"
+                android:id="@+id/actionLike"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_default"
+                app:layout_constraintStart_toEndOf="@+id/actionDefault"
                 app:layout_constraintTop_toTopOf="parent"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_like" />
 
             <ImageView
-                android:id="@+id/react_love"
+                android:id="@+id/actionLove"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_like"
+                app:layout_constraintStart_toEndOf="@+id/actionLike"
                 app:layout_constraintTop_toTopOf="parent"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_love" />
 
             <ImageView
-                android:id="@+id/react_wow"
+                android:id="@+id/actionWow"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_sad"
+                app:layout_constraintStart_toEndOf="@+id/actionSad"
                 app:layout_constraintTop_toTopOf="parent"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_wow" />
 
             <ImageView
-                android:id="@+id/react_sad"
+                android:id="@+id/actionSad"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 android:layout_marginStart="@dimen/_1sdp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_love"
+                app:layout_constraintStart_toEndOf="@+id/actionLove"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_sad" />
 
             <ImageView
-                android:id="@+id/react_angry"
+                android:id="@+id/actionAngry"
                 android:layout_width="@dimen/_11sdp"
                 android:visibility="gone"
                 android:layout_height="@dimen/_11sdp"
                 android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_wow"
+                app:layout_constraintStart_toEndOf="@+id/actionWow"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_angry" />
 
             <ImageView
-                android:id="@+id/react_care"
+                android:id="@+id/actionCare"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 android:visibility="gone"
                 android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_angry"
+                app:layout_constraintStart_toEndOf="@+id/actionAngry"
                 app:layout_constraintTop_toTopOf="parent"
 
                 app:srcCompat="@drawable/ic_care" />
 
             <ImageView
-                android:id="@+id/react_haha"
+                android:id="@+id/actionHaha"
                 android:layout_width="@dimen/_11sdp"
                 android:layout_height="@dimen/_11sdp"
                 android:visibility="gone"
                 android:layout_marginStart="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/react_care"
+                app:layout_constraintStart_toEndOf="@+id/actionCare"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_haha" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -343,6 +343,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_height="@dimen/_200sdp"
+                android:orientation="vertical"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/conTent"
@@ -434,7 +435,7 @@ freegan High Life vero, ea sed minim meggings"
                 app:srcCompat="@drawable/ic_more" />
 
             <View
-                android:id="@+id/userInfor"
+                android:id="@+id/viewPost"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"

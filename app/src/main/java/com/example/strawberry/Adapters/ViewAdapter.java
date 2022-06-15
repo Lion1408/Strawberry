@@ -2,6 +2,7 @@ package com.example.strawberry.Adapters;
 
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,35 +19,49 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.strawberry.Interfaces.PostOnClick;
-import com.example.strawberry.Model.Post;
+import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.Image;
+import com.example.strawberry.Model.Reaction;
+import com.example.strawberry.Model.User;
+import com.example.strawberry.Model.Video;
 import com.example.strawberry.R;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
-
-    List<Post> list;
-    Context context;
-
-    PostOnClick postOnClick;
-
+public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private Integer UP_POST = 0;
+    private Integer POST = 1;
+    private Integer HEAD_PROFILE_USER = 2;
+    private Integer INFOR_USER = 3;
+    private List<Data> list;
+    private Context context;
+    private PostOnClick postOnClick;
     public void PostOnClick(PostOnClick postOnClick) {
         this.postOnClick = postOnClick;
     }
 
-    public PostAdapter(List<Post> list, Context context) {
+    public ViewAdapter(List<Data> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public PostAdapter.PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == 1) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == UP_POST) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_up_post, parent, false);
+            return new UpPostViewHolder(view);
+        } else if (viewType == POST) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
             return new PostViewHolder(view);
+        } else if (viewType == HEAD_PROFILE_USER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_head_user, parent, false);
+            return new ProfileViewHolder(view);
+        } else if (viewType == INFOR_USER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_infor_user, parent, false);
+            return new InforUserViewHolder(view);
         }
         return null;
     }
@@ -57,28 +72,44 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
-        if (list.get(position).getItemType() == 1) {
-            Post post = list.get(position);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder x, int position) {
+        Data data = list.get(position);
+        if (list.get(position).getItemType() == UP_POST) {
+            UpPostViewHolder holder = (UpPostViewHolder) x;
+            Glide.with(holder.avt).load(data.getUser().getLinkAvt()).into(holder.avt);
+            holder.uppost.setOnClickListener(v -> {
 
+            });
+        }
+
+        if (list.get(position).getItemType() == POST) {
+            PostViewHolder holder = (PostViewHolder) x;
             //
-            holder.fullname.setText(post.getUser().getFullName());
-            holder.content.setText(post.getContentPost());
-            holder.react.setText(post.getReactions().getALL().toString());
-            holder.cmt.setText(post.getComments().size() + " lượt bình luận");
+            holder.fullname.setText(data.getUser().getFullName());
+            holder.content.setText(data.getContentPost());
+            holder.react.setText(data.getReactions().getALL().toString());
+            holder.cmt.setText(data.getCountComments() + " lượt bình luận");
             holder.time.setText("timeup");
-            Glide.with(holder.avt).load(post.getUser().getLinkAvt()).into(holder.avt);
-            if (post.getImages().size() > 0) {
-                Glide.with(holder.img).load(post.getImages().get(0).getLinkImage()).into(holder.img);
+            Glide.with(holder.avt).load(data.getUser().getLinkAvt()).into(holder.avt);
+            if (data.getImages().size() > 0) {
+                Glide.with(holder.img).load(data.getImages().get(0).getLinkImage()).into(holder.img);
                 holder.video.setVisibility(View.GONE);
                 holder.img.setVisibility(View.VISIBLE);
-            }  else if (post.getVideos().size() > 0) {
-                Uri uri = Uri.parse(post.getVideos().get(0).getLinkVideo());
+            }  else if (data.getVideos().size() > 0) {
+                Uri uri = Uri.parse(data.getVideos().get(0).getLinkVideo());
                 holder.video.setVideoURI(uri);
-                holder.video.setMediaController(new MediaController(holder.video.getContext()));
+                MediaController mediaController = new MediaController(holder.video.getContext());
+                holder.video.setMediaController(mediaController);
+                mediaController.setAnchorView(holder.itemView);
                 holder.video.start();
                 holder.img.setVisibility(View.GONE);
                 holder.video.setVisibility(View.VISIBLE);
+                holder.video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        holder.video.start();
+                    }
+                });
             } else {
                 holder.img.setVisibility(View.GONE);
                 holder.video.setVisibility(View.GONE);
@@ -90,7 +121,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
             holder.reactLike.setOnClickListener(v -> {
 
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.like);
                 holder.reactMain.setImageResource(R.drawable.ic_like);
                 holder.react_like.setVisibility(View.VISIBLE);
@@ -98,7 +129,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
             holder.reactLove.setOnClickListener(v -> {
 
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.love);
                 holder.reactMain.setImageResource(R.drawable.ic_love);
                 holder.react_love.setVisibility(View.VISIBLE);
@@ -106,7 +137,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
             holder.reactWow.setOnClickListener(v -> {
 
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.wow);
                 holder.reactMain.setImageResource(R.drawable.ic_wow);
                 holder.react_wow.setVisibility(View.VISIBLE);
@@ -114,7 +145,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
             holder.reactHaha.setOnClickListener(v -> {
 
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.haha);
                 holder.reactMain.setImageResource(R.drawable.ic_haha);
                 holder.react_haha.setVisibility(View.VISIBLE);
@@ -122,7 +153,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
             holder.reactSad.setOnClickListener(v -> {
 
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.sad);
                 holder.reactMain.setImageResource(R.drawable.ic_sad);
                 holder.react_sad.setVisibility(View.VISIBLE);
@@ -130,7 +161,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
             holder.reactCare.setOnClickListener(v -> {
 
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.care);
                 holder.reactMain.setImageResource(R.drawable.ic_care);
                 holder.react_care.setVisibility(View.VISIBLE);
@@ -138,7 +169,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
 
             holder.reactAngry.setOnClickListener(v -> {
-                holder.react.setText(post.getReactions().getALL().toString());
+                holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.angry);
                 holder.reactMain.setImageResource(R.drawable.ic_angry);
                 holder.react_angry.setVisibility(View.VISIBLE);
@@ -146,10 +177,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
 
             holder.avt.setOnClickListener(v -> {
-                postOnClick.OnClickAvt();
+                postOnClick.OnClickAvt(data.getUser());
+            });
+
+            holder.fullname.setOnClickListener(v -> {
+                postOnClick.OnClickAvt(data.getUser());
+            });
+
+            holder.viewPost.setOnClickListener(v -> {
+                postOnClick.OnclickPost(data.getIdPost());
             });
         }
 
+        if (list.get(position).getItemType() == HEAD_PROFILE_USER) {
+            ProfileViewHolder holder = (ProfileViewHolder) x;
+            holder.headprofileFullName.setText(data.getUser().getFullName());
+        }
+
+        if (list.get(position).getItemType() == INFOR_USER) {
+
+        }
     }
 
     @Override
@@ -161,10 +208,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         CircleImageView avt;
         TextView time, fullname, content, cmt, react, textReact;
         ImageView img, react_like, react_love, react_sad, react_care, react_angry, react_wow, react_default,react_haha,
-                        reactLike, reactLove, reactSad, reactCare, reactAngry, reactWow, reactHaha, reactMain;
+                reactLike, reactLove, reactSad, reactCare, reactAngry, reactWow, reactHaha, reactMain;
         ConstraintLayout likePost;
         LinearLayout list_react;
         VideoView video;
+        View viewPost;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.timeup);
@@ -176,17 +224,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             avt = itemView.findViewById(R.id.avatar);
             img = itemView.findViewById(R.id.img);
             video = itemView.findViewById(R.id.video);
+            viewPost = itemView.findViewById(R.id.viewPost);
             likePost = itemView.findViewById(R.id.likePost);
-            react_like = itemView.findViewById(R.id.react_like);
-            react_love = itemView.findViewById(R.id.react_love);
-            react_sad = itemView.findViewById(R.id.react_sad);
-            react_angry = itemView.findViewById(R.id.react_angry);
-            react_care = itemView.findViewById(R.id.react_care);
-            react_wow = itemView.findViewById(R.id.react_wow);
-            react_haha = itemView.findViewById(R.id.react_haha);
-            react_default = itemView.findViewById(R.id.react_default);
-            list_react = itemView.findViewById(R.id.list_react);
-
+            react_like = itemView.findViewById(R.id.reactLike);
+            react_love = itemView.findViewById(R.id.reactLove);
+            react_sad = itemView.findViewById(R.id.reactSad);
+            react_angry = itemView.findViewById(R.id.actionAngry);
+            react_care = itemView.findViewById(R.id.actionCare);
+            react_wow = itemView.findViewById(R.id.actionWow);
+            react_haha = itemView.findViewById(R.id.actionHaha);
+            react_default = itemView.findViewById(R.id.actionDefault);
+            list_react = itemView.findViewById(R.id.listReact);
             reactLike = itemView.findViewById(R.id.reactLike);
             reactLove = itemView.findViewById(R.id.reactLove);
             reactSad = itemView.findViewById(R.id.reactSad);
@@ -199,4 +247,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
     }
 
+    public class ProfileViewHolder extends RecyclerView.ViewHolder {
+        TextView headprofileFullName;
+        public ProfileViewHolder(@NonNull View itemView) {
+            super(itemView);
+            headprofileFullName = itemView.findViewById(R.id.headprofileFullName);
+        }
+    }
+
+    public class UpPostViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView avt;
+        ConstraintLayout uppost;
+        public UpPostViewHolder(@NonNull View itemView) {
+            super(itemView);
+            avt = itemView.findViewById(R.id.icInforUser);
+            uppost = itemView.findViewById(R.id.uppost);
+        }
+    }
+
+    public class InforUserViewHolder extends RecyclerView.ViewHolder {
+
+        public InforUserViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+        }
+    }
 }

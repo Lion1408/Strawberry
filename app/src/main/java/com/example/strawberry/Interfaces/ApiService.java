@@ -1,7 +1,7 @@
 package com.example.strawberry.Interfaces;
 
 import com.example.strawberry.Model.Image;
-import com.example.strawberry.Model.Post;
+import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.Reaction;
 import com.example.strawberry.Model.ReactionDTO;
 import com.example.strawberry.Model.UserDTO;
@@ -16,7 +16,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -63,9 +62,13 @@ public interface ApiService {
     // get public post
 
     @GET("/api/v1/posts")
-    Call <ResponseObject<List<Post>>> getAllPublicPost();
+    Call <ResponseObject<List<Data>>> getAllPublicPost();
 
     //
     @POST("/api/v1/reactions/set-reaction")
-    Call <ResponseObject<Post>> setReact(@Body ReactionDTO reactionDTO);
+    Call <ResponseObject<Data>> setReact(@Body ReactionDTO reactionDTO);
+
+    //
+    @GET("/api/v1/users/{id}/posts")
+    Call <ResponseObject<List<Data>>> getAllPostUser(@Path("id") Integer id);
 }

@@ -8,17 +8,24 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.strawberry.Adapters.PostAdapter;
+import com.example.strawberry.Activities.PostActivity;
+import com.example.strawberry.Activities.ProfileUserActivity;
+import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Interfaces.PostOnClick;
-import com.example.strawberry.Model.Post;
+import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.Image;
+import com.example.strawberry.Model.Reaction;
 import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
+import com.example.strawberry.Model.Video;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.FragmentHomeBinding;
 
@@ -42,37 +49,50 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         User user = getActivity().getIntent().getParcelableExtra("User");
-        List<Post> list = new ArrayList<>();
-//        ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Post>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseObject<List<Post>>> call, Response<ResponseObject<List<Post>>> response) {
-//                if (response.isSuccessful()) {
-//                    for (int i = 0; i < response.body().getData().size(); ++i) {
-//                        Post post = response.body().getData().get(i);
-//                        post.setItemType(1);
-//                        list.add(post);
-//                        System.out.println(post.toString());
-//                    }
-//                    RecyclerView recyclerView = view.findViewById(R.id.recy_post);
-//                    PostAdapter postAdapter = new PostAdapter(list, getContext());
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//                    postAdapter.PostOnClick(new PostOnClick() {
-//                        @Override
-//                        public void OnClickAvt() {
-//                            //startActivity(new Intent(getContext(), ProfileUserActivity.class));
-//                        }
-//                    });
-//                    recyclerView.setAdapter(postAdapter);
-//                } else {
-//                    Constants.showToast(Constants.ERROR, getContext());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseObject<List<Post>>> call, Throwable t) {
-//                Constants.showToast(Constants.ERROR_INTERNET, getContext());
-//            }
-//        });
+        List<Data> list = new ArrayList<>();
+        list.add(new Data());
+        list.get(0).setItemType(0);
+        User user1 = new User();
+        user1.setLinkAvt("https://img5.thuthuatphanmem.vn/uploads/2021/11/12/hinh-anh-anime-don-gian-hinh-nen-anime-don-gian-ma-dep_092443354.png");
+        list.get(0).setUser(user1);
+        ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Data>>>() {
+            @Override
+            public void onResponse(Call<ResponseObject<List<Data>>> call, Response<ResponseObject<List<Data>>> response) {
+                if (response.isSuccessful()) {
+                    for (int i = 0; i < response.body().getData().size(); ++i) {
+                        Data data = response.body().getData().get(i);
+                        data.setItemType(1);
+                        list.add(data);
+                    }
+                    RecyclerView recyclerView = view.findViewById(R.id.recy_post);
+                    ViewAdapter viewAdapter = new ViewAdapter(list, getContext());
+                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    viewAdapter.PostOnClick(new PostOnClick() {
+                        @Override
+                        public void OnClickAvt(User user1) {
+                            Intent intent = new Intent(getContext(), ProfileUserActivity.class);
+                            intent.putExtra("Data", user1);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void OnclickPost(Integer idPost) {
+                            Intent intent = new Intent(getContext(), PostActivity.class);
+                            intent.putExtra("Data",  idPost);
+                            startActivity(intent);
+                        }
+                    });
+                    recyclerView.setAdapter(viewAdapter);
+                } else {
+                    Constants.showToast(Constants.ERROR, getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseObject<List<Data>>> call, Throwable t) {
+                Constants.showToast(Constants.ERROR_INTERNET, getContext());
+            }
+        });
         return view;
     }
 }

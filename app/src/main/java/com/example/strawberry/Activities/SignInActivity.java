@@ -99,7 +99,7 @@ public class SignInActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         User user1 = response.body().getData();
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.putExtra("User", (Parcelable) user1);
+                        intent.putExtra("Data", (Parcelable) user1);
                         startActivity(intent);
                         loading(false);
                         finishAffinity();
