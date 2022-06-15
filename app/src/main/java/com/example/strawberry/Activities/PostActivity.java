@@ -21,8 +21,7 @@ public class PostActivity extends AppCompatActivity {
             finish();
         });
         List<Data> list = new ArrayList<>();
-        Integer idPost = getIntent().getParcelableExtra("Data");
-
+        Data data = getIntent().getParcelableExtra("Data");
         binding.contenPost.setText("Bài viết của " + data.getUser().getFullName());
         list.add(data);
 //        RecyclerView recyclerView = findViewById(R.id.recy_user_post);
