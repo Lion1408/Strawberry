@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
+import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
@@ -29,7 +31,7 @@ public class ProfileUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        User user = getIntent().getParcelableExtra("User");
+        User user = getIntent().getParcelableExtra("Data");
         binding.username.setText(user.getFullName());
         binding.backHome.setOnClickListener(v -> {
             finish();
@@ -40,6 +42,8 @@ public class ProfileUserActivity extends AppCompatActivity {
         list.get(0).setUser(user);
         list.add(new Data());
         list.get(1).setItemType(3);
+        list.add(new Data());
+        list.get(2).setItemType(0);
         ApiService.apiService.getAllPostUser(user.getIdUser()).enqueue(new Callback<ResponseObject<List<Data>>>() {
             @Override
             public void onResponse(Call<ResponseObject<List<Data>>> call, Response<ResponseObject<List<Data>>> response) {
@@ -51,6 +55,19 @@ public class ProfileUserActivity extends AppCompatActivity {
                         RecyclerView recyclerView = findViewById(R.id.recy_profile_user);
                         ViewAdapter viewAdapter = new ViewAdapter(list, getApplicationContext());
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        viewAdapter.PostOnClick(new PostOnClick() {
+                            @Override
+                            public void OnClickAvt(User user1) {
+
+                            }
+
+                            @Override
+                            public void OnclickPost(Data data) {
+                                Intent intent = new Intent(getApplicationContext(), PostActivity.class);
+                                intent.putExtra("Data",  data);
+                                startActivity(intent);
+                            }
+                        });
                         recyclerView.setAdapter(viewAdapter);
                     }
                 } else {

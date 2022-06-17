@@ -48,32 +48,6 @@ public class User  implements Parcelable{
         }
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(firstName);
-        dest.writeString(lastName);
-        dest.writeString(fullName);
-        dest.writeString(email);
-        dest.writeString(password);
-        dest.writeString(phoneNumber);
-        dest.writeString(linkAvt);
-        dest.writeString(gender);
-        dest.writeString(birthday);
-        dest.writeString(address);
-        dest.writeString(biography);
-        if (idUser == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(idUser);
-        }
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {
@@ -198,5 +172,31 @@ public class User  implements Parcelable{
                 ", biography='" + biography + '\'' +
                 ", idUser=" + idUser +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(firstName);
+        parcel.writeString(lastName);
+        parcel.writeString(fullName);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(linkAvt);
+        parcel.writeString(gender);
+        parcel.writeString(birthday);
+        parcel.writeString(address);
+        parcel.writeString(biography);
+        if (idUser == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(idUser);
+        }
     }
 }

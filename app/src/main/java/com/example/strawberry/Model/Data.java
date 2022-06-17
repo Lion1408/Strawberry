@@ -44,6 +44,9 @@ public class Data implements Parcelable {
         updatedAt = in.readString();
         contentPost = in.readString();
         user = in.readParcelable(User.class.getClassLoader());
+        images = in.createTypedArrayList(Image.CREATOR);
+        reactions = in.readParcelable(Reaction.class.getClassLoader());
+        videos = in.createTypedArrayList(Video.CREATOR);
         if (in.readByte() == 0) {
             countComments = null;
         } else {
@@ -137,7 +140,7 @@ public class Data implements Parcelable {
 
     @Override
     public String toString() {
-        return "Post{" +
+        return "Data{" +
                 "idPost=" + idPost +
                 ", itemType=" + itemType +
                 ", updatedAt='" + updatedAt + '\'' +
@@ -172,6 +175,9 @@ public class Data implements Parcelable {
         parcel.writeString(updatedAt);
         parcel.writeString(contentPost);
         parcel.writeParcelable(user, i);
+        parcel.writeTypedList(images);
+        parcel.writeParcelable(reactions, i);
+        parcel.writeTypedList(videos);
         if (countComments == null) {
             parcel.writeByte((byte) 0);
         } else {

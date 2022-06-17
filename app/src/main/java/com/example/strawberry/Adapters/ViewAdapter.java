@@ -4,6 +4,7 @@ package com.example.strawberry.Adapters;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Data data = list.get(position);
         if (list.get(position).getItemType() == UP_POST) {
             UpPostViewHolder holder = (UpPostViewHolder) x;
-            Glide.with(holder.avt).load(data.getUser().getLinkAvt()).into(holder.avt);
+            Glide.with(holder.avt).load("https://img5.thuthuatphanmem.vn/uploads/2021/11/12/hinh-anh-anime-don-gian-hinh-nen-anime-don-gian-ma-dep_092443354.png").into(holder.avt);
             holder.uppost.setOnClickListener(v -> {
 
             });
@@ -93,8 +94,8 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Glide.with(holder.avt).load(data.getUser().getLinkAvt()).into(holder.avt);
             if (data.getImages().size() > 0) {
                 Glide.with(holder.img).load(data.getImages().get(0).getLinkImage()).into(holder.img);
-                holder.video.setVisibility(View.GONE);
                 holder.img.setVisibility(View.VISIBLE);
+                holder.video.setVisibility(View.GONE);
             }  else if (data.getVideos().size() > 0) {
                 Uri uri = Uri.parse(data.getVideos().get(0).getLinkVideo());
                 holder.video.setVideoURI(uri);
@@ -102,8 +103,8 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.video.setMediaController(mediaController);
                 mediaController.setAnchorView(holder.itemView);
                 holder.video.start();
-                holder.img.setVisibility(View.GONE);
                 holder.video.setVisibility(View.VISIBLE);
+                holder.img.setVisibility(View.GONE);
                 holder.video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
@@ -185,8 +186,29 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
             holder.viewPost.setOnClickListener(v -> {
-                postOnClick.OnclickPost(data.getIdPost());
+                postOnClick.OnclickPost(data);
             });
+
+            holder.content.setOnClickListener(v -> {
+                postOnClick.OnclickPost(data);
+            });
+
+            holder.video.setOnCompletionListener(v -> {
+                postOnClick.OnclickPost(data);
+            });
+
+            holder.img.setOnClickListener(v -> {
+                postOnClick.OnclickPost(data);
+            });
+
+            holder.layerReaction.setOnClickListener(v -> {
+                postOnClick.OnclickPost(data);
+            });
+
+            holder.cmt.setOnClickListener(v -> {
+                postOnClick.OnclickPost(data);
+            });
+
         }
 
         if (list.get(position).getItemType() == HEAD_PROFILE_USER) {
@@ -209,7 +231,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView time, fullname, content, cmt, react, textReact;
         ImageView img, react_like, react_love, react_sad, react_care, react_angry, react_wow, react_default,react_haha,
                 reactLike, reactLove, reactSad, reactCare, reactAngry, reactWow, reactHaha, reactMain;
-        ConstraintLayout likePost;
+        ConstraintLayout likePost, layerReaction;
         LinearLayout list_react;
         VideoView video;
         View viewPost;
@@ -226,9 +248,9 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             video = itemView.findViewById(R.id.video);
             viewPost = itemView.findViewById(R.id.viewPost);
             likePost = itemView.findViewById(R.id.likePost);
-            react_like = itemView.findViewById(R.id.reactLike);
-            react_love = itemView.findViewById(R.id.reactLove);
-            react_sad = itemView.findViewById(R.id.reactSad);
+            react_like = itemView.findViewById(R.id.actionLike);
+            react_love = itemView.findViewById(R.id.actionLove);
+            react_sad = itemView.findViewById(R.id.actionSad);
             react_angry = itemView.findViewById(R.id.actionAngry);
             react_care = itemView.findViewById(R.id.actionCare);
             react_wow = itemView.findViewById(R.id.actionWow);
@@ -242,8 +264,8 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             reactCare = itemView.findViewById(R.id.reactCare);
             reactWow = itemView.findViewById(R.id.reactWow);
             reactHaha = itemView.findViewById(R.id.reactHaha);
-
             reactMain = itemView.findViewById(R.id.reactMain);
+            layerReaction = itemView.findViewById(R.id.layerReaction);
         }
     }
 

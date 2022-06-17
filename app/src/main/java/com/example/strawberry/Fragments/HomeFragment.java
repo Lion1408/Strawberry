@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
         list.add(new Data());
         list.get(0).setItemType(0);
         User user1 = new User();
-        user1.setLinkAvt("https://img5.thuthuatphanmem.vn/uploads/2021/11/12/hinh-anh-anime-don-gian-hinh-nen-anime-don-gian-ma-dep_092443354.png");
+        user1.setLinkAvt("");
         list.get(0).setUser(user1);
         ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Data>>>() {
             @Override
@@ -76,9 +76,9 @@ public class HomeFragment extends Fragment {
                         }
 
                         @Override
-                        public void OnclickPost(Integer idPost) {
+                        public void OnclickPost(Data data) {
                             Intent intent = new Intent(getContext(), PostActivity.class);
-                            intent.putExtra("Data",  idPost);
+                            intent.putExtra("Data",  data);
                             startActivity(intent);
                         }
                     });

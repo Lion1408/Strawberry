@@ -18,7 +18,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_forget_password.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_post.xml" value="0.23233695652173914" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_profile_user.xml" value="0.23233695652173914" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_profile_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_sign_in.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_sign_up.xml" value="0.4" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_spash.xml" value="0.22780797101449277" />
@@ -27,10 +27,11 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_register_account.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_group.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_home.xml" value="0.264" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_menu.xml" value="0.22780797101449277" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_menu.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_notification.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_profile_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/fragment_watch.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_head_user.xml" value="0.1503623188405797" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_infor_user.xml" value="0.4" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.4" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_profile_user.xml" value="0.264" />
