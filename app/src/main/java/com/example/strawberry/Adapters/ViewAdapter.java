@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.Image;
@@ -77,7 +78,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Data data = list.get(position);
         if (list.get(position).getItemType() == UP_POST) {
             UpPostViewHolder holder = (UpPostViewHolder) x;
-            Glide.with(holder.avt).load("https://img5.thuthuatphanmem.vn/uploads/2021/11/12/hinh-anh-anime-don-gian-hinh-nen-anime-don-gian-ma-dep_092443354.png").into(holder.avt);
+            Glide.with(holder.avt).load(data.getUser().getLinkAvt()).into(holder.avt);
             holder.uppost.setOnClickListener(v -> {
 
             });
@@ -178,11 +179,11 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
             holder.avt.setOnClickListener(v -> {
-                postOnClick.OnClickAvt(data.getUser());
+                postOnClick.OnClickAvt(data);
             });
 
             holder.fullname.setOnClickListener(v -> {
-                postOnClick.OnClickAvt(data.getUser());
+                postOnClick.OnClickAvt(data);
             });
 
             holder.viewPost.setOnClickListener(v -> {
@@ -214,6 +215,12 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (list.get(position).getItemType() == HEAD_PROFILE_USER) {
             ProfileViewHolder holder = (ProfileViewHolder) x;
             holder.headprofileFullName.setText(data.getUser().getFullName());
+            System.out.println(data.getIdLog() + " : " + data.getUser().getIdUser());
+            if (data.getIdLog() == data.getUser().getIdUser()) {
+                holder.addfriend.setVisibility(View.GONE);
+            } else {
+                holder.addfriend.setVisibility(View.VISIBLE);
+            }
         }
 
         if (list.get(position).getItemType() == INFOR_USER) {
@@ -271,9 +278,11 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class ProfileViewHolder extends RecyclerView.ViewHolder {
         TextView headprofileFullName;
+        ConstraintLayout addfriend;
         public ProfileViewHolder(@NonNull View itemView) {
             super(itemView);
             headprofileFullName = itemView.findViewById(R.id.headprofileFullName);
+            addfriend = itemView.findViewById(R.id.addFriend);
         }
     }
 

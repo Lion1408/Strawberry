@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
+import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserDTO;
@@ -93,13 +94,13 @@ public class SignInActivity extends AppCompatActivity {
                     binding.password.getText().toString().trim(),
                     binding.email.getText().toString().trim()
             );
-            ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<User>>() {
+            ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<Data>>() {
                 @Override
-                public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
+                public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
                     if (response.isSuccessful()) {
-                        User user1 = response.body().getData();
+                        Data data = response.body().getData();
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.putExtra("Data", (Parcelable) user1);
+                        intent.putExtra("Data", data);
                         startActivity(intent);
                         loading(false);
                         finishAffinity();
@@ -110,7 +111,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
+                public void onFailure(Call<ResponseObject<Data>> call, Throwable t) {
                     loading(false);
                     Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                 }

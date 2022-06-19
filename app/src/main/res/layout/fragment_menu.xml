@@ -51,14 +51,13 @@
             app:layout_constraintTop_toTopOf="@+id/guideline2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout9"
+                android:id="@+id/profileUser"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <ImageView
                     android:id="@+id/imageView9"
                     android:layout_width="@dimen/_20sdp"
@@ -88,9 +87,9 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout9"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout9"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+                app:layout_constraintEnd_toEndOf="@+id/profileUser"
+                app:layout_constraintStart_toStartOf="@+id/profileUser"
+                app:layout_constraintTop_toBottomOf="@+id/profileUser">
 
                 <ImageView
                     android:id="@+id/imageView10"
@@ -215,7 +214,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout14"
+                android:id="@+id/logout"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_5sdp"

@@ -35,7 +35,7 @@ public interface ApiService {
     Call <ResponseObject<List<User>>> getAllusers();
 
     @POST("/api/v1/auth/login")
-    Call <ResponseObject<User>> checkLogin(@Body UserDTO userDTO);
+    Call <ResponseObject<Data>> checkLogin(@Body UserDTO userDTO);
 
     @GET("/api/v1/users/forget-password")
     Call <ResponseObject<User>> forgetPassword(@Query("email") String email);
@@ -71,4 +71,7 @@ public interface ApiService {
     //
     @GET("/api/v1/users/{id}/posts")
     Call <ResponseObject<List<Data>>> getAllPostUser(@Path("id") Integer id);
+
+    @GET("/api/v1/users/{id}/images")
+    Call <ResponseObject<List<Image>>> getAllImageUser(@Path("id") Integer id);
 }

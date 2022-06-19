@@ -19,6 +19,7 @@ public class Constants {
     public static final String ENTER_LAST_NAME = "Tên trống";
     public static final String ENTER_CONFIRM_PASSWORD = "Xác nhận mật khẩu trống";
     public static final String PASSWORD_NOT_SAME = "Mật khẩu không trùng nhau";
+    static final Integer IDUSER = 0;
     public static final void showToast(String string, Context context) {
         Toast.makeText(context, string, Toast.LENGTH_SHORT).show();
     }

@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Strawberry">
         <activity
+            android:name=".Activities.InforUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.ProfileUserActivity"
             android:exported="false" />
         <activity
@@ -30,10 +36,10 @@
             android:name=".Activities.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.SplashActivity"
+            android:name=".Activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.ImageUserActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

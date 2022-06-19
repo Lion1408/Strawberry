@@ -96,12 +96,12 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.email.getText().toString().trim(),
                     binding.password.getText().toString().trim(),
                     binding.email.getText().toString().trim(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
                     1);
             ApiService.apiService.createAccount(user).enqueue(new Callback<ResponseObject<User>>() {
                 @Override

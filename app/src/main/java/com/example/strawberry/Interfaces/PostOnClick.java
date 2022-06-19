@@ -9,6 +9,7 @@ import com.example.strawberry.Model.Video;
 import java.util.List;
 
 public interface PostOnClick {
-    void OnClickAvt(User user);
+    void OnClickAvt(Data data);
     void OnclickPost(Data data);
+
 }

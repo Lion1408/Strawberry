@@ -37,16 +37,18 @@ public class PostActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         viewAdapter.PostOnClick(new PostOnClick() {
             @Override
-            public void OnClickAvt(User user1) {
+            public void OnClickAvt(Data data1) {
                 Intent intent = new Intent(getApplicationContext(), ProfileUserActivity.class);
-                intent.putExtra("Data", user1);
+                intent.putExtra("Data", data1);
                 startActivity(intent);
+                finish();
             }
 
             @Override
             public void OnclickPost(Data data) {
 
             }
+
         });
         recyclerView.setAdapter(viewAdapter);
     }

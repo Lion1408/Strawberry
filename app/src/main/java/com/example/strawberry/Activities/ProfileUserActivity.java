@@ -31,33 +31,44 @@ public class ProfileUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        User user = getIntent().getParcelableExtra("Data");
-        binding.username.setText(user.getFullName());
+        Data data1 = getIntent().getParcelableExtra("Data");
+        binding.username.setText(data1.getUser().getFullName());
         binding.backHome.setOnClickListener(v -> {
             finish();
         });
         List <Data> list = new ArrayList<>();
-        list.add(new Data());
-        list.get(0).setItemType(2);
-        list.get(0).setUser(user);
-        list.add(new Data());
-        list.get(1).setItemType(3);
-        list.add(new Data());
-        list.get(2).setItemType(0);
-        ApiService.apiService.getAllPostUser(user.getIdUser()).enqueue(new Callback<ResponseObject<List<Data>>>() {
+        Data dt1 = new Data();
+        dt1.setItemType(2);
+        dt1.setUser(data1.getUser());
+        dt1.setIdLog(data1.getIdLog());
+        Data dt2 = new Data();
+        dt2.setItemType(3);
+        dt2.setUser(data1.getUser());
+        dt2.setIdLog(data1.getIdLog());
+        Data dt3 = new Data();
+        dt3.setItemType(0);
+        dt3.setUser(data1.getUser());
+        dt3.setIdLog(data1.getIdLog());
+        list.add(dt1);
+        list.add(dt2);
+        list.add(dt3);
+
+
+        ApiService.apiService.getAllPostUser(data1.getUser().getIdUser()).enqueue(new Callback<ResponseObject<List<Data>>>() {
             @Override
             public void onResponse(Call<ResponseObject<List<Data>>> call, Response<ResponseObject<List<Data>>> response) {
                 if (response.isSuccessful()) {
                     for (int i = 0; i < response.body().getData().size(); ++i) {
                         Data data = response.body().getData().get(i);
                         data.setItemType(1);
+                        data.setIdLog(data1.getIdLog());
                         list.add(data);
                         RecyclerView recyclerView = findViewById(R.id.recy_profile_user);
                         ViewAdapter viewAdapter = new ViewAdapter(list, getApplicationContext());
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         viewAdapter.PostOnClick(new PostOnClick() {
                             @Override
-                            public void OnClickAvt(User user1) {
+                            public void OnClickAvt(Data data1) {
 
                             }
 
@@ -66,7 +77,9 @@ public class ProfileUserActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), PostActivity.class);
                                 intent.putExtra("Data",  data);
                                 startActivity(intent);
+                                finish();
                             }
+
                         });
                         recyclerView.setAdapter(viewAdapter);
                     }

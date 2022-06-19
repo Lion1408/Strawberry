@@ -9,11 +9,14 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.strawberry.Adapters.StrawberryAdapter;
 
+import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Fragments.HomeFragment;
+import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityMainBinding;
@@ -34,9 +37,12 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.add(new MeowBottomNavigation.Model(2, R.drawable.ic_group));
         binding.bottomNav.add(new MeowBottomNavigation.Model(3, R.drawable.ic_notification));
         binding.bottomNav.add(new MeowBottomNavigation.Model(4, R.drawable.ic_menu));
-        User user1 = getIntent().getParcelableExtra("User");
-        Intent intent = new Intent(MainActivity.this, HomeFragment.class);
-        intent.putExtra("User", (Parcelable) user1);
+        Data data = getIntent().getParcelableExtra("Data");
+        data.setIdLog(data.getUser().getIdUser());
+        Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
+        intentHome.putExtra("Data", data);
+        Intent intentMenu = new Intent(MainActivity.this, HomeFragment.class);
+        intentMenu.putExtra("Data", data);
         binding.bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {

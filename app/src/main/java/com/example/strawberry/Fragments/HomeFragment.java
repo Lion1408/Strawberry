@@ -3,6 +3,7 @@ package com.example.strawberry.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.strawberry.Activities.MainActivity;
 import com.example.strawberry.Activities.PostActivity;
 import com.example.strawberry.Activities.ProfileUserActivity;
 import com.example.strawberry.Adapters.ViewAdapter;
@@ -48,13 +50,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        User user = getActivity().getIntent().getParcelableExtra("User");
+        Data data1 = getActivity().getIntent().getParcelableExtra("Data");
         List<Data> list = new ArrayList<>();
-        list.add(new Data());
+        list.add(data1);
         list.get(0).setItemType(0);
-        User user1 = new User();
-        user1.setLinkAvt("");
-        list.get(0).setUser(user1);
+
         ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Data>>>() {
             @Override
             public void onResponse(Call<ResponseObject<List<Data>>> call, Response<ResponseObject<List<Data>>> response) {
@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < response.body().getData().size(); ++i) {
                         Data data = response.body().getData().get(i);
                         data.setItemType(1);
+                        data.setIdLog(data1.getIdLog());
                         list.add(data);
                     }
                     RecyclerView recyclerView = view.findViewById(R.id.recy_post);
@@ -69,18 +70,19 @@ public class HomeFragment extends Fragment {
                     recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                     viewAdapter.PostOnClick(new PostOnClick() {
                         @Override
-                        public void OnClickAvt(User user1) {
+                        public void OnClickAvt(Data data1) {
                             Intent intent = new Intent(getContext(), ProfileUserActivity.class);
-                            intent.putExtra("Data", user1);
+                            intent.putExtra("Data", data1);
                             startActivity(intent);
                         }
 
                         @Override
-                        public void OnclickPost(Data data) {
+                        public void OnclickPost(Data data1) {
                             Intent intent = new Intent(getContext(), PostActivity.class);
-                            intent.putExtra("Data",  data);
+                            intent.putExtra("Data",  data1);
                             startActivity(intent);
                         }
+
                     });
                     recyclerView.setAdapter(viewAdapter);
                 } else {

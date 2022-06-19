@@ -14,11 +14,12 @@ public class Data implements Parcelable {
     private Reaction reactions;
     private List<Video> videos;
     private Integer countComments;
+    private Integer idLog;
 
     public Data() {
     }
 
-    public Data(Integer idPost, Integer itemType, String updatedAt, String contentPost, User user, List<Image> images, Reaction reactions, List<Video> videos, Integer countComments) {
+    public Data(Integer idPost, Integer itemType, String updatedAt, String contentPost, User user, List<Image> images, Reaction reactions, List<Video> videos, Integer countComments, Integer idLog) {
         this.idPost = idPost;
         this.itemType = itemType;
         this.updatedAt = updatedAt;
@@ -28,6 +29,7 @@ public class Data implements Parcelable {
         this.reactions = reactions;
         this.videos = videos;
         this.countComments = countComments;
+        this.idLog = idLog;
     }
 
     protected Data(Parcel in) {
@@ -51,6 +53,11 @@ public class Data implements Parcelable {
             countComments = null;
         } else {
             countComments = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            idLog = null;
+        } else {
+            idLog = in.readInt();
         }
     }
 
@@ -138,6 +145,14 @@ public class Data implements Parcelable {
         this.countComments = countComments;
     }
 
+    public Integer getIdLog() {
+        return idLog;
+    }
+
+    public void setIdLog(Integer idLog) {
+        this.idLog = idLog;
+    }
+
     @Override
     public String toString() {
         return "Data{" +
@@ -150,6 +165,7 @@ public class Data implements Parcelable {
                 ", reactions=" + reactions +
                 ", videos=" + videos +
                 ", countComments=" + countComments +
+                ", idLog=" + idLog +
                 '}';
     }
 
@@ -183,6 +199,12 @@ public class Data implements Parcelable {
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(countComments);
+        }
+        if (idLog == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(idLog);
         }
     }
 }
