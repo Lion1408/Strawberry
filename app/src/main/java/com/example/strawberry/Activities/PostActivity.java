@@ -1,6 +1,5 @@
 package com.example.strawberry.Activities;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
-import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityPostBinding;
 
@@ -45,7 +43,7 @@ public class PostActivity extends AppCompatActivity {
             }
 
             @Override
-            public void OnclickPost(Data data) {
+            public void OnClickPost(Data data) {
 
             }
 

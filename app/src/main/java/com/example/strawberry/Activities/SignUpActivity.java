@@ -92,11 +92,13 @@ public class SignUpActivity extends AppCompatActivity {
             Constants.showToast(Constants.PASSWORD_NOT_SAME, getApplicationContext());
             loading(false);
         } else {
-            User user = new User(binding.firstname.getText().toString().trim(), binding.lastname.getText().toString().trim(),
-                    binding.email.getText().toString().trim(),
-                    binding.password.getText().toString().trim(),
-                    binding.email.getText().toString().trim(),
-                    "",
+            User user = new User(
+                    binding.firstname.getText().toString().trim() + "",
+                    binding.lastname.getText().toString().trim() + "",
+                    binding.firstname.getText().toString().trim() + binding.lastname.getText().toString().trim(),
+                    binding.email.getText().toString().trim() + "",
+                    binding.password.getText().toString().trim() + "",
+                    binding.email.getText().toString() + "",
                     "",
                     "",
                     "",

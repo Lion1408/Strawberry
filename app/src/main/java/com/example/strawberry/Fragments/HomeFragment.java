@@ -3,19 +3,14 @@ package com.example.strawberry.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.strawberry.Activities.MainActivity;
 import com.example.strawberry.Activities.PostActivity;
 import com.example.strawberry.Activities.ProfileUserActivity;
 import com.example.strawberry.Adapters.ViewAdapter;
@@ -23,11 +18,7 @@ import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
-import com.example.strawberry.Model.Image;
-import com.example.strawberry.Model.Reaction;
 import com.example.strawberry.Model.ResponseObject;
-import com.example.strawberry.Model.User;
-import com.example.strawberry.Model.Video;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.FragmentHomeBinding;
 
@@ -77,7 +68,7 @@ public class HomeFragment extends Fragment {
                         }
 
                         @Override
-                        public void OnclickPost(Data data1) {
+                        public void OnClickPost(Data data1) {
                             Intent intent = new Intent(getContext(), PostActivity.class);
                             intent.putExtra("Data",  data1);
                             startActivity(intent);

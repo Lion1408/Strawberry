@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -25,10 +23,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ImageUserActivity extends AppCompatActivity {
+public class ImageVideoUserActivity extends AppCompatActivity {
     ActivityImageUserBinding binding;
     GridView gridView;
     List<Image> list = new ArrayList<>();
+    ImageAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,22 @@ public class ImageUserActivity extends AppCompatActivity {
         binding.backProfileUser.setOnClickListener(v -> {
             finish();
         });
-
+        adapter = new ImageAdapter(getApplicationContext(), list, R.layout.item_image);
+        adapter.setImageOnClick(new ImageOnClick() {
+            @Override
+            public void onclickImage(String image) {
+                Dialog dialog = new Dialog(ImageVideoUserActivity.this, R.style.Theme_Strawberry);
+                dialog.setContentView(R.layout.dialog_show_image);
+                ImageView img, backImage;
+                img = dialog.findViewById(R.id.showImage);
+                backImage = dialog.findViewById(R.id.backImage);
+                Glide.with(img).load(image).into(img);
+                backImage.setOnClickListener(v -> {
+                    dialog.dismiss();
+                });
+                dialog.show();
+            }
+        });
         ApiService.apiService.getAllImageUser(1).enqueue(new Callback<ResponseObject<List<Image>>>() {
             @Override
             public void onResponse(Call<ResponseObject<List<Image>>> call, Response<ResponseObject<List<Image>>> response) {
@@ -48,23 +62,6 @@ public class ImageUserActivity extends AppCompatActivity {
                         list.add(image);
                     }
                 }
-
-                ImageAdapter adapter = new ImageAdapter(getApplicationContext(), list, R.layout.item_image);
-                adapter.setImageOnClick(new ImageOnClick() {
-                    @Override
-                    public void onclickImage(String image) {
-                        Dialog dialog = new Dialog(ImageUserActivity.this, R.style.Theme_Strawberry);
-                        dialog.setContentView(R.layout.dialog_show_image);
-                        ImageView img, backImage;
-                        img = dialog.findViewById(R.id.showImage);
-                        backImage = dialog.findViewById(R.id.backImage);
-                        Glide.with(img).load(image).into(img);
-                        backImage.setOnClickListener(v -> {
-                            dialog.dismiss();
-                        });
-                        dialog.show();
-                    }
-                });
                 gridView.setAdapter(adapter);
             }
             @Override
@@ -72,6 +69,5 @@ public class ImageUserActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

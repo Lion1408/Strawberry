@@ -35,4 +35,7 @@
     <string name="infor_user">Thông tin cá nhân</string>
     <string name="friend">Bạn bè</string>
     <string name="image">Ảnh/Video</string>
+    <string name="gender">Giới tính :</string>
+    <string name="birthday">Ngày Sinh:</string>
+    <string name="place">Nơi ở: </string>
 </resources>

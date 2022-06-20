@@ -10,6 +10,5 @@ import java.util.List;
 
 public interface PostOnClick {
     void OnClickAvt(Data data);
-    void OnclickPost(Data data);
-
+    void OnClickPost(Data data);
 }

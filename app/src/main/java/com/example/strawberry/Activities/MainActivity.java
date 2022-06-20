@@ -16,6 +16,7 @@ import com.example.strawberry.Adapters.StrawberryAdapter;
 
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Fragments.HomeFragment;
+import com.example.strawberry.Fragments.MenuFragment;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         data.setIdLog(data.getUser().getIdUser());
         Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
         intentHome.putExtra("Data", data);
-        Intent intentMenu = new Intent(MainActivity.this, HomeFragment.class);
+        Intent intentMenu = new Intent(MainActivity.this, MenuFragment.class);
         intentMenu.putExtra("Data", data);
         binding.bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override

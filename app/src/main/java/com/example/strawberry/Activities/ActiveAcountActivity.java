@@ -37,7 +37,7 @@ public class ActiveAcountActivity extends AppCompatActivity {
         });
         binding.activeConfirm.setOnClickListener(v -> {
             loading(true);
-            User user = getIntent().getParcelableExtra("User");
+            User user = getIntent().getParcelableExtra("Data");
             String code = binding.num1.getText().toString().trim()
                     + binding.num2.getText().toString().trim()
                     + binding.num3.getText().toString().trim()

@@ -4,13 +4,11 @@ package com.example.strawberry.Adapters;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -19,13 +17,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.strawberry.Define.Constants;
+import com.example.strawberry.Interfaces.InforUserOnClick;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
-import com.example.strawberry.Model.Image;
-import com.example.strawberry.Model.Reaction;
-import com.example.strawberry.Model.User;
-import com.example.strawberry.Model.Video;
 import com.example.strawberry.R;
 
 import java.util.List;
@@ -40,8 +34,18 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Data> list;
     private Context context;
     private PostOnClick postOnClick;
+    private InforUserOnClick inforUserOnClick;
+
     public void PostOnClick(PostOnClick postOnClick) {
         this.postOnClick = postOnClick;
+    }
+
+    public InforUserOnClick getInforUserOnClick() {
+        return inforUserOnClick;
+    }
+
+    public void setInforUserOnClick(InforUserOnClick inforUserOnClick) {
+        this.inforUserOnClick = inforUserOnClick;
     }
 
     public ViewAdapter(List<Data> list, Context context) {
@@ -100,9 +104,9 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }  else if (data.getVideos().size() > 0) {
                 Uri uri = Uri.parse(data.getVideos().get(0).getLinkVideo());
                 holder.video.setVideoURI(uri);
-                MediaController mediaController = new MediaController(holder.video.getContext());
-                holder.video.setMediaController(mediaController);
-                mediaController.setAnchorView(holder.itemView);
+//                MediaController mediaController = new MediaController(holder.video.getContext());
+//                holder.video.setMediaController(mediaController);
+//                mediaController.setAnchorView(holder.itemView);
                 holder.video.start();
                 holder.video.setVisibility(View.VISIBLE);
                 holder.img.setVisibility(View.GONE);
@@ -154,7 +158,6 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.list_react.setVisibility(View.GONE);
             });
             holder.reactSad.setOnClickListener(v -> {
-
                 holder.react.setText(data.getReactions().getALL().toString());
                 holder.textReact.setText(R.string.sad);
                 holder.reactMain.setImageResource(R.drawable.ic_sad);
@@ -187,27 +190,27 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
             holder.viewPost.setOnClickListener(v -> {
-                postOnClick.OnclickPost(data);
+                postOnClick.OnClickPost(data);
             });
 
             holder.content.setOnClickListener(v -> {
-                postOnClick.OnclickPost(data);
+                postOnClick.OnClickPost(data);
             });
 
             holder.video.setOnCompletionListener(v -> {
-                postOnClick.OnclickPost(data);
+                postOnClick.OnClickPost(data);
             });
 
             holder.img.setOnClickListener(v -> {
-                postOnClick.OnclickPost(data);
+                postOnClick.OnClickPost(data);
             });
 
             holder.layerReaction.setOnClickListener(v -> {
-                postOnClick.OnclickPost(data);
+                postOnClick.OnClickPost(data);
             });
 
             holder.cmt.setOnClickListener(v -> {
-                postOnClick.OnclickPost(data);
+                postOnClick.OnClickPost(data);
             });
 
         }
@@ -215,15 +218,24 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (list.get(position).getItemType() == HEAD_PROFILE_USER) {
             ProfileViewHolder holder = (ProfileViewHolder) x;
             holder.headprofileFullName.setText(data.getUser().getFullName());
-            System.out.println(data.getIdLog() + " : " + data.getUser().getIdUser());
+
             if (data.getIdLog() == data.getUser().getIdUser()) {
                 holder.addfriend.setVisibility(View.GONE);
             } else {
                 holder.addfriend.setVisibility(View.VISIBLE);
             }
+
         }
 
         if (list.get(position).getItemType() == INFOR_USER) {
+            InforUserViewHolder holder = (InforUserViewHolder) x;
+            holder.imageVideoUser.setOnClickListener(v -> {
+                inforUserOnClick.OnClickImageVideo();
+            });
+
+            holder.inforOfUser.setOnClickListener(v -> {
+                inforUserOnClick.OnClickInfor();
+            });
 
         }
     }
@@ -297,10 +309,11 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class InforUserViewHolder extends RecyclerView.ViewHolder {
-
+        ConstraintLayout imageVideoUser, inforOfUser;
         public InforUserViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            imageVideoUser = itemView.findViewById(R.id.imageUser);
+            inforOfUser = itemView.findViewById(R.id.infoOfUser);
         }
     }
 }
