@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ public class HomeFragment extends Fragment {
         List<Data> list = new ArrayList<>();
         list.add(data1);
         list.get(0).setItemType(0);
-
         ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Data>>>() {
             @Override
             public void onResponse(Call<ResponseObject<List<Data>>> call, Response<ResponseObject<List<Data>>> response) {

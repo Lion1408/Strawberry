@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.add(new MeowBottomNavigation.Model(3, R.drawable.ic_notification));
         binding.bottomNav.add(new MeowBottomNavigation.Model(4, R.drawable.ic_menu));
         Data data = getIntent().getParcelableExtra("Data");
-        data.setIdLog(data.getUser().getIdUser());
         Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
         intentHome.putExtra("Data", data);
         Intent intentMenu = new Intent(MainActivity.this, MenuFragment.class);

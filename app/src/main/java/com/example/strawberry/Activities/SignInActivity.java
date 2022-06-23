@@ -3,11 +3,13 @@ package com.example.strawberry.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 
 import com.example.strawberry.Define.Constants;
@@ -18,6 +20,7 @@ import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserDTO;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivitySignInBinding;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -99,9 +102,14 @@ public class SignInActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
                     if (response.isSuccessful()) {
                         Data data = response.body().getData();
+                        data.setIdLog(data.getUser().getIdUser());
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                         intent.putExtra("Data", data);
                         startActivity(intent);
+                        SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                        editor.putString("email", binding.email.getText().toString().trim());
+                        editor.putString("password", binding.password.getText().toString().trim());
+                        editor.commit();
                         loading(false);
                         finishAffinity();
                     } else {

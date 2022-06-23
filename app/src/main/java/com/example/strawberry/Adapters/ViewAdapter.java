@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.InforUserOnClick;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
@@ -122,6 +123,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             holder.likePost.setOnClickListener(v -> {
+                Constants.showToast(position + " ", context);
                 holder.list_react.setVisibility(View.VISIBLE);
                 holder.react_default.setVisibility(View.GONE);
             });
@@ -197,7 +199,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 postOnClick.OnClickPost(data);
             });
 
-            holder.video.setOnCompletionListener(v -> {
+            holder.video.setOnClickListener(v -> {
                 postOnClick.OnClickPost(data);
             });
 
