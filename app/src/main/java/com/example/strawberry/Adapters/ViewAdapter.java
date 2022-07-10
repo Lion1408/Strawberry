@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.InforUserOnClick;
+import com.example.strawberry.Interfaces.OnClickUpPost;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.R;
@@ -36,6 +37,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private PostOnClick postOnClick;
     private InforUserOnClick inforUserOnClick;
+    private OnClickUpPost onClickUpPost;
 
     public void PostOnClick(PostOnClick postOnClick) {
         this.postOnClick = postOnClick;
@@ -47,6 +49,10 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void setInforUserOnClick(InforUserOnClick inforUserOnClick) {
         this.inforUserOnClick = inforUserOnClick;
+    }
+
+    public void setOnClickUpPost(OnClickUpPost onClickUpPost) {
+        this.onClickUpPost = onClickUpPost;
     }
 
     public ViewAdapter(List<Data> list, Context context) {
@@ -239,6 +245,13 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 inforUserOnClick.OnClickInfor();
             });
 
+        }
+
+        if (list.get(position).getItemType() == UP_POST) {
+            UpPostViewHolder holder = (UpPostViewHolder) x;
+            holder.uppost.setOnClickListener(v -> {
+                onClickUpPost.onClick();
+            });
         }
     }
 

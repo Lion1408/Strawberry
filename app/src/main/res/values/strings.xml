@@ -38,4 +38,5 @@
     <string name="gender">Giới tính :</string>
     <string name="birthday">Ngày Sinh:</string>
     <string name="place">Nơi ở: </string>
+    <string name="new_post">Bài viết mới</string>
 </resources>

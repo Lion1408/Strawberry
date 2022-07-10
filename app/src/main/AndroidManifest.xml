@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Strawberry">
         <activity
+            android:name=".Activities.UpPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.FriendActivity"
             android:exported="false" />
         <activity

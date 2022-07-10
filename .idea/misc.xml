@@ -16,14 +16,16 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/test.xml" value="0.226" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_active_acount.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_forget_password.xml" value="0.22780797101449277" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_friend.xml" value="0.2346014492753623" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_image_user.xml" value="0.2346014492753623" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_infor_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_post.xml" value="0.23233695652173914" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_profile_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_sign_in.xml" value="0.264" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_sign_up.xml" value="0.4" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_sign_up.xml" value="0.176" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_spash.xml" value="0.22780797101449277" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_up_post.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_active_account.xml" value="0.19202898550724637" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_edit_infor_user.xml" value="0.4" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_forget_password.xml" value="0.22780797101449277" />
@@ -38,7 +40,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_head_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_image.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_infor_user.xml" value="0.264" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.4" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_profile_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_up_post.xml" value="0.536" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_user.xml" value="0.22554347826086957" />

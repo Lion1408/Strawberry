@@ -11,6 +11,7 @@ import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Interfaces.InforUserOnClick;
+import com.example.strawberry.Interfaces.OnClickUpPost;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ResponseObject;
@@ -82,6 +83,12 @@ public class ProfileUserActivity extends AppCompatActivity {
             @Override
             public void OnClickFriend() {
 
+            }
+        });
+        viewAdapter.setOnClickUpPost(new OnClickUpPost() {
+            @Override
+            public void onClick() {
+                startActivity(new Intent(getApplicationContext(), UpPostActivity.class));
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

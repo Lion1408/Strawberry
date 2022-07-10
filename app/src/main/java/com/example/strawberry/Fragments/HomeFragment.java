@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 
 import com.example.strawberry.Activities.PostActivity;
 import com.example.strawberry.Activities.ProfileUserActivity;
+import com.example.strawberry.Activities.UpPostActivity;
 import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
+import com.example.strawberry.Interfaces.OnClickUpPost;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ResponseObject;
@@ -46,6 +48,31 @@ public class HomeFragment extends Fragment {
         List<Data> list = new ArrayList<>();
         list.add(data1);
         list.get(0).setItemType(0);
+        RecyclerView recyclerView = view.findViewById(R.id.recy_post);
+        ViewAdapter viewAdapter = new ViewAdapter(list, getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        viewAdapter.PostOnClick(new PostOnClick() {
+            @Override
+            public void OnClickAvt(Data data1) {
+                Intent intent = new Intent(getContext(), ProfileUserActivity.class);
+                intent.putExtra("Data", data1);
+                startActivity(intent);
+            }
+
+            @Override
+            public void OnClickPost(Data data1) {
+                Intent intent = new Intent(getContext(), PostActivity.class);
+                intent.putExtra("Data",  data1);
+                startActivity(intent);
+            }
+
+        });
+        viewAdapter.setOnClickUpPost(new OnClickUpPost() {
+            @Override
+            public void onClick() {
+                startActivity(new Intent(getContext(), UpPostActivity.class));
+            }
+        });
         ApiService.apiService.getAllPublicPost().enqueue(new Callback<ResponseObject<List<Data>>>() {
             @Override
             public void onResponse(Call<ResponseObject<List<Data>>> call, Response<ResponseObject<List<Data>>> response) {
@@ -56,25 +83,6 @@ public class HomeFragment extends Fragment {
                         data.setIdLog(data1.getIdLog());
                         list.add(data);
                     }
-                    RecyclerView recyclerView = view.findViewById(R.id.recy_post);
-                    ViewAdapter viewAdapter = new ViewAdapter(list, getContext());
-                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    viewAdapter.PostOnClick(new PostOnClick() {
-                        @Override
-                        public void OnClickAvt(Data data1) {
-                            Intent intent = new Intent(getContext(), ProfileUserActivity.class);
-                            intent.putExtra("Data", data1);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void OnClickPost(Data data1) {
-                            Intent intent = new Intent(getContext(), PostActivity.class);
-                            intent.putExtra("Data",  data1);
-                            startActivity(intent);
-                        }
-
-                    });
                     recyclerView.setAdapter(viewAdapter);
                 } else {
                     Constants.showToast(Constants.ERROR, getContext());
