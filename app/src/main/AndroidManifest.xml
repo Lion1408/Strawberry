@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Strawberry">
         <activity
+            android:name=".Activities.ListChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Test"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.UpPostActivity"
             android:exported="false" />
         <activity

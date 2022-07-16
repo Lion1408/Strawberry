@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         app:elevation="0dp"
@@ -17,17 +18,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_splash"
-            android:title="@string/app_name"
+            android:title="@string/menu"
             android:titleTextColor="@color/text_background_splash"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy_post"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="134dp"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@+id/titlebar"
+        tools:layout_editor_absoluteX="0dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/chat"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:src="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

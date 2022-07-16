@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.example.strawberry.Model.Image;
 import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.ListImage;
 import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.Reaction;
 import com.example.strawberry.Model.ReactionDTO;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -88,6 +90,7 @@ public interface ApiService {
     // up post user
     @Multipart
     @POST("/api/v1/posts/{idUser}/create-post")
-    Call <ResponseObject<Data>> upPost(@Path("idUser") Integer idUser, @QueryMap Map<String, String> map,
-                                       @Part MultipartBody.Part fileImages);
+    Call <RequestBody> upPost(@Path("idUser") Integer idUser,
+                              @Part MultipartBody.Part fileImages);
+
 }

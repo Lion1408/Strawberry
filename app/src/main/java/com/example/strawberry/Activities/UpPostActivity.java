@@ -19,6 +19,7 @@ import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Define.RealPathUtil;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.ListImage;
 import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.databinding.ActivityUpPostBinding;
 
@@ -49,17 +50,17 @@ public class UpPostActivity extends AppCompatActivity {
             finish();
         });
         binding.post.setOnClickListener(v -> {
-            Map <String, String> map = new HashMap<>();
-            map.put("access", "PUBLIC");
-            map.put("contentPost", binding.content.getText().toString().trim());
+//            Map <String, String> map = new HashMap<>();
+//            map.put("access", "PUBLIC");
+//            map.put("contentPost", binding.content.getText().toString().trim());
             Uri uri = listImages.get(0);
             String realPathUtil = RealPathUtil.getRealPath(this, uri);
             File file = new File(realPathUtil);
-            RequestBody request = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part mul = MultipartBody.Part.createFormData("fileImages", file.getName(), request);
-            ApiService.apiService.upPost(1, map, mul).enqueue(new Callback<ResponseObject<Data>>() {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part mul = MultipartBody.Part.createFormData("fileImages", file.getName(), requestBody);
+            ApiService.apiService.upPost(1, mul).enqueue(new Callback<RequestBody>() {
                 @Override
-                public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
+                public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
                     if (response.isSuccessful()) {
                         finish();
                     } else {
@@ -68,7 +69,7 @@ public class UpPostActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseObject<Data>> call, Throwable t) {
+                public void onFailure(Call<RequestBody> call, Throwable t) {
                     Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                 }
             });
