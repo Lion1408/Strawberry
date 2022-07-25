@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/background_splash"
+    android:background="@drawable/background_post"
     android:layout_marginBottom="@dimen/_5sdp"
     android:layout_marginStart="@dimen/_5sdp"
     android:layout_marginEnd="@dimen/_5sdp"
@@ -39,9 +39,9 @@
                 android:id="@+id/comment"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_18sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/share"
-                app:layout_constraintStart_toEndOf="@+id/likePost"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -50,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:text="Bình luận"
+                    android:textColor="@color/text_background_splash"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView11"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -58,49 +59,19 @@
                     android:id="@+id/imageView11"
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="20dp"
                     android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_comment" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/share"
-                android:layout_width="@dimen/_90sdp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/_18sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_share" />
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:text="@string/share"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView12"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:srcCompat="@drawable/ic_cmt"
+                    app:tint="#fec2c3" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/likePost"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_18sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -109,11 +80,10 @@
                     android:id="@+id/reactMain"
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_18sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_strawberry" />
+                    app:srcCompat="@drawable/ic_heart" />
 
                 <TextView
                     android:id="@+id/textReact"
@@ -121,73 +91,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:text="@string/react"
+                    android:textColor="@color/text_background_splash"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/reactMain"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:id="@+id/listReact"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@color/background_splash"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:visibility="gone"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:orientation="horizontal"
-                android:weightSum="7"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/reactLike"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_like" />
-                <ImageView
-                    android:id="@+id/reactLove"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_love" />
-                <ImageView
-                    android:id="@+id/reactHaha"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_haha" />
-                <ImageView
-                    android:id="@+id/reactSad"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_sad" />
-                <ImageView
-                    android:id="@+id/reactWow"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_wow" />
-                <ImageView
-                    android:id="@+id/reactCare"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_care" />
-                <ImageView
-                    android:id="@+id/reactAngry"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    app:srcCompat="@drawable/ic_angry" />
-
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -205,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:text="lượt bình luận"
+                android:textColor="@color/text_background_splash"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -215,107 +125,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:text="Lượt react"
+                android:textColor="@color/text_background_splash"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionHaha"
+                app:layout_constraintStart_toEndOf="@+id/actionlove"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view6"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/_10sdp"
+
+            <ImageView
+                android:id="@+id/actionlove"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_strawberry" />
-
-            <ImageView
-                android:id="@+id/actionDefault"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/view6"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_strawberry" />
-
-            <ImageView
-                android:id="@+id/actionLike"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                android:layout_marginStart="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionDefault"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_like" />
-
-            <ImageView
-                android:id="@+id/actionLove"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                android:layout_marginStart="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionLike"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_love" />
-
-            <ImageView
-                android:id="@+id/actionWow"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                android:layout_marginStart="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionSad"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_wow" />
-
-            <ImageView
-                android:id="@+id/actionSad"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                android:layout_marginStart="@dimen/_1sdp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionLove"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_sad" />
-
-            <ImageView
-                android:id="@+id/actionAngry"
-                android:layout_width="@dimen/_11sdp"
-                android:visibility="gone"
-                android:layout_height="@dimen/_11sdp"
-                android:layout_marginStart="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionWow"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_angry" />
-
-            <ImageView
-                android:id="@+id/actionCare"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionAngry"
-                app:layout_constraintTop_toTopOf="parent"
-
-                app:srcCompat="@drawable/ic_care" />
-
-            <ImageView
-                android:id="@+id/actionHaha"
-                android:layout_width="@dimen/_11sdp"
-                android:layout_height="@dimen/_11sdp"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/actionCare"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_haha" />
+                android:layout_marginStart="@dimen/_10sdp"
+                app:srcCompat="@drawable/ic_heart" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -395,6 +219,7 @@ freegan High Life vero, ea sed minim meggings"
 
             <TextView
                 android:id="@+id/fullName"
+                android:textColor="@color/text_background_splash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_14sdp"
@@ -421,6 +246,7 @@ freegan High Life vero, ea sed minim meggings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="timeup"
+                android:textColor="@color/text_background_splash"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@+id/avatar"
                 app:layout_constraintStart_toStartOf="@+id/fullName"
@@ -444,7 +270,6 @@ freegan High Life vero, ea sed minim meggings"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintStart_toEndOf="@+id/fullName"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

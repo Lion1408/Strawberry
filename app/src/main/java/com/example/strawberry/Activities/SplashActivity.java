@@ -13,6 +13,7 @@ import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ResponseObject;
+import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserDTO;
 import com.example.strawberry.R;
 import com.google.gson.Gson;
@@ -34,8 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         String password = sharedPreferences.getString("password", "");
         UserDTO userDTO = new UserDTO(
                 email,
-                password,
-                email
+                password
         );
         Handler handler = new Handler();
         if (email.length() == 0) {
@@ -50,14 +50,14 @@ public class SplashActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<Data>>() {
+                    ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<User>>() {
                         @Override
-                        public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
+                        public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
                             if (response.isSuccessful()) {
-                                Data data = response.body().getData();
-                                data.setIdLog(data.getUser().getIdUser());
+                                User user = response.body().getData();
                                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                intent.putExtra("Data", data);
+                                intent.putExtra("Data", user);
+                                System.out.println(user);
                                 startActivity(intent);
                                 finishAffinity();
                             } else {
@@ -66,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<ResponseObject<Data>> call, Throwable t) {
+                        public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
                             Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                         }
                     });

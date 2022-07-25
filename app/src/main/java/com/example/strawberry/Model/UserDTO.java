@@ -1,15 +1,14 @@
 package com.example.strawberry.Model;
 
 public class UserDTO {
-    private String email, password, phoneNumber;
+    private String email, password;
 
     public UserDTO() {
     }
 
-    public UserDTO(String email, String password, String phoneNumber) {
+    public UserDTO(String email, String password) {
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -28,20 +27,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     @Override
     public String toString() {
         return "UserDTO{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

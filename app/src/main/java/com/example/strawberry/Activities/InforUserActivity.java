@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ public class InforUserActivity extends AppCompatActivity {
         });
         binding.editInforUser.setOnClickListener(v -> {
             Dialog dialog = new Dialog(InforUserActivity.this);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.setContentView(R.layout.dialog_edit_infor_user);
             TextView confirmChange;
             EditText textgender, textbirthday, textplace;

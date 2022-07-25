@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background_splash"
             android:title="@string/menu"
+
             android:titleTextColor="@color/text_background_splash"
             app:layout_scrollFlags="enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>

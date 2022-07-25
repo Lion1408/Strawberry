@@ -17,4 +17,7 @@
     <color name="gray">#333333</color>
     <color name="ic_color">#292D32</color>
     <color name="signin">#1D2671</color>
+    <color name="color_main">#80FFFFFF</color>
+    <color name="gradient_start">#BFCCC8</color>
+    <color name="gradient_end">#FFBBBB</color>
 </resources>

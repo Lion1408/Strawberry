@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.add(new MeowBottomNavigation.Model(2, R.drawable.ic_group));
         binding.bottomNav.add(new MeowBottomNavigation.Model(3, R.drawable.ic_notification));
         binding.bottomNav.add(new MeowBottomNavigation.Model(4, R.drawable.ic_menu));
-        Data data = getIntent().getParcelableExtra("Data");
+        User user = getIntent().getParcelableExtra("Data");
         Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
-        intentHome.putExtra("Data", data);
+        intentHome.putExtra("Data", user);
         Intent intentMenu = new Intent(MainActivity.this, MenuFragment.class);
-        intentMenu.putExtra("Data", data);
+        intentMenu.putExtra("Data", user);
         binding.bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Strawberry</string>
-    <string name="ten_tai_khoan">Email hoặc số điện thoại</string>
+    <string name="ten_tai_khoan">Nhập email</string>
     <string name="mat_khau">Mật khẩu</string>
     <string name="ghi_nho_mat_khau">Ghi nhớ mật khẩu</string>
     <string name="sign_in">Đăng nhập</string>

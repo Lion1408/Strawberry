@@ -13,9 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.strawberry.Interfaces.OnClickUserChat;
 import com.example.strawberry.Model.UserChat;
 import com.example.strawberry.R;
 
@@ -27,6 +29,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewholder>{
     List<UserChat> list;
     Context context;
+    OnClickUserChat onClickUserChat;
+
+    public void setOnClickUserChat(OnClickUserChat onClickUserChat) {
+        this.onClickUserChat = onClickUserChat;
+    }
+
     public void setContext(Context context) {
         this.context = context;
     }
@@ -49,13 +57,14 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
         UserChat userChat = list.get(position);
         holder.username.setText(userChat.getUsername());
         Glide.with(holder.avt).load(userChat.getLinkavt()).into(holder.avt);
-        Log.e("Here ", userChat.toString());
-        System.out.println(userChat.getStatus());
         if (userChat.getStatus().equals("true")) {
             holder.status.setImageResource(R.drawable.background_online);
         } else {
             holder.status.setBackgroundResource(R.drawable.background_off);
         }
+        holder.roomchat.setOnClickListener(v -> {
+            onClickUserChat.onClick(userChat);
+        });
     }
 
     @Override
@@ -67,11 +76,13 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
         TextView username;
         ImageView status;
         CircleImageView avt;
+        ConstraintLayout roomchat;
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username);
             avt = itemView.findViewById(R.id.imageProfile);
             status = itemView.findViewById(R.id.status);
+            roomchat = itemView.findViewById(R.id.roomchat);
         }
     }
 }

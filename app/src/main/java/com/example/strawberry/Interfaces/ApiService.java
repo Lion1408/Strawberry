@@ -1,11 +1,7 @@
 package com.example.strawberry.Interfaces;
 
-import android.net.Uri;
-
 import com.example.strawberry.Model.Image;
 import com.example.strawberry.Model.Data;
-import com.example.strawberry.Model.ListImage;
-import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.Reaction;
 import com.example.strawberry.Model.ReactionDTO;
 import com.example.strawberry.Model.UserDTO;
@@ -14,9 +10,7 @@ import com.example.strawberry.Model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -24,14 +18,12 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 public interface ApiService {
     Gson gson = new GsonBuilder()
@@ -45,9 +37,9 @@ public interface ApiService {
 
     @GET("/api/v1/users")
     Call <ResponseObject<List<User>>> getAllusers();
-
+    // login
     @POST("/api/v1/auth/login")
-    Call <ResponseObject<Data>> checkLogin(@Body UserDTO userDTO);
+    Call <ResponseObject<User>> checkLogin(@Body UserDTO userDTO);
 
     @GET("/api/v1/users/forget-password")
     Call <ResponseObject<User>> forgetPassword(@Query("email") String email);

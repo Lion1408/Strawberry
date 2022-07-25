@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.ApiService;
@@ -98,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.firstname.getText().toString().trim() + binding.lastname.getText().toString().trim(),
                     binding.email.getText().toString().trim() + "",
                     binding.password.getText().toString().trim() + "",
-                    binding.email.getText().toString() + "",
+                    "",
                     "",
                     "",
                     "",

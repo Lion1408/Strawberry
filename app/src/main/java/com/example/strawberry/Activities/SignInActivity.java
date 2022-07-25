@@ -2,6 +2,7 @@ package com.example.strawberry.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,22 +95,22 @@ public class SignInActivity extends AppCompatActivity {
         } else {
             UserDTO userDTO = new UserDTO(
                     binding.email.getText().toString().trim(),
-                    binding.password.getText().toString().trim(),
-                    binding.email.getText().toString().trim()
+                    binding.password.getText().toString().trim()
             );
-            ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<Data>>() {
+            ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<User>>() {
                 @Override
-                public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
+                public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
                     if (response.isSuccessful()) {
-                        Data data = response.body().getData();
-                        data.setIdLog(data.getUser().getIdUser());
+                        User user = response.body().getData();
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.putExtra("Data", data);
+                        intent.putExtra("Data", user);
                         startActivity(intent);
-                        SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
-                        editor.putString("email", binding.email.getText().toString().trim());
-                        editor.putString("password", binding.password.getText().toString().trim());
-                        editor.commit();
+                        if (binding.iconSavepassword.getContentDescription().equals("show")) {
+                            SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                            editor.putString("email", binding.email.getText().toString().trim());
+                            editor.putString("password", binding.password.getText().toString().trim());
+                            editor.commit();
+                        }
                         loading(false);
                         finishAffinity();
                     } else {
@@ -119,7 +120,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseObject<Data>> call, Throwable t) {
+                public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
                     loading(false);
                     Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                 }

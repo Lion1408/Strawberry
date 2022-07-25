@@ -42,8 +42,7 @@
             android:layout_height="wrap_content"
             android:text="@string/new_post"
             android:layout_marginLeft="@dimen/_20sdp"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"
+            android:textSize="@dimen/text_size_medium"
             android:textColor="@color/text_background_splash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +55,8 @@
             android:text="Đăng"
             android:background="@drawable/background_layer"
             android:layout_marginRight="@dimen/_16sdp"
-            android:textSize="@dimen/_14sdp"
-            android:textColor="#9C27B0"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_background_splash"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +80,7 @@
             android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_180sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:background="#fff"
+            android:background="@drawable/backgrond_input"
             android:paddingStart="@dimen/_10sdp"
             android:paddingTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,56 +93,35 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/backgrond_input"
                 android:hint="Nội dung"
-                android:maxLines="13"
+                android:maxLines="11"
+                android:textColor="@color/text_background_splash"
                 android:textAlignment="textStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:visibility="visible"
+            android:background="@drawable/background_border_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
         <TextView
             android:id="@+id/selectImage"
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_150sdp"
             android:text="Chọn ảnh"
             android:gravity="center"
-            android:background="@drawable/background_main"
             app:layout_constraintBottom_toBottomOf="@+id/imageview"
             app:layout_constraintEnd_toEndOf="@+id/imageview"
             app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="@+id/imageview"
             app:layout_constraintTop_toTopOf="@+id/imageview"
             app:layout_constraintVertical_bias="0.222" />
-
-        <ImageView
-            android:id="@+id/imageview"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="@dimen/_150sdp"
-            android:visibility="visible"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
-
-        <ImageView
-            android:id="@+id/previous"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:src="@drawable/ic_previous"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/imageview"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
-            app:layout_constraintTop_toTopOf="@+id/imageview" />
-
-        <ImageView
-            android:id="@+id/next"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:src="@drawable/ic_next"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/imageview"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
-            app:layout_constraintTop_toTopOf="@+id/imageview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

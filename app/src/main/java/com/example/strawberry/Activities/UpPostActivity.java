@@ -1,5 +1,6 @@
 package com.example.strawberry.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,20 +14,36 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Define.RealPathUtil;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ListImage;
+import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.databinding.ActivityUpPostBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -38,103 +55,100 @@ import retrofit2.Response;
 
 public class UpPostActivity extends AppCompatActivity {
     ActivityUpPostBinding binding;
-    private static final int PICK_IMAGES_CODE = 0;
     private Integer pos = 0;
-    private List<Uri> listImages = new ArrayList<>();
+    Uri imageUri = null;
+    Long n;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUpPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                n = snapshot.child("posts").getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        binding.post.setOnClickListener(v -> {
+            Post post = new Post();
+            Date date = new Date();
+            post.setContent(binding.content.getText().toString().trim());
+            post.setComment(0);
+            post.setIdUser(0);
+            post.setReaction(0);
+            post.setTime(date.getTime() + "");
+            post.setLinkAvt("https://upanh123.com/wp-content/uploads/2020/10/anh-anime-girl.jpg");
+            post.setLinkVideo("null");
+            post.setLinkImage("null");
+            if (imageUri != null) {
+                StorageReference storageReference;
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+                Date now = new Date();
+                String fileName = formatter.format(now);
+                storageReference = FirebaseStorage.getInstance().getReference("images/"+fileName);
+                storageReference.putFile(imageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        post.setLinkImage(uri.toString());
+                                        databaseReference.child("posts/" + "post" + n)
+                                                .setValue(post);
+                                        finish();
+                                        Constants.showToast("Đăng bài thành công!", getApplicationContext());
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            } else {
+                databaseReference.child("posts/" + "post" + n)
+                        .setValue(post);
+                finish();
+                Constants.showToast("Đăng bài thành công!", getApplicationContext());
+            }
+        });
+
         binding.backHome.setOnClickListener(v -> {
             finish();
         });
-        binding.post.setOnClickListener(v -> {
-//            Map <String, String> map = new HashMap<>();
-//            map.put("access", "PUBLIC");
-//            map.put("contentPost", binding.content.getText().toString().trim());
-            Uri uri = listImages.get(0);
-            String realPathUtil = RealPathUtil.getRealPath(this, uri);
-            File file = new File(realPathUtil);
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part mul = MultipartBody.Part.createFormData("fileImages", file.getName(), requestBody);
-            ApiService.apiService.upPost(1, mul).enqueue(new Callback<RequestBody>() {
-                @Override
-                public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
-                    if (response.isSuccessful()) {
-                        finish();
-                    } else {
-                        Constants.showToast(Constants.ERROR, getApplicationContext());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<RequestBody> call, Throwable t) {
-                    Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
-                }
-            });
-        });
 
         binding.selectImage.setOnClickListener(v -> {
-            pickImages();
+            selectImage();
         });
 
         binding.imageview.setOnClickListener(v -> {
-            pickImages();
+            selectImage();
         });
 
-        binding.next.setOnClickListener(v -> {
-            binding.imageview.setImageURI(listImages.get((pos + 1) % listImages.size()));
-            pos = (pos + 1) % listImages.size();
-        });
-
-        binding.previous.setOnClickListener(v -> {
-            binding.imageview.setImageURI(listImages.get((pos - 1 + listImages.size()) % listImages.size()));
-            pos = (pos - 1 + listImages.size()) % listImages.size();
-        });
     }
-
-    private void pickImages() {
-        listImages.clear();
+    private void selectImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGES_CODE);
+        startActivityForResult(intent,100);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGES_CODE)  {
-            if (resultCode == RESULT_OK) {
-                if (data.getClipData() != null) {
-                    // pick multiple images
-                    for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                        Uri uri = data.getClipData().getItemAt(i).getUri();
-                        listImages.add(uri);
-                        binding.imageview.setImageURI(listImages.get(0));
-                    }
-                } else {
-                    Uri uri = data.getData();
-                    listImages.add(uri);
-                    binding.imageview.setImageURI(listImages.get(0));
-                }
-
-            }
-        }
-        if (listImages.size() != 0) {
+        if (requestCode == 100 && data != null && data.getData() != null){
+            imageUri = data.getData();
+            binding.imageview.setImageURI(imageUri);
             binding.selectImage.setVisibility(View.GONE);
-            if (listImages.size() > 1) {
-                binding.previous.setVisibility(View.VISIBLE);
-                binding.next.setVisibility(View.VISIBLE);
-                binding.imageview.setVisibility(View.VISIBLE);
-            } else {
-                binding.imageview.setVisibility(View.VISIBLE);
-            }
-        } else {
-            binding.selectImage.setVisibility(View.VISIBLE);
-            binding.imageview.setVisibility(View.GONE);
         }
     }
 }

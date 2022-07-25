@@ -36,9 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:background="@drawable/background_layer"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -168,6 +168,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/password"
                 app:layout_constraintStart_toStartOf="@+id/password"
                 app:layout_constraintTop_toBottomOf="@+id/textSavepassword">
+
                 <TextView
                     android:id="@+id/signin"
                     android:layout_width="wrap_content"
@@ -185,13 +186,14 @@
                     app:layout_constraintEnd_toEndOf="@+id/password"
                     app:layout_constraintStart_toStartOf="@+id/password"
                     app:layout_constraintTop_toBottomOf="@+id/textSavepassword" />
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_gravity="center"
                     android:indeterminateTint="@color/white"
-                    android:visibility="invisible"
-                    android:layout_height="@dimen/_20sdp"/>
+                    android:visibility="invisible" />
             </FrameLayout>
 
 

@@ -6,22 +6,22 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User  implements Parcelable{
-    private String firstName, lastName, fullName, email, password, phoneNumber, linkAvt,
-                    gender, birthday, address, biography;
+public class User implements Parcelable{
+    private String firstName, lastName, fullName, email, password,
+            linkAvt, linkCover, gender, birthday, address, biography;
     private Integer idUser;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String fullName, String email, String password, String phoneNumber, String linkAvt, String gender, String birthday, String address, String biography, Integer idUser) {
+    public User(String firstName, String lastName, String fullName, String email, String password, String linkAvt, String linkCover, String gender, String birthday, String address, String biography, Integer idUser) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
         this.linkAvt = linkAvt;
+        this.linkCover = linkCover;
         this.gender = gender;
         this.birthday = birthday;
         this.address = address;
@@ -35,8 +35,8 @@ public class User  implements Parcelable{
         fullName = in.readString();
         email = in.readString();
         password = in.readString();
-        phoneNumber = in.readString();
         linkAvt = in.readString();
+        linkCover = in.readString();
         gender = in.readString();
         birthday = in.readString();
         address = in.readString();
@@ -100,20 +100,20 @@ public class User  implements Parcelable{
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getLinkAvt() {
         return linkAvt;
     }
 
     public void setLinkAvt(String linkAvt) {
         this.linkAvt = linkAvt;
+    }
+
+    public String getLinkCover() {
+        return linkCover;
+    }
+
+    public void setLinkCover(String linkCover) {
+        this.linkCover = linkCover;
     }
 
     public String getGender() {
@@ -164,8 +164,8 @@ public class User  implements Parcelable{
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
                 ", linkAvt='" + linkAvt + '\'' +
+                ", linkCover='" + linkCover + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", address='" + address + '\'' +
@@ -186,8 +186,8 @@ public class User  implements Parcelable{
         parcel.writeString(fullName);
         parcel.writeString(email);
         parcel.writeString(password);
-        parcel.writeString(phoneNumber);
         parcel.writeString(linkAvt);
+        parcel.writeString(linkCover);
         parcel.writeString(gender);
         parcel.writeString(birthday);
         parcel.writeString(address);

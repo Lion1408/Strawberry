@@ -5,13 +5,18 @@
       <map>
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1615" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/backgrond_input.xml" value="0.1705" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_border_image.xml" value="0.19" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_edit_infor.xml" value="0.19" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_input.xml" value="0.1705" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_item_menu.xml" value="0.1575" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_layer.xml" value="0.172" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_main.xml" value="0.172" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_menu.xml" value="0.1615" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_off.xml" value="0.19" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_online.xml" value="0.19" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_post.xml" value="0.1575" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_signin.xml" value="0.172" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/background_up_post.xml" value="0.152" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/ei_lock.xml" value="0.172" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/ic_add.xml" value="0.159" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1705" />
@@ -19,6 +24,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/drawable/test.xml" value="0.226" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_active_acount.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_chat.xml" value="0.2" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_chat_room.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_forget_password.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_friend.xml" value="0.2346014492753623" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_image_user.xml" value="0.2346014492753623" />
@@ -32,9 +38,9 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_spash.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_testfirebase.xml" value="0.2" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_up_post.xml" value="0.264" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_up_post.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_active_account.xml" value="0.19202898550724637" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_edit_infor_user.xml" value="0.4" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_edit_infor_user.xml" value="0.4565916398713826" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_forget_password.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_register_account.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_show_image.xml" value="0.2346014492753623" />
@@ -47,7 +53,10 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_head_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_image.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_infor_user.xml" value="0.264" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.2" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_mess.xml" value="0.264" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_mess_left.xml" value="0.4" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_mess_right.xml" value="0.6" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_profile_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_up_post.xml" value="0.536" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_user.xml" value="0.22554347826086957" />

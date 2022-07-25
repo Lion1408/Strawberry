@@ -15,6 +15,7 @@ import com.example.strawberry.Activities.ProfileUserActivity;
 import com.example.strawberry.Activities.SignInActivity;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.FragmentMenuBinding;
 
@@ -31,20 +32,19 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        Data data = getActivity().getIntent().getParcelableExtra("Data");
+        User user = getActivity().getIntent().getParcelableExtra("Data");
         binding.logout.setOnClickListener(v -> {
-
             startActivity(new Intent(getContext(), SignInActivity.class));
             Constants.showToast("Đăng xuất thành công!", getContext());
-            getActivity().finishAffinity();
             SharedPreferences.Editor editor = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE).edit();
             editor.clear();
             editor.commit();
+            getActivity().finishAffinity();
         });
 
         binding.profileUser.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ProfileUserActivity.class);
-            intent.putExtra("Data", data);
+            intent.putExtra("Data", user);
             startActivity(intent);
         });
         return view;
