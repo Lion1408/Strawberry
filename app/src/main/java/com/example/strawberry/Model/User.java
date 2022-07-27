@@ -10,11 +10,12 @@ public class User implements Parcelable{
     private String firstName, lastName, fullName, email, password,
             linkAvt, linkCover, gender, birthday, address, biography;
     private Integer idUser;
+    private Boolean status;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String fullName, String email, String password, String linkAvt, String linkCover, String gender, String birthday, String address, String biography, Integer idUser) {
+    public User(String firstName, String lastName, String fullName, String email, String password, String linkAvt, String linkCover, String gender, String birthday, String address, String biography, Integer idUser, Boolean status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
@@ -27,6 +28,7 @@ public class User implements Parcelable{
         this.address = address;
         this.biography = biography;
         this.idUser = idUser;
+        this.status = status;
     }
 
     protected User(Parcel in) {
@@ -46,6 +48,8 @@ public class User implements Parcelable{
         } else {
             idUser = in.readInt();
         }
+        byte tmpStatus = in.readByte();
+        status = tmpStatus == 0 ? null : tmpStatus == 1;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -156,6 +160,14 @@ public class User implements Parcelable{
         this.idUser = idUser;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -171,6 +183,7 @@ public class User implements Parcelable{
                 ", address='" + address + '\'' +
                 ", biography='" + biography + '\'' +
                 ", idUser=" + idUser +
+                ", status=" + status +
                 '}';
     }
 
@@ -198,5 +211,6 @@ public class User implements Parcelable{
             parcel.writeByte((byte) 1);
             parcel.writeInt(idUser);
         }
+        parcel.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
     }
 }

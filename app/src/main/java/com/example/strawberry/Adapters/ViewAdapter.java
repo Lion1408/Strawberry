@@ -2,19 +2,17 @@ package com.example.strawberry.Adapters;
 
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,10 +20,11 @@ import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.InforUserOnClick;
 import com.example.strawberry.Interfaces.OnClickUpPost;
 import com.example.strawberry.Interfaces.PostOnClick;
-import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.Post;
 import com.example.strawberry.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -89,7 +88,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             UpPostViewHolder holder = (UpPostViewHolder) x;
             Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
             holder.uppost.setOnClickListener(v -> {
-
+                onClickUpPost.onClick();
             });
         }
 
@@ -97,9 +96,17 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             PostViewHolder holder = (PostViewHolder) x;
             holder.fullname.setText(post.getFullName());
             holder.content.setText(post.getContent());
+            if (!post.getActionReact()) {
+                holder.reactImg.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
+            } else {
+                holder.reactImg.clearColorFilter();
+            }
             holder.react.setText(post.getReaction().toString());
             holder.cmt.setText(post.getComment() + " lượt bình luận");
-            holder.time.setText("timeup");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
+            Date date = new Date();
+            date.setTime(Long.valueOf(post.getTime()));
+            holder.time.setText(simpleDateFormat.format(date));
             Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
             if (!post.getLinkVideo().equals("null")) {
                 Uri uri = Uri.parse(post.getLinkVideo());
@@ -148,15 +155,21 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 postOnClick.OnClickPost(post);
             });
 
+            holder.reactPost.setOnClickListener(v -> {
+                postOnClick.OnClickReact(post);
+            });
+
         }
 
-        if (list.get(position).getItemType() == Constants.HEAD_PROFILE_USER) {
+        if (post.getItemType() == Constants.HEAD_PROFILE_USER) {
             ProfileViewHolder holder = (ProfileViewHolder) x;
-            holder.headprofileFullName.setText(post.getFullName());
-
+            holder.username.setText(post.getFullName());
+            holder.biography.setText("Tiểu sử: " + (post.getBiography() == null?"":post.getBiography()));
+            Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
+            Glide.with(holder.cover).load(post.getLinkCover()).into(holder.cover);
         }
 
-        if (list.get(position).getItemType() == Constants.INFOR_USER) {
+        if (post.getItemType() == Constants.INFOR_USER) {
             InforUserViewHolder holder = (InforUserViewHolder) x;
             holder.imageVideoUser.setOnClickListener(v -> {
                 inforUserOnClick.OnClickImageVideo();
@@ -166,13 +179,6 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 inforUserOnClick.OnClickInfor();
             });
 
-        }
-
-        if (list.get(position).getItemType() == Constants.UP_POST) {
-            UpPostViewHolder holder = (UpPostViewHolder) x;
-            holder.uppost.setOnClickListener(v -> {
-                onClickUpPost.onClick();
-            });
         }
     }
 
@@ -184,8 +190,8 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class PostViewHolder extends RecyclerView.ViewHolder {
         CircleImageView avt;
         TextView time, fullname, content, cmt, react, textReact;
-        ImageView img;
-        ConstraintLayout likePost, layerReaction;
+        ImageView img, reactImg;
+        ConstraintLayout reactPost, layerReaction;
         VideoView video;
         View viewPost;
         public PostViewHolder(@NonNull View itemView) {
@@ -200,17 +206,22 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             img = itemView.findViewById(R.id.img);
             video = itemView.findViewById(R.id.video);
             viewPost = itemView.findViewById(R.id.viewPost);
-            likePost = itemView.findViewById(R.id.likePost);
+            reactPost = itemView.findViewById(R.id.reactPost);
             layerReaction = itemView.findViewById(R.id.layerReaction);
+            reactImg = itemView.findViewById(R.id.reactImg);
         }
     }
 
     public class ProfileViewHolder extends RecyclerView.ViewHolder {
-        TextView headprofileFullName;
+        TextView username, biography;
+        ImageView cover;
+        CircleImageView avt;
         public ProfileViewHolder(@NonNull View itemView) {
             super(itemView);
-            headprofileFullName = itemView.findViewById(R.id.headprofileFullName);
-
+            username = itemView.findViewById(R.id.userName);
+            biography = itemView.findViewById(R.id.biography);
+            avt = itemView.findViewById(R.id.avtUser);
+            cover = itemView.findViewById(R.id.imgCoverUser);
         }
     }
 

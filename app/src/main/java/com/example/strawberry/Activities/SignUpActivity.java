@@ -16,6 +16,8 @@ import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivitySignUpBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -99,19 +101,25 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.firstname.getText().toString().trim() + binding.lastname.getText().toString().trim(),
                     binding.email.getText().toString().trim() + "",
                     binding.password.getText().toString().trim() + "",
+                    "https://firebasestorage.googleapis.com/v0/b/strawberry-7ebce.appspot.com/o/default%2Fraf%2C750x1000%2C075%2Ct%2CFFFFFF_97ab1c12de.jpg?alt=media&token=50061099-5e61-4f7f-a2a2-1e9b0e0b7c46",
+                    "https://firebasestorage.googleapis.com/v0/b/strawberry-7ebce.appspot.com/o/default%2Fcute-strawberry-seamless-pattern-vector.jpg?alt=media&token=f17a3733-d694-46bb-9daf-f7ed8c16bd86",
                     "",
                     "",
                     "",
                     "",
-                    "",
-                    "",
-                    1);
+                    1,
+                    true
+            );
+
             ApiService.apiService.createAccount(user).enqueue(new Callback<ResponseObject<User>>() {
                 @Override
                 public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
                     if (response.isSuccessful()) {
                         Intent intent = new Intent(getApplicationContext(), ActiveAcountActivity.class);
                         User user1 = response.body().getData();
+                        user1.setLinkAvt(user.getLinkAvt());
+                        user1.setLinkCover(user.getLinkCover());
+                        user1.setStatus(true);
                         intent.putExtra("Data", user1);
                         startActivity(intent);
                         loading(false);

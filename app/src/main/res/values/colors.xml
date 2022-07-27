@@ -20,4 +20,5 @@
     <color name="color_main">#80FFFFFF</color>
     <color name="gradient_start">#BFCCC8</color>
     <color name="gradient_end">#FFBBBB</color>
+    <color name="react">#fec2c3</color>
 </resources>

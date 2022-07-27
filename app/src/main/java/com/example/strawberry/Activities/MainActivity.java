@@ -1,5 +1,6 @@
 package com.example.strawberry.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -22,16 +23,27 @@ import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityMainBinding;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
+    User user = new User();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        User user = getIntent().getParcelableExtra("Data");
+        Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
+        intentHome.putExtra("Data", user);
+        Intent intentMenu = new Intent(MainActivity.this, MenuFragment.class);
+        intentMenu.putExtra("Data", user);
         StrawberryAdapter adapter = new StrawberryAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         binding.viewpaper.setAdapter(adapter);
         binding.bottomNav.add(new MeowBottomNavigation.Model(0, R.drawable.ic_home));
@@ -39,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.add(new MeowBottomNavigation.Model(2, R.drawable.ic_group));
         binding.bottomNav.add(new MeowBottomNavigation.Model(3, R.drawable.ic_notification));
         binding.bottomNav.add(new MeowBottomNavigation.Model(4, R.drawable.ic_menu));
-        User user = getIntent().getParcelableExtra("Data");
-        Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
-        intentHome.putExtra("Data", user);
-        Intent intentMenu = new Intent(MainActivity.this, MenuFragment.class);
-        intentMenu.putExtra("Data", user);
         binding.bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {

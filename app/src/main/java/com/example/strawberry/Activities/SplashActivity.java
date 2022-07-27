@@ -1,5 +1,6 @@
 package com.example.strawberry.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +17,11 @@ import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserDTO;
 import com.example.strawberry.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -50,14 +56,13 @@ public class SplashActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<User>>() {
+                    ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<Data>>() {
                         @Override
-                        public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
+                        public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
                             if (response.isSuccessful()) {
-                                User user = response.body().getData();
+                                User user = response.body().getData().getUser();
                                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                                 intent.putExtra("Data", user);
-                                System.out.println(user);
                                 startActivity(intent);
                                 finishAffinity();
                             } else {
@@ -66,10 +71,11 @@ public class SplashActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
+                        public void onFailure(Call<ResponseObject<Data>> call, Throwable t) {
                             Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                         }
                     });
+                    finish();
                 }
             }, 1400);
         }

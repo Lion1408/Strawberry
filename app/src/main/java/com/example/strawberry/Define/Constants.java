@@ -18,10 +18,12 @@ public class Constants {
     public static final String ENTER_LAST_NAME = "Tên trống";
     public static final String ENTER_CONFIRM_PASSWORD = "Xác nhận mật khẩu trống";
     public static final String PASSWORD_NOT_SAME = "Mật khẩu không trùng nhau";
+    public static final String DATA = "Data";
     public static final Integer UP_POST = 0;
     public static final Integer POST = 1;
     public static final Integer HEAD_PROFILE_USER = 2;
     public static final Integer INFOR_USER = 3;
+
     public static final void showToast(String string, Context context) {
         Toast.makeText(context, string, Toast.LENGTH_SHORT).show();
     }

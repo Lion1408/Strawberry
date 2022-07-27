@@ -216,7 +216,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView2"
+            android:id="@+id/imgUser"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:src="@drawable/img"

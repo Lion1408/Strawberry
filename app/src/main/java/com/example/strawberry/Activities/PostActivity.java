@@ -47,6 +47,11 @@ public class PostActivity extends AppCompatActivity {
             public void OnClickPost(Post post) {
 
             }
+
+            @Override
+            public void OnClickReact(Post post) {
+
+            }
         });
         recyclerView.setAdapter(viewAdapter);
     }

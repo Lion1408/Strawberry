@@ -25,6 +25,7 @@ import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.ListImage;
 import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.ResponseObject;
+import com.example.strawberry.Model.User;
 import com.example.strawberry.databinding.ActivityUpPostBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,20 +56,22 @@ import retrofit2.Response;
 
 public class UpPostActivity extends AppCompatActivity {
     ActivityUpPostBinding binding;
-    private Integer pos = 0;
     Uri imageUri = null;
-    Long n;
+    Integer n = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUpPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        User user = getIntent().getParcelableExtra("Data");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                n = snapshot.child("posts").getChildrenCount();
+                n = 0;
+                while (snapshot.child("posts/post" + n).getValue() != null) {
+                    n++;
+                }
             }
 
             @Override
@@ -81,12 +84,13 @@ public class UpPostActivity extends AppCompatActivity {
             Date date = new Date();
             post.setContent(binding.content.getText().toString().trim());
             post.setComment(0);
-            post.setIdUser(0);
+            post.setIdUser(user.getIdUser());
             post.setReaction(0);
             post.setTime(date.getTime() + "");
-            post.setLinkAvt("https://upanh123.com/wp-content/uploads/2020/10/anh-anime-girl.jpg");
+            post.setLinkAvt(user.getLinkAvt());
             post.setLinkVideo("null");
             post.setLinkImage("null");
+            post.setFullName(user.getFullName());
             if (imageUri != null) {
                 StorageReference storageReference;
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
@@ -101,6 +105,7 @@ public class UpPostActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         post.setLinkImage(uri.toString());
+                                        post.setIdPost(n);
                                         databaseReference.child("posts/" + "post" + n)
                                                 .setValue(post);
                                         finish();
@@ -115,6 +120,7 @@ public class UpPostActivity extends AppCompatActivity {
                     }
                 });
             } else {
+                post.setIdPost(n);
                 databaseReference.child("posts/" + "post" + n)
                         .setValue(post);
                 finish();

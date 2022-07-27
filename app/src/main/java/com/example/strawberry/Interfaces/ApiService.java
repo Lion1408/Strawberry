@@ -39,7 +39,7 @@ public interface ApiService {
     Call <ResponseObject<List<User>>> getAllusers();
     // login
     @POST("/api/v1/auth/login")
-    Call <ResponseObject<User>> checkLogin(@Body UserDTO userDTO);
+    Call <ResponseObject<Data>> checkLogin(@Body UserDTO userDTO);
 
     @GET("/api/v1/users/forget-password")
     Call <ResponseObject<User>> forgetPassword(@Query("email") String email);

@@ -40,7 +40,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +50,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
-
+    Boolean isFirstCall = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +60,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recy_post);
         User user = getActivity().getIntent().getParcelableExtra("Data");
         List<Post> list = new ArrayList<>();
-        RecyclerView recyclerView = view.findViewById(R.id.recy_post);
         ViewAdapter viewAdapter = new ViewAdapter(list, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         viewAdapter.PostOnClick(new PostOnClick() {
             @Override
             public void OnClickAvt(Post post) {
@@ -78,11 +81,26 @@ public class HomeFragment extends Fragment {
                 System.out.println(post.toString());
                 startActivity(intent);
             }
+
+            @Override
+            public void OnClickReact(Post post) {
+                Map <String, String> mp = new HashMap<>();
+                mp.put("idUser0", "hihi");
+                if (post.getActionReact() == true) {
+                    databaseReference.child("reactions/" + "post" + post.getIdPost() + "/idUser" + user.getIdUser()).removeValue();
+                    databaseReference.child("posts/" + "post" + post.getIdPost() + "/reaction").setValue(post.getReaction() - 1);
+                } else {
+                    databaseReference.child("reactions/" + "post" + post.getIdPost() + "/idUser" + user.getIdUser()).setValue(mp);
+                    databaseReference.child("posts/" + "post" + post.getIdPost() + "/reaction").setValue(post.getReaction() + 1);
+                }
+            }
         });
         viewAdapter.setOnClickUpPost(new OnClickUpPost() {
             @Override
             public void onClick() {
-                startActivity(new Intent(getContext(), UpPostActivity.class));
+                Intent intent = new Intent(getContext(), UpPostActivity.class);
+                intent.putExtra("Data", user);
+                startActivity(intent);
             }
         });
         ImageView chat = view.findViewById(R.id.chat);
@@ -90,23 +108,33 @@ public class HomeFragment extends Fragment {
             startActivity(new Intent(getContext(), ChatActivity.class));
         });
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user1 = snapshot.child("users/idUser" + user.getIdUser()).getValue(User.class);
                 list.clear();
                 Post post = new Post();
-                post.setIdUser(user.getIdUser());
+                post.setIdUser(user1.getIdUser());
                 post.setItemType(0);
+                post.setLinkAvt(user1.getLinkAvt());
                 list.add(post);
                 for (DataSnapshot i : snapshot.child("posts").getChildren()) {
                     Post post1 = i.getValue(Post.class);
-                    System.out.println(post1.toString());
+                    post1.setLinkAvt(user1.getLinkAvt());
                     post1.setItemType(1);
+                    if (snapshot.child("reactions/post" + post1.getIdPost() + "/idUser" + user.getIdUser()).getValue() != null) {
+                        post1.setActionReact(true);
+                    } else {
+                        post1.setActionReact(false);
+                    }
                     list.add(post1);
                 }
-                System.out.println(list.get(1).toString());
-                recyclerView.setAdapter(viewAdapter);
+                if (isFirstCall) {
+                    recyclerView.setAdapter(viewAdapter);
+                    isFirstCall = false;
+                } else {
+                    viewAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override

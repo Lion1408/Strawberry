@@ -1,5 +1,6 @@
 package com.example.strawberry.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -21,6 +22,11 @@ import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserDTO;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivitySignInBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -29,6 +35,7 @@ import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
     private ActivitySignInBinding binding;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,22 +104,33 @@ public class SignInActivity extends AppCompatActivity {
                     binding.email.getText().toString().trim(),
                     binding.password.getText().toString().trim()
             );
-            ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<User>>() {
+            ApiService.apiService.checkLogin(userDTO).enqueue(new Callback<ResponseObject<Data>>() {
                 @Override
-                public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
+                public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
                     if (response.isSuccessful()) {
-                        User user = response.body().getData();
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.putExtra("Data", user);
-                        startActivity(intent);
-                        if (binding.iconSavepassword.getContentDescription().equals("show")) {
-                            SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
-                            editor.putString("email", binding.email.getText().toString().trim());
-                            editor.putString("password", binding.password.getText().toString().trim());
-                            editor.commit();
-                        }
-                        loading(false);
-                        finishAffinity();
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                User user1 = response.body().getData().getUser();
+                                User user = snapshot.child("users/idUser" + user1.getIdUser()).getValue(User.class);
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                intent.putExtra("Data", user);
+                                startActivity(intent);
+                                if (binding.iconSavepassword.getContentDescription().equals("show")) {
+                                    SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                                    editor.putString("email", binding.email.getText().toString().trim());
+                                    editor.putString("password", binding.password.getText().toString().trim());
+                                    editor.commit();
+                                }
+                                loading(false);
+                                finishAffinity();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     } else {
                         loading(false);
                         Constants.showToast(Constants.ERROR_LOGIN, SignInActivity.this);
@@ -120,7 +138,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseObject<User>> call, Throwable t) {
+                public void onFailure(Call<ResponseObject<Data>> call, Throwable t) {
                     loading(false);
                     Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                 }

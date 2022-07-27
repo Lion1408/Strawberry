@@ -22,7 +22,7 @@
     <string name="group">Nhóm</string>
     <string name="notification">Thông báo</string>
     <string name="menu">Menu</string>
-    <string name="react">Bày tỏ</string>
+    <string name="react">Tim</string>
     <string name="share">Chia sẻ</string>
     <string name="like">Thích</string>
     <string name="love">Tim</string>
@@ -34,7 +34,7 @@
     <string name="thingking">Bạn đang nghĩ gì ?</string>
     <string name="infor_user">Thông tin cá nhân</string>
     <string name="friend">Bạn bè</string>
-    <string name="image">Ảnh/Video</string>
+    <string name="image">Ảnh</string>
     <string name="gender">Giới tính :</string>
     <string name="birthday">Ngày Sinh:</string>
     <string name="place">Nơi ở: </string>

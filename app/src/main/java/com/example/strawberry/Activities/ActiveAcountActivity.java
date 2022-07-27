@@ -14,6 +14,8 @@ import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityActiveAcountBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +23,7 @@ import retrofit2.Response;
 
 public class ActiveAcountActivity extends AppCompatActivity {
     ActivityActiveAcountBinding binding;
-
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class ActiveAcountActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {
                     if (response.isSuccessful()) {
+                        databaseReference.child("users/" + "idUser" + user.getIdUser()).setValue(user);
                         startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                         Constants.showToast(Constants.SUCCESS_CREAT_A_ACCOUNT, getApplicationContext());
                         finishAffinity();

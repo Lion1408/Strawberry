@@ -64,11 +64,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_cmt"
-                    app:tint="#fec2c3" />
+                    app:tint="@color/react" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/likePost"
+                android:id="@+id/reactPost"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_18sdp"
@@ -77,13 +77,14 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/reactMain"
+                    android:id="@+id/reactImg"
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_heart" />
+                    app:srcCompat="@drawable/ic_heart"
+                    />
 
                 <TextView
                     android:id="@+id/textReact"
@@ -93,7 +94,7 @@
                     android:text="@string/react"
                     android:textColor="@color/text_background_splash"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/reactMain"
+                    app:layout_constraintStart_toEndOf="@+id/reactImg"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -209,13 +210,14 @@ freegan High Life vero, ea sed minim meggings"
             <ImageView
                 android:id="@+id/imageView9"
                 android:layout_width="@dimen/_8sdp"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_3sdp"
                 android:layout_height="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/timeup"
                 app:layout_constraintStart_toEndOf="@+id/timeup"
                 app:layout_constraintTop_toTopOf="@+id/timeup"
                 app:layout_constraintVertical_bias="0.65"
-                app:srcCompat="@drawable/ic_global" />
+                app:srcCompat="@drawable/ic_global"
+                app:tint="@color/text_background_splash" />
 
             <TextView
                 android:id="@+id/fullName"

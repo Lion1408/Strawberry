@@ -6,23 +6,28 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class Post implements Parcelable {
-    private String content, time, linkAvt, linkImage, linkVideo, fullName;
-    private Integer comment, reaction, idUser, itemType;
+    private String content, time, linkAvt, linkImage, linkVideo, fullName, linkCover,biography;
+    private Integer comment, reaction, idUser, itemType, idPost;
+    private Boolean actionReact;
 
     public Post() {
     }
 
-    public Post(String content, String time, String linkAvt, String linkImage, String linkVideo, String fullName, Integer comment, Integer reaction, Integer idUser, Integer itemType) {
+    public Post(String content, String time, String linkAvt, String linkImage, String linkVideo, String fullName, String linkCover, String biography, Integer comment, Integer reaction, Integer idUser, Integer itemType, Integer idPost, Boolean actionReact) {
         this.content = content;
         this.time = time;
         this.linkAvt = linkAvt;
         this.linkImage = linkImage;
         this.linkVideo = linkVideo;
         this.fullName = fullName;
+        this.linkCover = linkCover;
+        this.biography = biography;
         this.comment = comment;
         this.reaction = reaction;
         this.idUser = idUser;
         this.itemType = itemType;
+        this.idPost = idPost;
+        this.actionReact = actionReact;
     }
 
     protected Post(Parcel in) {
@@ -32,6 +37,8 @@ public class Post implements Parcelable {
         linkImage = in.readString();
         linkVideo = in.readString();
         fullName = in.readString();
+        linkCover = in.readString();
+        biography = in.readString();
         if (in.readByte() == 0) {
             comment = null;
         } else {
@@ -52,6 +59,13 @@ public class Post implements Parcelable {
         } else {
             itemType = in.readInt();
         }
+        if (in.readByte() == 0) {
+            idPost = null;
+        } else {
+            idPost = in.readInt();
+        }
+        byte tmpActionReact = in.readByte();
+        actionReact = tmpActionReact == 0 ? null : tmpActionReact == 1;
     }
 
     @Override
@@ -62,6 +76,8 @@ public class Post implements Parcelable {
         dest.writeString(linkImage);
         dest.writeString(linkVideo);
         dest.writeString(fullName);
+        dest.writeString(linkCover);
+        dest.writeString(biography);
         if (comment == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -86,6 +102,13 @@ public class Post implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(itemType);
         }
+        if (idPost == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(idPost);
+        }
+        dest.writeByte((byte) (actionReact == null ? 0 : actionReact ? 1 : 2));
     }
 
     @Override
@@ -153,6 +176,22 @@ public class Post implements Parcelable {
         this.fullName = fullName;
     }
 
+    public String getLinkCover() {
+        return linkCover;
+    }
+
+    public void setLinkCover(String linkCover) {
+        this.linkCover = linkCover;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
     public Integer getComment() {
         return comment;
     }
@@ -185,6 +224,22 @@ public class Post implements Parcelable {
         this.itemType = itemType;
     }
 
+    public Integer getIdPost() {
+        return idPost;
+    }
+
+    public void setIdPost(Integer idPost) {
+        this.idPost = idPost;
+    }
+
+    public Boolean getActionReact() {
+        return actionReact;
+    }
+
+    public void setActionReact(Boolean actionReact) {
+        this.actionReact = actionReact;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -194,10 +249,14 @@ public class Post implements Parcelable {
                 ", linkImage='" + linkImage + '\'' +
                 ", linkVideo='" + linkVideo + '\'' +
                 ", fullName='" + fullName + '\'' +
+                ", linkCover='" + linkCover + '\'' +
+                ", biography='" + biography + '\'' +
                 ", comment=" + comment +
                 ", reaction=" + reaction +
                 ", idUser=" + idUser +
                 ", itemType=" + itemType +
+                ", idPost=" + idPost +
+                ", actionReact=" + actionReact +
                 '}';
     }
 }
