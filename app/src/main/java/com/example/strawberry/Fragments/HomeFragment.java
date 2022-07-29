@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recy_post);
-        User user = getActivity().getIntent().getParcelableExtra("Data");
+        User user = getActivity().getIntent().getParcelableExtra("User");
         List<Post> list = new ArrayList<>();
         ViewAdapter viewAdapter = new ViewAdapter(list, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -70,28 +70,44 @@ public class HomeFragment extends Fragment {
             @Override
             public void OnClickAvt(Post post) {
                 Intent intent = new Intent(getContext(), ProfileUserActivity.class);
-                intent.putExtra("Data", post);
+                User user1 = new User();
+                user1.setIdUser(post.getIdUser());
+                intent.putExtra("User", user1);
                 startActivity(intent);
             }
 
             @Override
             public void OnClickPost(Post post) {
                 Intent intent = new Intent(getContext(), PostActivity.class);
-                intent.putExtra("Data", post);
-                System.out.println(post.toString());
+                intent.putExtra("Post", post);
+                intent.putExtra("User", user);
                 startActivity(intent);
             }
 
             @Override
             public void OnClickReact(Post post) {
                 Map <String, String> mp = new HashMap<>();
-                mp.put("idUser0", "hihi");
+                mp.put("idUser" + user.getIdUser(), "hihi");
                 if (post.getActionReact() == true) {
-                    databaseReference.child("reactions/" + "post" + post.getIdPost() + "/idUser" + user.getIdUser()).removeValue();
-                    databaseReference.child("posts/" + "post" + post.getIdPost() + "/reaction").setValue(post.getReaction() - 1);
+                    databaseReference
+                            .child("reactions/" + "post" + post.getIdPost() + "/idUser" + user.getIdUser())
+                            .removeValue();
+                    databaseReference
+                            .child("posts/" + "post" + post.getIdPost() + "/reaction")
+                            .setValue(post.getReaction() - 1);
+                    databaseReference
+                            .child("userPosts/" + "user" + post.getIdUser() + "/post" + post.getIdPost() + "/reaction")
+                            .setValue(post.getReaction() - 1);
                 } else {
-                    databaseReference.child("reactions/" + "post" + post.getIdPost() + "/idUser" + user.getIdUser()).setValue(mp);
-                    databaseReference.child("posts/" + "post" + post.getIdPost() + "/reaction").setValue(post.getReaction() + 1);
+                    databaseReference
+                            .child("reactions/" + "post" + post.getIdPost() + "/idUser" + user.getIdUser())
+                            .setValue(mp);
+                    databaseReference
+                            .child("posts/" + "post" + post.getIdPost() + "/reaction")
+                            .setValue(post.getReaction() + 1);
+                    databaseReference
+                            .child("userPosts/" + "user" + post.getIdUser() + "/post" + post.getIdPost() + "/reaction")
+                            .setValue(post.getReaction() + 1);
                 }
             }
         });
@@ -99,7 +115,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick() {
                 Intent intent = new Intent(getContext(), UpPostActivity.class);
-                intent.putExtra("Data", user);
+                intent.putExtra("User", user);
                 startActivity(intent);
             }
         });
@@ -120,8 +136,9 @@ public class HomeFragment extends Fragment {
                 list.add(post);
                 for (DataSnapshot i : snapshot.child("posts").getChildren()) {
                     Post post1 = i.getValue(Post.class);
-                    post1.setLinkAvt(user1.getLinkAvt());
-                    post1.setItemType(1);
+                    User user2 = snapshot.child("users/idUser" + post1.getIdUser()).getValue(User.class);
+                    post1.setLinkAvt(user2.getLinkAvt());
+                    post1.setItemType(Constants.POST);
                     if (snapshot.child("reactions/post" + post1.getIdPost() + "/idUser" + user.getIdUser()).getValue() != null) {
                         post1.setActionReact(true);
                     } else {

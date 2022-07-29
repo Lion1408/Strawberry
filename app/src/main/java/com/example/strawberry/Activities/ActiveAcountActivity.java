@@ -68,7 +68,7 @@ public class ActiveAcountActivity extends AppCompatActivity {
         });
         binding.sendcode.setOnClickListener(vv -> {
             loading(true);
-            User user1 = getIntent().getParcelableExtra("Data");
+            User user1 = getIntent().getParcelableExtra(Constants.DATA);
             ApiService.apiService.sendCode(user1.getIdUser()).enqueue(new Callback<ResponseObject<User>>() {
                 @Override
                 public void onResponse(Call<ResponseObject<User>> call, Response<ResponseObject<User>> response) {

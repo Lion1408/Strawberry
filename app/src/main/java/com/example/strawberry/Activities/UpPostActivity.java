@@ -63,7 +63,7 @@ public class UpPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUpPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        User user = getIntent().getParcelableExtra("Data");
+        User user = getIntent().getParcelableExtra("User");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,8 +106,8 @@ public class UpPostActivity extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
                                         post.setLinkImage(uri.toString());
                                         post.setIdPost(n);
-                                        databaseReference.child("posts/" + "post" + n)
-                                                .setValue(post);
+                                        databaseReference.child("posts/post" + n).setValue(post);
+                                        databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
                                         finish();
                                         Constants.showToast("Đăng bài thành công!", getApplicationContext());
                                     }
@@ -121,8 +121,8 @@ public class UpPostActivity extends AppCompatActivity {
                 });
             } else {
                 post.setIdPost(n);
-                databaseReference.child("posts/" + "post" + n)
-                        .setValue(post);
+                databaseReference.child("posts/" + "post" + n).setValue(post);
+                databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
                 finish();
                 Constants.showToast("Đăng bài thành công!", getApplicationContext());
             }

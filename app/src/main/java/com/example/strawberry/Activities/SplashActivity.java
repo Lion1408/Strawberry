@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                    finish();
+                    finishAffinity();
                 }
             }, 1400);
         } else {
@@ -61,8 +61,8 @@ public class SplashActivity extends AppCompatActivity {
                         public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
                             if (response.isSuccessful()) {
                                 User user = response.body().getData().getUser();
-                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                intent.putExtra("Data", user);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("User", user);
                                 startActivity(intent);
                                 finishAffinity();
                             } else {
@@ -75,7 +75,6 @@ public class SplashActivity extends AppCompatActivity {
                             Constants.showToast(Constants.ERROR_INTERNET, getApplicationContext());
                         }
                     });
-                    finish();
                 }
             }, 1400);
         }

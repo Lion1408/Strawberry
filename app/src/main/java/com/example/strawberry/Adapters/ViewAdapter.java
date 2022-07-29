@@ -159,6 +159,10 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 postOnClick.OnClickReact(post);
             });
 
+            holder.comment.setOnClickListener(v -> {
+                postOnClick.OnClickPost(post);
+            });
+
         }
 
         if (post.getItemType() == Constants.HEAD_PROFILE_USER) {
@@ -191,7 +195,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CircleImageView avt;
         TextView time, fullname, content, cmt, react, textReact;
         ImageView img, reactImg;
-        ConstraintLayout reactPost, layerReaction;
+        ConstraintLayout reactPost, layerReaction, comment;
         VideoView video;
         View viewPost;
         public PostViewHolder(@NonNull View itemView) {
@@ -209,6 +213,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             reactPost = itemView.findViewById(R.id.reactPost);
             layerReaction = itemView.findViewById(R.id.layerReaction);
             reactImg = itemView.findViewById(R.id.reactImg);
+            comment = itemView.findViewById(R.id.comment);
         }
     }
 

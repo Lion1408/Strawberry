@@ -39,11 +39,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        User user = getIntent().getParcelableExtra("Data");
-        Intent intentHome = new Intent(MainActivity.this, HomeFragment.class);
-        intentHome.putExtra("Data", user);
-        Intent intentMenu = new Intent(MainActivity.this, MenuFragment.class);
-        intentMenu.putExtra("Data", user);
+        User user1 = getIntent().getParcelableExtra("User");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user = snapshot.child("users/idUser" + user1.getIdUser()).getValue(User.class);
+                Intent intentHome = new Intent(getApplicationContext(), HomeFragment.class);
+                intentHome.putExtra("User", user);
+                Intent intentMenu = new Intent(getApplicationContext(), MenuFragment.class);
+                intentMenu.putExtra("User", user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         StrawberryAdapter adapter = new StrawberryAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         binding.viewpaper.setAdapter(adapter);
         binding.bottomNav.add(new MeowBottomNavigation.Model(0, R.drawable.ic_home));

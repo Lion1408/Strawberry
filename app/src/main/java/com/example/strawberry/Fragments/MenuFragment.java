@@ -41,7 +41,7 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        user = getActivity().getIntent().getParcelableExtra(Constants.DATA);
+        user = getActivity().getIntent().getParcelableExtra("User");
         binding.logout.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), SignInActivity.class));
             Constants.showToast("Đăng xuất thành công!", getContext());
@@ -54,7 +54,7 @@ public class MenuFragment extends Fragment {
 
         binding.profileUser.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ProfileUserActivity.class);
-            intent.putExtra("Data", user);
+            intent.putExtra("User", user);
             startActivity(intent);
         });
         return view;

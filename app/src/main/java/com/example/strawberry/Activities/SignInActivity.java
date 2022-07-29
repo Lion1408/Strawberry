@@ -108,29 +108,18 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseObject<Data>> call, Response<ResponseObject<Data>> response) {
                     if (response.isSuccessful()) {
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                User user1 = response.body().getData().getUser();
-                                User user = snapshot.child("users/idUser" + user1.getIdUser()).getValue(User.class);
-                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                intent.putExtra("Data", user);
-                                startActivity(intent);
-                                if (binding.iconSavepassword.getContentDescription().equals("show")) {
-                                    SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
-                                    editor.putString("email", binding.email.getText().toString().trim());
-                                    editor.putString("password", binding.password.getText().toString().trim());
-                                    editor.commit();
-                                }
-                                loading(false);
-                                finishAffinity();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                        User user = response.body().getData().getUser();
+                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                        intent.putExtra("User", user);
+                        startActivity(intent);
+                        if (binding.iconSavepassword.getContentDescription().equals("show")) {
+                            SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                            editor.putString("email", binding.email.getText().toString().trim());
+                            editor.putString("password", binding.password.getText().toString().trim());
+                            editor.commit();
+                            loading(false);
+                            finishAffinity();
+                        }
                     } else {
                         loading(false);
                         Constants.showToast(Constants.ERROR_LOGIN, SignInActivity.this);
