@@ -1,7 +1,12 @@
 package com.example.strawberry.Adapters;
 
 
+import android.app.Dialog;
+
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.DhcpInfo;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +21,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.strawberry.Activities.InforUserActivity;
+import com.example.strawberry.Activities.SignInActivity;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.InforUserOnClick;
 import com.example.strawberry.Interfaces.OnClickUpPost;
@@ -24,6 +31,8 @@ import com.example.strawberry.Model.Post;
 import com.example.strawberry.R;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -101,13 +110,40 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 holder.reactImg.clearColorFilter();
             }
+
             holder.react.setText(post.getReaction().toString());
             holder.cmt.setText(post.getComment() + " lượt bình luận");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
-            Date date = new Date();
-            date.setTime(Long.valueOf(post.getTime()));
-            holder.time.setText(simpleDateFormat.format(date));
+            Date dateOld = new Date();
+            dateOld.setTime(Long.valueOf(post.getTime()));
+            Date dateNew = new Date();
+            String time = "";
+            Long total = dateNew.getTime() - dateOld.getTime();
+            long h = total/(60*60*1000);
+            total -= h * (60*60*1000);
+            long m = total/(60*1000);
+            total -= m * (60*1000);
+            long s = total/1000;
+            if (h >= 24) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd tháng mm yyyy");
+                time = simpleDateFormat.format(dateOld);
+            } else
+            if (h > 0) {
+                time = h + " giờ trước";
+            } else if (m > 0) {
+                time = m + " phút trước";
+            } else {
+                time = s + " giây trước";
+            }
+            holder.time.setText(time);
             Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
+            if (post.getIdUser() == post.getIdLog()) {
+                holder.deletePost.setVisibility(View.VISIBLE);
+            } else {
+                holder.deletePost.setVisibility(View.GONE);
+            }
+            holder.deletePost.setOnClickListener(v -> {
+                postOnClick.OnClickDelete(post);
+            });
             if (!post.getLinkVideo().equals("null")) {
                 Uri uri = Uri.parse(post.getLinkVideo());
                 holder.video.setVideoURI(uri);
@@ -194,7 +230,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class PostViewHolder extends RecyclerView.ViewHolder {
         CircleImageView avt;
         TextView time, fullname, content, cmt, react, textReact;
-        ImageView img, reactImg;
+        ImageView img, reactImg, deletePost;
         ConstraintLayout reactPost, layerReaction, comment;
         VideoView video;
         View viewPost;
@@ -214,6 +250,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             layerReaction = itemView.findViewById(R.id.layerReaction);
             reactImg = itemView.findViewById(R.id.reactImg);
             comment = itemView.findViewById(R.id.comment);
+            deletePost = itemView.findViewById(R.id.deletePost);
         }
     }
 

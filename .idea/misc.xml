@@ -40,6 +40,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_testfirebase.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/activity_up_post.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_active_account.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_check.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_edit_infor_user.xml" value="0.4565916398713826" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_forget_password.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/dialog_register_account.xml" value="0.264" />
@@ -56,7 +57,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_mess.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_mess_left.xml" value="0.4" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_mess_right.xml" value="0.6" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.4" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_post.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_profile_user.xml" value="0.264" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_up_post.xml" value="0.536" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/Strawberry/app/src/main/res/layout/item_user.xml" value="0.22554347826086957" />

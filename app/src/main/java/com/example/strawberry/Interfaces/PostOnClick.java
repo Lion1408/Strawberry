@@ -13,4 +13,5 @@ public interface PostOnClick {
     void OnClickAvt(Post post);
     void OnClickPost(Post post);
     void OnClickReact(Post post);
+    void OnClickDelete(Post post);
 }
