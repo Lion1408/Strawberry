@@ -140,7 +140,11 @@ public class ProfileUserActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 User userPost = snapshot.child("users/idUser" + post1.getIdUser()).getValue(User.class);
-                binding.username.setText(userPost.getFullName());
+                if (user1.getIdUser() == post1.getIdUser()) {
+                    binding.username.setText("Trang cá nhân của bạn");
+                } else {
+                    binding.username.setText(userPost.getFullName());
+                }
                 Post item1 = new Post();
                 item1.setItemType(Constants.HEAD_PROFILE_USER);
                 item1.setBiography(userPost.getBiography());
@@ -152,11 +156,13 @@ public class ProfileUserActivity extends AppCompatActivity {
                 item2.setItemType(Constants.INFOR_USER);
                 item2.setIdUser(userPost.getIdUser());
                 list.add(item2);
-                Post item3 = new Post();
-                item3.setItemType(0);
-                item3.setIdUser(userPost.getIdUser());
-                item3.setLinkAvt(userPost.getLinkAvt());
-                list.add(item3);
+                if (user1.getIdUser() == post1.getIdUser()) {
+                    Post item3 = new Post();
+                    item3.setItemType(0);
+                    item3.setIdUser(userPost.getIdUser());
+                    item3.setLinkAvt(userPost.getLinkAvt());
+                    list.add(item3);
+                }
                 for (DataSnapshot i : snapshot.child("userPosts/user" + userPost.getIdUser()).getChildren()) {
                     Post post2 = i.getValue(Post.class);
                     User user2 = snapshot.child("users/idUser" + post2.getIdUser()).getValue(User.class);

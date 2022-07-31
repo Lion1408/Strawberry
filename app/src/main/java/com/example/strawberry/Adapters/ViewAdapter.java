@@ -35,6 +35,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -81,6 +82,9 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewType == Constants.INFOR_USER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_infor_user, parent, false);
             return new InforUserViewHolder(view);
+        } else if (viewType == Constants.COMMENT) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
+            return new CommentViewHolder(view);
         }
         return null;
     }
@@ -124,8 +128,9 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             total -= m * (60*1000);
             long s = total/1000;
             if (h >= 24) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd tháng mm yyyy");
-                time = simpleDateFormat.format(dateOld);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MM:yyyy:HH:mm");
+                String ss = simpleDateFormat.format(dateOld);
+                time = ss.substring(0, 2) + " Thg " + ss.substring(3, 5) + " " + ss.substring(11, 16);
             } else
             if (h > 0) {
                 time = h + " giờ trước";
@@ -220,6 +225,13 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
         }
+
+        if (post.getItemType() == Constants.COMMENT) {
+            CommentViewHolder holder = (CommentViewHolder) x;
+            Glide.with(holder.avtComment).load(post.getLinkAvt()).into(holder.avtComment);
+            holder.username.setText(post.getFullName());
+            holder.content.setText(post.getContent());
+        }
     }
 
     @Override
@@ -283,6 +295,19 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             imageVideoUser = itemView.findViewById(R.id.imageUser);
             inforOfUser = itemView.findViewById(R.id.infoOfUser);
+        }
+    }
+
+    public class CommentViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView avtComment;
+        TextView content, username;
+        ImageView deleteComment;
+        public CommentViewHolder(@NonNull View itemView) {
+            super(itemView);
+            avtComment = itemView.findViewById(R.id.avtComment);
+            content = itemView.findViewById(R.id.textComment);
+            deleteComment = itemView.findViewById(R.id.deleteComment);
+            username = itemView.findViewById(R.id.fullName);
         }
     }
 }

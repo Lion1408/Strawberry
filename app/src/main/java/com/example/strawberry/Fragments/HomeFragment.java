@@ -139,7 +139,9 @@ public class HomeFragment extends Fragment {
         });
         ImageView chat = view.findViewById(R.id.chat);
         chat.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), ChatActivity.class));
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra("User", user);
+            startActivity(intent);
         });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -149,7 +151,6 @@ public class HomeFragment extends Fragment {
                 list.clear();
                 Post post = new Post();
                 post.setIdUser(user1.getIdUser());
-                post.setTime("0");
                 post.setItemType(0);
                 post.setLinkAvt(user1.getLinkAvt());
                 list.add(post);

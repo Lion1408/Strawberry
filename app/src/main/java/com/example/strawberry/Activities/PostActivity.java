@@ -17,6 +17,7 @@ import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.Message;
 import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,8 @@ public class PostActivity extends AppCompatActivity {
     User user = new User();
     List<Post> list = new ArrayList<>();
     Boolean isFirstCall = true;
+    Integer n = 0;
+    Post postcmt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +58,73 @@ public class PostActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                n = 0;
+                while (snapshot.child("comments/post" + post1.getIdPost() + "/comment" + n).getValue() != null) {
+                    n++;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        binding.sendComment.setOnClickListener(v -> {
+            if (binding.contentComment.getText().toString().trim().isEmpty()) {
+                Constants.showToast("Nhập nội dung", getApplicationContext());
+            } else {
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Date date = new Date();
+                        postcmt = snapshot.child("posts/post" + post1.getIdPost()).getValue(Post.class);
+                        User userID = snapshot.child("users/idUser" + user.getIdUser()).getValue(User.class);
+                        postcmt.setLinkAvt(userID.getLinkAvt());
+                        postcmt.setFullName(userID.getFullName());
+                        postcmt.setIdLog(userID.getIdUser());
+                        postcmt.setTime(date.getTime() + "");
+                        postcmt.setContent(binding.contentComment.getText().toString());
+                        databaseReference.child("comments/post" + post1.getIdPost() + "/comment" + n).setValue(postcmt);
+                        databaseReference.
+                                child("userPosts/" + "user" + postcmt.getIdUser() + "/post" + postcmt.getIdPost() + "/comment")
+                                .setValue(postcmt.getComment() + 1);
+
+                        databaseReference
+                                .child("posts/" + "post" + postcmt.getIdPost() + "/comment")
+                                .setValue(postcmt.getComment() + 1);
+                        binding.contentComment.setText("");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 Post post = snapshot.child("posts/post" + post1.getIdPost()).getValue(Post.class);
                 User userPost = snapshot.child("users/idUser" + post.getIdUser()).getValue(User.class);
-                binding.contenPost.setText("Bài viết của " + userPost.getFullName());
+                User userID = snapshot.child("users/idUser" + user.getIdUser()).getValue(User.class);
+                if (user.getIdUser() == post1.getIdUser()) {
+                    binding.contenPost.setText("Bài viết của bạn");
+                } else {
+                    binding.contenPost.setText("Bài viết của " + userPost.getFullName());
+                }
                 post.setLinkAvt(userPost.getLinkAvt());
                 post.setItemType(Constants.POST);
                 post.setActionReact(post1.getActionReact());
                 post.setIdLog(user.getIdUser());
                 list.add(post);
+                for (DataSnapshot i : snapshot.child("comments/post" + post1.getIdPost()).getChildren()) {
+                    Post post2 = i.getValue(Post.class);
+                    post2.setItemType(Constants.COMMENT);
+                    list.add(post2);
+                }
                 if (isFirstCall) {
                     recyclerView.setAdapter(viewAdapter);
                     isFirstCall = false;
@@ -127,6 +189,5 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView.setAdapter(viewAdapter);
     }
 }

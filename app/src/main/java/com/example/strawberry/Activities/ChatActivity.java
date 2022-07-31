@@ -14,6 +14,7 @@ import com.example.strawberry.Adapters.MessAdapter;
 import com.example.strawberry.Adapters.UserChatAdapter;
 import com.example.strawberry.Interfaces.OnClickUserChat;
 import com.example.strawberry.Model.Message;
+import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserChat;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityChatBinding;
@@ -37,48 +38,50 @@ public class ChatActivity extends AppCompatActivity {
     UserChatAdapter adapter;
     Map <String, String> mp = new HashMap<>();
     List<UserChat> list = new ArrayList<>();
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        user = getIntent().getParcelableExtra("User");
         binding.back.setOnClickListener(v -> {
             finish();
         });
         RecyclerView recyclerView = findViewById(R.id.recy_chat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mp.clear();
-                for (DataSnapshot i : snapshot.child("chats/" + "id0" + "/").getChildren()) {
-                    String idUser = i.getKey();
-                    mp.put(idUser, "true");
-                    System.out.println(idUser + "  :))");
-                    Message message = new Message();
-                    for (DataSnapshot j :  snapshot.child("chats/" + "id0/" + idUser).getChildren()) {
-                        message = j.getValue(Message.class);
-                    }
-                    mp.put("time" + idUser, message.getTime());
-                    mp.put("content" + idUser, message.getContent());
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        adapter = new UserChatAdapter(list, getApplicationContext());
 
+        adapter.setOnClickUserChat(new OnClickUserChat() {
+            @Override
+            public void onClick(UserChat userChat) {
+                Intent intent = new Intent(getApplicationContext(), RoomChatActivity.class);
+                intent.putExtra("Userchat", userChat);
+                intent.putExtra("User", user);
+                startActivity(intent);
             }
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mp.clear();
+                for (DataSnapshot i : snapshot.child("chats/idUser" + user.getIdUser()).getChildren()) {
+                    String idUser = i.getKey();
+                    mp.put(idUser, "true");
+                    Message message = new Message();
+                    for (DataSnapshot j :  snapshot.child("chats/" + "idUser" + user.getIdUser() + "/" + idUser).getChildren()) {
+                        message = j.getValue(Message.class);
+                    }
+                    mp.put("time" + idUser, message.getTime());
+                    mp.put("content" + idUser, message.getContent());
+                }
                 list.clear();
                 for (DataSnapshot i : snapshot.child("users").getChildren()) {
-                    Log.e("Chat", i.getKey() + " " +  mp.get(i.getKey()));
                     if (mp.get(i.getKey()) != null) {
                         UserChat userChat = i.getValue(UserChat.class);
-                        userChat.setTime(mp.get("time" + "id" + userChat.getIdUser()));
-                        userChat.setContent(mp.get("content" + "id" + userChat.getIdUser()));
+                        userChat.setTime(mp.get("time" + "idUser" + userChat.getIdUser()));
+                        userChat.setContent(mp.get("content" + "idUser" + userChat.getIdUser()));
                         list.add(userChat);
                     }
                 }
@@ -88,15 +91,6 @@ public class ChatActivity extends AppCompatActivity {
                         String xx = x.getTime();
                         String yy = y.getTime();
                         return yy.compareTo(xx);
-                    }
-                });
-                adapter = new UserChatAdapter(list, getApplicationContext());
-                adapter.setOnClickUserChat(new OnClickUserChat() {
-                    @Override
-                    public void onClick(UserChat userChat) {
-                        Intent intent = new Intent(getApplicationContext(), RoomChatActivity.class);
-                        intent.putExtra("Data", (Parcelable) userChat);
-                        startActivity(intent);
                     }
                 });
                 recyclerView.setAdapter(adapter);
@@ -109,7 +103,9 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         binding.NewChat.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), ListChatActivity.class));
+            Intent intent = new Intent(getApplicationContext(), ListChatActivity.class);
+            intent.putExtra("User", user);
+            startActivity(intent);
         });
     }
 }

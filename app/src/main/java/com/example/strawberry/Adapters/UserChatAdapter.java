@@ -55,9 +55,9 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         UserChat userChat = list.get(position);
-        holder.username.setText(userChat.getUsername());
-        Glide.with(holder.avt).load(userChat.getLinkavt()).into(holder.avt);
-        if (userChat.getStatus().equals("true")) {
+        holder.username.setText(userChat.getFullName());
+        Glide.with(holder.avt).load(userChat.getLinkAvt()).into(holder.avt);
+        if (userChat.getStatus().equals(true)) {
             holder.status.setImageResource(R.drawable.background_online);
         } else {
             holder.status.setBackgroundResource(R.drawable.background_off);

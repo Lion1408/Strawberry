@@ -15,6 +15,7 @@ import android.util.Log;
 import com.example.strawberry.Adapters.UserChatAdapter;
 import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Interfaces.OnClickUserChat;
+import com.example.strawberry.Model.User;
 import com.example.strawberry.Model.UserChat;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityListChatBinding;
@@ -32,11 +33,13 @@ public class ListChatActivity extends AppCompatActivity {
     ActivityListChatBinding binding;
     List <UserChat> list = new ArrayList<>();
     UserChatAdapter adapter;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityListChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        user = getIntent().getParcelableExtra("User");
         binding.backmess.setOnClickListener(v -> {
             finish();
         });
@@ -56,7 +59,8 @@ public class ListChatActivity extends AppCompatActivity {
                     @Override
                     public void onClick(UserChat userChat) {
                         Intent intent = new Intent(getApplicationContext(), RoomChatActivity.class);
-                        intent.putExtra("Data", (Parcelable) userChat);
+                        intent.putExtra("Userchat", userChat);
+                        intent.putExtra("User", user);
                         startActivity(intent);
                         finish();
                     }

@@ -7,7 +7,6 @@
     android:layout_marginTop="@dimen/_5sdp"
     android:layout_marginStart="@dimen/_5sdp"
     android:layout_marginEnd="@dimen/_5sdp"
-    android:layout_marginBottom="@dimen/_5sdp"
     android:layout_height="@dimen/_50sdp">
 
     <de.hdodenhof.circleimageview.CircleImageView

@@ -4,25 +4,24 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class UserChat implements Parcelable {
-    private String username, linkavt, status, time, content;
+    private String fullName, linkAvt, time, content;
     private Integer idUser;
-
+    private Boolean status;
     public UserChat() {
     }
 
-    public UserChat(String username, String linkavt, String status, String time, String content, Integer idUser) {
-        this.username = username;
-        this.linkavt = linkavt;
-        this.status = status;
+    public UserChat(String fullName, String linkAvt, String time, String content, Integer idUser, Boolean status) {
+        this.fullName = fullName;
+        this.linkAvt = linkAvt;
         this.time = time;
         this.content = content;
         this.idUser = idUser;
+        this.status = status;
     }
 
     protected UserChat(Parcel in) {
-        username = in.readString();
-        linkavt = in.readString();
-        status = in.readString();
+        fullName = in.readString();
+        linkAvt = in.readString();
         time = in.readString();
         content = in.readString();
         if (in.readByte() == 0) {
@@ -30,6 +29,28 @@ public class UserChat implements Parcelable {
         } else {
             idUser = in.readInt();
         }
+        byte tmpStatus = in.readByte();
+        status = tmpStatus == 0 ? null : tmpStatus == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fullName);
+        dest.writeString(linkAvt);
+        dest.writeString(time);
+        dest.writeString(content);
+        if (idUser == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(idUser);
+        }
+        dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<UserChat> CREATOR = new Creator<UserChat>() {
@@ -44,28 +65,20 @@ public class UserChat implements Parcelable {
         }
     };
 
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getLinkavt() {
-        return linkavt;
+    public String getLinkAvt() {
+        return linkAvt;
     }
 
-    public void setLinkavt(String linkavt) {
-        this.linkavt = linkavt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setLinkAvt(String linkAvt) {
+        this.linkAvt = linkAvt;
     }
 
     public String getTime() {
@@ -92,35 +105,11 @@ public class UserChat implements Parcelable {
         this.idUser = idUser;
     }
 
-    @Override
-    public String toString() {
-        return "UserChat{" +
-                "username='" + username + '\'' +
-                ", linkavt='" + linkavt + '\'' +
-                ", status='" + status + '\'' +
-                ", time='" + time + '\'' +
-                ", content='" + content + '\'' +
-                ", idUser=" + idUser +
-                '}';
+    public Boolean getStatus() {
+        return status;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(username);
-        parcel.writeString(linkavt);
-        parcel.writeString(status);
-        parcel.writeString(time);
-        parcel.writeString(content);
-        if (idUser == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(idUser);
-        }
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }
