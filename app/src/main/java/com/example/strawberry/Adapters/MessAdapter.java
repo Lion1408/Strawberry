@@ -17,6 +17,8 @@ import com.example.strawberry.R;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MessAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     List<Message> list;
     Context context;
@@ -52,6 +54,7 @@ public class MessAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         } else {
             MessContentLeftHolder holder = (MessContentLeftHolder) x;
             holder.mess_left.setText(message.getContent());
+            Glide.with(holder.avtChat).load(message.getLinkAvt()).into(holder.avtChat);
         }
     }
 
@@ -66,9 +69,11 @@ public class MessAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
     public class MessContentLeftHolder  extends RecyclerView.ViewHolder {
         TextView mess_left;
+        CircleImageView avtChat;
         public MessContentLeftHolder(@NonNull View itemView) {
             super(itemView);
             mess_left = itemView.findViewById(R.id.mess_left);
+            avtChat = itemView.findViewById(R.id.avtChat);
         }
     }
     public class MessContentRightHolder extends RecyclerView.ViewHolder {

@@ -19,6 +19,7 @@
     <ImageView
         android:id="@+id/status"
         android:layout_width="@dimen/_9sdp"
+        android:background="@drawable/background_online"
         android:layout_height="@dimen/_9sdp"
         app:layout_constraintBottom_toBottomOf="@+id/imageProfile"
         app:layout_constraintEnd_toEndOf="@+id/imageProfile" />

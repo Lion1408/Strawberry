@@ -10,7 +10,7 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView3"
+        android:id="@+id/avtChat"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:src="@drawable/img"
@@ -32,7 +32,7 @@
         android:text="Bạn có một tin nhắn mới! một hai ba bốn năm 6 bảy"
         android:textAlignment="inherit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/circleImageView3"
+        app:layout_constraintStart_toEndOf="@+id/avtChat"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,16 @@
 package com.example.strawberry.Model;
 
 public class Message {
-    private String content, time;
+    private String content, time, linkAvt;
     private Integer itemtype;
 
     public Message() {
     }
 
-    public Message(String content, String time, Integer itemtype) {
+    public Message(String content, String time, String linkAvt, Integer itemtype) {
         this.content = content;
         this.time = time;
+        this.linkAvt = linkAvt;
         this.itemtype = itemtype;
     }
 
@@ -29,6 +30,14 @@ public class Message {
         this.time = time;
     }
 
+    public String getLinkAvt() {
+        return linkAvt;
+    }
+
+    public void setLinkAvt(String linkAvt) {
+        this.linkAvt = linkAvt;
+    }
+
     public Integer getItemtype() {
         return itemtype;
     }
@@ -42,6 +51,7 @@ public class Message {
         return "Message{" +
                 "content='" + content + '\'' +
                 ", time='" + time + '\'' +
+                ", linkAvt='" + linkAvt + '\'' +
                 ", itemtype=" + itemtype +
                 '}';
     }

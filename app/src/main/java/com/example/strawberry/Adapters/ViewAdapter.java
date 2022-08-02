@@ -103,6 +103,11 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.uppost.setOnClickListener(v -> {
                 onClickUpPost.onClick();
             });
+            if (post.getStatusUser()) {
+                holder.statusUser.setBackgroundResource(R.drawable.background_online);
+            } else {
+                holder.statusUser.setBackgroundResource(R.drawable.background_off);
+            }
         }
 
         if (post.getItemType() == Constants.POST) {
@@ -114,7 +119,11 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 holder.reactImg.clearColorFilter();
             }
-
+            if (post.getStatusUser()) {
+                holder.statusUser.setBackgroundResource(R.drawable.background_online);
+            } else {
+                holder.statusUser.setBackgroundResource(R.drawable.background_off);
+            }
             holder.react.setText(post.getReaction().toString());
             holder.cmt.setText(post.getComment() + " lượt bình luận");
             Date dateOld = new Date();
@@ -242,7 +251,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class PostViewHolder extends RecyclerView.ViewHolder {
         CircleImageView avt;
         TextView time, fullname, content, cmt, react, textReact;
-        ImageView img, reactImg, deletePost;
+        ImageView img, reactImg, deletePost, statusUser;
         ConstraintLayout reactPost, layerReaction, comment;
         VideoView video;
         View viewPost;
@@ -263,6 +272,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             reactImg = itemView.findViewById(R.id.reactImg);
             comment = itemView.findViewById(R.id.comment);
             deletePost = itemView.findViewById(R.id.deletePost);
+            statusUser = itemView.findViewById(R.id.statusUser);
         }
     }
 
@@ -282,10 +292,12 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class UpPostViewHolder extends RecyclerView.ViewHolder {
         CircleImageView avt;
         ConstraintLayout uppost;
+        ImageView statusUser;
         public UpPostViewHolder(@NonNull View itemView) {
             super(itemView);
             avt = itemView.findViewById(R.id.icInforUser);
             uppost = itemView.findViewById(R.id.uppost);
+            statusUser = itemView.findViewById(R.id.statusUser);
         }
     }
 

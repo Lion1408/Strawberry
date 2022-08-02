@@ -80,52 +80,57 @@ public class UpPostActivity extends AppCompatActivity {
             }
         });
         binding.post.setOnClickListener(v -> {
-            Post post = new Post();
-            Date date = new Date();
-            post.setContent(binding.content.getText().toString().trim());
-            post.setComment(0);
-            post.setIdUser(user.getIdUser());
-            post.setReaction(0);
-            post.setTime(date.getTime() + "");
-            post.setLinkAvt(user.getLinkAvt());
-            post.setLinkVideo("null");
-            post.setLinkImage("null");
-            post.setFullName(user.getFullName());
-            if (imageUri != null) {
-                StorageReference storageReference;
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
-                Date now = new Date();
-                String fileName = formatter.format(now);
-                storageReference = FirebaseStorage.getInstance().getReference("images/"+fileName);
-                storageReference.putFile(imageUri)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        post.setLinkImage(uri.toString());
-                                        post.setIdPost(n);
-                                        databaseReference.child("posts/post" + n).setValue(post);
-                                        databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
-                                        finish();
-                                        Constants.showToast("Đăng bài thành công!", getApplicationContext());
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
+            if (imageUri == null && binding.content.getText().toString().trim().isEmpty()) {
+                Constants.showToast("Nhập nội dung hoặc chọn ảnh", getApplicationContext());
             } else {
-                post.setIdPost(n);
-                databaseReference.child("posts/" + "post" + n).setValue(post);
-                databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
-                finish();
-                Constants.showToast("Đăng bài thành công!", getApplicationContext());
+                Post post = new Post();
+                Date date = new Date();
+                post.setContent(binding.content.getText().toString().trim());
+                post.setComment(0);
+                post.setIdUser(user.getIdUser());
+                post.setReaction(0);
+                post.setTime(date.getTime() + "");
+                post.setLinkAvt(user.getLinkAvt());
+                post.setLinkVideo("null");
+                post.setLinkImage("null");
+                post.setFullName(user.getFullName());
+                if (imageUri != null) {
+                    StorageReference storageReference;
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+                    Date now = new Date();
+                    String fileName = formatter.format(now);
+                    storageReference = FirebaseStorage.getInstance().getReference("images/"+fileName);
+                    storageReference.putFile(imageUri)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            post.setLinkImage(uri.toString());
+                                            post.setIdPost(n);
+                                            databaseReference.child("posts/post" + n).setValue(post);
+                                            databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
+                                            finish();
+                                            Constants.showToast("Đăng bài thành công!", getApplicationContext());
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+                } else {
+                    post.setIdPost(n);
+                    databaseReference.child("posts/" + "post" + n).setValue(post);
+                    databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
+                    finish();
+                    Constants.showToast("Đăng bài thành công!", getApplicationContext());
+                }
             }
+
         });
 
         binding.backHome.setOnClickListener(v -> {

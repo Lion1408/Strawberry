@@ -63,6 +63,7 @@ public class RoomChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
+                user = snapshot.child("users/idUser" + user.getIdUser()).getValue(User.class);
                 for (DataSnapshot i: snapshot.child("chats/idUser" + user.getIdUser() + "/idUser" + userChat.getIdUser()).getChildren()) {
                     Message message = i.getValue(Message.class);
                     list.add(message);
@@ -90,6 +91,7 @@ public class RoomChatActivity extends AppCompatActivity {
                 Message message = new Message(
                         binding.boxcontent.getText() + "",
                         date.getTime() + "",
+                        user.getLinkAvt() + "",
                         0);
 
                 databaseReference.child("chats")

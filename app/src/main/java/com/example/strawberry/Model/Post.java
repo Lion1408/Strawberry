@@ -8,12 +8,12 @@ import java.util.List;
 public class Post implements Parcelable {
     private String content, time, linkAvt, linkImage, linkVideo, fullName, linkCover,biography;
     private Integer comment, reaction, idUser, itemType, idPost, idLog;
-    private Boolean actionReact;
+    private Boolean actionReact, statusUser;
 
     public Post() {
     }
 
-    public Post(String content, String time, String linkAvt, String linkImage, String linkVideo, String fullName, String linkCover, String biography, Integer comment, Integer reaction, Integer idUser, Integer itemType, Integer idPost, Integer idLog, Boolean actionReact) {
+    public Post(String content, String time, String linkAvt, String linkImage, String linkVideo, String fullName, String linkCover, String biography, Integer comment, Integer reaction, Integer idUser, Integer itemType, Integer idPost, Integer idLog, Boolean actionReact, Boolean statusUser) {
         this.content = content;
         this.time = time;
         this.linkAvt = linkAvt;
@@ -29,6 +29,7 @@ public class Post implements Parcelable {
         this.idPost = idPost;
         this.idLog = idLog;
         this.actionReact = actionReact;
+        this.statusUser = statusUser;
     }
 
     protected Post(Parcel in) {
@@ -72,60 +73,8 @@ public class Post implements Parcelable {
         }
         byte tmpActionReact = in.readByte();
         actionReact = tmpActionReact == 0 ? null : tmpActionReact == 1;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(content);
-        dest.writeString(time);
-        dest.writeString(linkAvt);
-        dest.writeString(linkImage);
-        dest.writeString(linkVideo);
-        dest.writeString(fullName);
-        dest.writeString(linkCover);
-        dest.writeString(biography);
-        if (comment == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(comment);
-        }
-        if (reaction == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(reaction);
-        }
-        if (idUser == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(idUser);
-        }
-        if (itemType == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(itemType);
-        }
-        if (idPost == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(idPost);
-        }
-        if (idLog == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(idLog);
-        }
-        dest.writeByte((byte) (actionReact == null ? 0 : actionReact ? 1 : 2));
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        byte tmpStatusUser = in.readByte();
+        statusUser = tmpStatusUser == 0 ? null : tmpStatusUser == 1;
     }
 
     public static final Creator<Post> CREATOR = new Creator<Post>() {
@@ -260,6 +209,14 @@ public class Post implements Parcelable {
         this.actionReact = actionReact;
     }
 
+    public Boolean getStatusUser() {
+        return statusUser;
+    }
+
+    public void setStatusUser(Boolean statusUser) {
+        this.statusUser = statusUser;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -278,6 +235,62 @@ public class Post implements Parcelable {
                 ", idPost=" + idPost +
                 ", idLog=" + idLog +
                 ", actionReact=" + actionReact +
+                ", statusUser=" + statusUser +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(content);
+        parcel.writeString(time);
+        parcel.writeString(linkAvt);
+        parcel.writeString(linkImage);
+        parcel.writeString(linkVideo);
+        parcel.writeString(fullName);
+        parcel.writeString(linkCover);
+        parcel.writeString(biography);
+        if (comment == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(comment);
+        }
+        if (reaction == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(reaction);
+        }
+        if (idUser == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(idUser);
+        }
+        if (itemType == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(itemType);
+        }
+        if (idPost == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(idPost);
+        }
+        if (idLog == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(idLog);
+        }
+        parcel.writeByte((byte) (actionReact == null ? 0 : actionReact ? 1 : 2));
+        parcel.writeByte((byte) (statusUser == null ? 0 : statusUser ? 1 : 2));
     }
 }

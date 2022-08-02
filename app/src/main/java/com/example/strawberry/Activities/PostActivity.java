@@ -119,6 +119,7 @@ public class PostActivity extends AppCompatActivity {
                 post.setItemType(Constants.POST);
                 post.setActionReact(post1.getActionReact());
                 post.setIdLog(user.getIdUser());
+                post.setStatusUser(userPost.getStatus());
                 list.add(post);
                 for (DataSnapshot i : snapshot.child("comments/post" + post1.getIdPost()).getChildren()) {
                     Post post2 = i.getValue(Post.class);
@@ -127,9 +128,11 @@ public class PostActivity extends AppCompatActivity {
                 }
                 if (isFirstCall) {
                     recyclerView.setAdapter(viewAdapter);
+                    recyclerView.scrollToPosition(list.size() - 1);
                     isFirstCall = false;
                 } else {
                     viewAdapter.notifyDataSetChanged();
+                    recyclerView.scrollToPosition(list.size() - 1);
                 }
             }
 

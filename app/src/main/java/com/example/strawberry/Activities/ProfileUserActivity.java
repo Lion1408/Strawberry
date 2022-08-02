@@ -158,9 +158,10 @@ public class ProfileUserActivity extends AppCompatActivity {
                 list.add(item2);
                 if (user1.getIdUser() == post1.getIdUser()) {
                     Post item3 = new Post();
-                    item3.setItemType(0);
+                    item3.setItemType(Constants.UP_POST);
                     item3.setIdUser(userPost.getIdUser());
                     item3.setLinkAvt(userPost.getLinkAvt());
+                    item3.setStatusUser(userPost.getStatus());
                     list.add(item3);
                 }
                 for (DataSnapshot i : snapshot.child("userPosts/user" + userPost.getIdUser()).getChildren()) {
@@ -174,6 +175,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                     } else {
                         post2.setActionReact(false);
                     }
+                    post2.setStatusUser(user2.getStatus());
                     list.add(post2);
                 }
                 Collections.sort(list.subList(3, list.size()), new Comparator<Post>() {

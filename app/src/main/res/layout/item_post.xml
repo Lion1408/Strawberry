@@ -206,7 +206,6 @@ freegan High Life vero, ea sed minim meggings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <ImageView
                 android:id="@+id/imageView9"
                 android:layout_width="@dimen/_8sdp"
@@ -242,7 +241,13 @@ freegan High Life vero, ea sed minim meggings"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
-
+            <ImageView
+                android:id="@+id/statusUser"
+                android:layout_width="@dimen/_9sdp"
+                android:background="@drawable/background_online"
+                android:layout_height="@dimen/_9sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/avatar"
+                app:layout_constraintEnd_toEndOf="@+id/avatar" />
             <TextView
                 android:id="@+id/timeup"
                 android:layout_width="wrap_content"
@@ -272,6 +277,7 @@ freegan High Life vero, ea sed minim meggings"
                 app:layout_constraintEnd_toStartOf="@+id/deletePost"
                 app:layout_constraintStart_toEndOf="@+id/fullName"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

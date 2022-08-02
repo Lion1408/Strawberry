@@ -17,7 +17,16 @@
         android:src="@drawable/account_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></de.hdodenhof.circleimageview.CircleImageView>
+        app:layout_constraintTop_toTopOf="parent">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+    <ImageView
+        android:id="@+id/statusUser"
+        android:layout_width="@dimen/_9sdp"
+        android:background="@drawable/background_online"
+        android:layout_height="@dimen/_9sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/icInforUser"
+        app:layout_constraintEnd_toEndOf="@+id/icInforUser" />
 
     <TextView
         android:id="@+id/textInforUser"

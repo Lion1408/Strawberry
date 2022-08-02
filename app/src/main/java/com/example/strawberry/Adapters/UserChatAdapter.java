@@ -57,8 +57,8 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
         UserChat userChat = list.get(position);
         holder.username.setText(userChat.getFullName());
         Glide.with(holder.avt).load(userChat.getLinkAvt()).into(holder.avt);
-        if (userChat.getStatus().equals(true)) {
-            holder.status.setImageResource(R.drawable.background_online);
+        if (userChat.getStatus()) {
+            holder.status.setBackgroundResource(R.drawable.background_online);
         } else {
             holder.status.setBackgroundResource(R.drawable.background_off);
         }

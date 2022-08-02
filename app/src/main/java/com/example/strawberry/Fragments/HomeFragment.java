@@ -153,11 +153,14 @@ public class HomeFragment extends Fragment {
                 post.setIdUser(user1.getIdUser());
                 post.setItemType(0);
                 post.setLinkAvt(user1.getLinkAvt());
+                post.setStatusUser(user1.getStatus());
                 list.add(post);
                 for (DataSnapshot i : snapshot.child("posts").getChildren()) {
                     Post post1 = i.getValue(Post.class);
                     User user2 = snapshot.child("users/idUser" + post1.getIdUser()).getValue(User.class);
                     post1.setLinkAvt(user2.getLinkAvt());
+                    post1.setStatusUser(user2.getStatus());
+                    System.out.println(user2.getStatus());
                     post1.setItemType(Constants.POST);
                     post1.setIdLog(user.getIdUser());
                     if (snapshot.child("reactions/post" + post1.getIdPost() + "/idUser" + user.getIdUser()).getValue() != null) {
@@ -165,6 +168,7 @@ public class HomeFragment extends Fragment {
                     } else {
                         post1.setActionReact(false);
                     }
+                    System.out.println("post1 " + post1.getStatusUser());
                     list.add(post1);
                 }
                 Collections.sort(list.subList(1, list.size()), new Comparator<Post>() {
