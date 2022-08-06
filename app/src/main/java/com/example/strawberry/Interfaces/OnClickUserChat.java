@@ -4,4 +4,5 @@ import com.example.strawberry.Model.UserChat;
 
 public interface OnClickUserChat {
     void onClick(UserChat userChat);
+    void onDel(UserChat userChat);
 }

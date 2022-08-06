@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.Message;
 import com.example.strawberry.R;
 
@@ -22,6 +21,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     List<Message> list;
     Context context;
+
+
     public void setContext(Context context) {
         this.context = context;
     }

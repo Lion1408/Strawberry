@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Post implements Parcelable {
     private String content, time, linkAvt, linkImage, linkVideo, fullName, linkCover,biography;
-    private Integer comment, reaction, idUser, itemType, idPost, idLog;
+    private Integer comment, reaction, idUser, itemType, idPost, idLog, idCmt;
     private Boolean actionReact, statusUser;
 
     public Post() {
     }
 
-    public Post(String content, String time, String linkAvt, String linkImage, String linkVideo, String fullName, String linkCover, String biography, Integer comment, Integer reaction, Integer idUser, Integer itemType, Integer idPost, Integer idLog, Boolean actionReact, Boolean statusUser) {
+    public Post(String content, String time, String linkAvt, String linkImage, String linkVideo, String fullName, String linkCover, String biography, Integer comment, Integer reaction, Integer idUser, Integer itemType, Integer idPost, Integer idLog, Integer idCmt, Boolean actionReact, Boolean statusUser) {
         this.content = content;
         this.time = time;
         this.linkAvt = linkAvt;
@@ -28,6 +28,7 @@ public class Post implements Parcelable {
         this.itemType = itemType;
         this.idPost = idPost;
         this.idLog = idLog;
+        this.idCmt = idCmt;
         this.actionReact = actionReact;
         this.statusUser = statusUser;
     }
@@ -70,6 +71,11 @@ public class Post implements Parcelable {
             idLog = null;
         } else {
             idLog = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            idCmt = null;
+        } else {
+            idCmt = in.readInt();
         }
         byte tmpActionReact = in.readByte();
         actionReact = tmpActionReact == 0 ? null : tmpActionReact == 1;
@@ -201,6 +207,14 @@ public class Post implements Parcelable {
         this.idLog = idLog;
     }
 
+    public Integer getIdCmt() {
+        return idCmt;
+    }
+
+    public void setIdCmt(Integer idCmt) {
+        this.idCmt = idCmt;
+    }
+
     public Boolean getActionReact() {
         return actionReact;
     }
@@ -234,6 +248,7 @@ public class Post implements Parcelable {
                 ", itemType=" + itemType +
                 ", idPost=" + idPost +
                 ", idLog=" + idLog +
+                ", idCmt=" + idCmt +
                 ", actionReact=" + actionReact +
                 ", statusUser=" + statusUser +
                 '}';
@@ -289,6 +304,12 @@ public class Post implements Parcelable {
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(idLog);
+        }
+        if (idCmt == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(idCmt);
         }
         parcel.writeByte((byte) (actionReact == null ? 0 : actionReact ? 1 : 2));
         parcel.writeByte((byte) (statusUser == null ? 0 : statusUser ? 1 : 2));

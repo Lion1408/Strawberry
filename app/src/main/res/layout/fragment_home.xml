@@ -12,18 +12,18 @@
         app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="vertical"
         >
         <Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_splash"
-            android:title="@string/menu"
+            android:title="@string/app_name"
 
             android:titleTextColor="@color/text_background_splash"
             app:layout_scrollFlags="enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy_post"
         android:layout_width="match_parent"
@@ -41,10 +41,24 @@
 
         <ImageView
             android:id="@+id/chat"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:src="@drawable/ic_chat"
+            android:src="@drawable/ic_chat3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:transitionName="test"
+             />
+        <SearchView
+            android:id="@+id/searchHome"
+            android:layout_width="@dimen/_190sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:queryHint="Tìm kiếm"
+            android:iconifiedByDefault="false"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

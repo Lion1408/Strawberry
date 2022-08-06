@@ -66,6 +66,8 @@ public class RoomChatActivity extends AppCompatActivity {
                 user = snapshot.child("users/idUser" + user.getIdUser()).getValue(User.class);
                 for (DataSnapshot i: snapshot.child("chats/idUser" + user.getIdUser() + "/idUser" + userChat.getIdUser()).getChildren()) {
                     Message message = i.getValue(Message.class);
+                    User user1 = snapshot.child("users/idUser" + userChat.getIdUser()).getValue(User.class);
+                    message.setLinkAvt(user1.getLinkAvt());
                     list.add(message);
                 }
                 recyclerView.scrollToPosition(list.size() - 1);

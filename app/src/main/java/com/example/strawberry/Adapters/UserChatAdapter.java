@@ -1,15 +1,10 @@
 package com.example.strawberry.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +25,7 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
     List<UserChat> list;
     Context context;
     OnClickUserChat onClickUserChat;
+
 
     public void setOnClickUserChat(OnClickUserChat onClickUserChat) {
         this.onClickUserChat = onClickUserChat;
@@ -65,6 +61,9 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
         holder.roomchat.setOnClickListener(v -> {
             onClickUserChat.onClick(userChat);
         });
+        holder.deleteMess.setOnClickListener(v -> {
+            onClickUserChat.onDel(userChat);
+        });
     }
 
     @Override
@@ -74,15 +73,17 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
 
     public class Viewholder extends RecyclerView.ViewHolder {
         TextView username;
-        ImageView status;
+        ImageView status, deleteMess;
         CircleImageView avt;
         ConstraintLayout roomchat;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username);
             avt = itemView.findViewById(R.id.imageProfile);
             status = itemView.findViewById(R.id.status);
             roomchat = itemView.findViewById(R.id.roomchat);
+            deleteMess = itemView.findViewById(R.id.deleteMess);
         }
     }
 }

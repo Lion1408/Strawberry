@@ -107,6 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
                     "",
                     "",
                     "",
+                    "",
                     1,
                     true
             );

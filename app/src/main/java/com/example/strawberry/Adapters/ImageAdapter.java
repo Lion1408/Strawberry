@@ -30,13 +30,13 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     Context context;
-    List <Image> list;
+    List <String> list;
     private Integer layout;
 
     public ImageAdapter() {
     }
 
-    public ImageAdapter(Context context, List<Image> list, Integer layout) {
+    public ImageAdapter(Context context, List<String> list, Integer layout) {
         this.context = context;
         this.list = list;
         this.layout = layout;
@@ -62,9 +62,9 @@ public class ImageAdapter extends BaseAdapter {
         view = View.inflate(context, layout, null);
         ImageView img;
         img = view.findViewById(R.id.itemImageUser);
-        Glide.with(img).load(list.get(i).getLinkImage()).into(img);
+        Glide.with(img).load(list.get(i)).into(img);
         img.setOnClickListener(v -> {
-            imageOnClick.onclickImage(list.get(i).getLinkImage());
+            imageOnClick.onclickImage(list.get(i));
         });
         return view;
     }

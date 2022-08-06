@@ -24,6 +24,7 @@ public class Constants {
     public static final Integer HEAD_PROFILE_USER = 2;
     public static final Integer INFOR_USER = 3;
     public static final Integer COMMENT = 4;
+    public static final Integer NOTIFICATION = 5;
 
     public static final void showToast(String string, Context context) {
         Toast.makeText(context, string, Toast.LENGTH_SHORT).show();

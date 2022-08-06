@@ -6,10 +6,17 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/img"
+        android:hardwareAccelerated="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Strawberry">
+        <activity
+            android:name=".Activities.ChangeAvatarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ChangeCoverActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.RoomChatActivity"
             android:exported="false" />

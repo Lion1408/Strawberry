@@ -1,5 +1,6 @@
 package com.example.strawberry.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -13,8 +14,14 @@ import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Interfaces.ImageOnClick;
 import com.example.strawberry.Model.Image;
 import com.example.strawberry.Model.ResponseObject;
+import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityImageUserBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +33,14 @@ import retrofit2.Response;
 public class ImageVideoUserActivity extends AppCompatActivity {
     ActivityImageUserBinding binding;
     GridView gridView;
-    List<Image> list = new ArrayList<>();
+    List<String> list = new ArrayList<>();
     ImageAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityImageUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        User user = getIntent().getParcelableExtra("User");
         gridView = findViewById(R.id.gridview);
         binding.backProfileUser.setOnClickListener(v -> {
             finish();
@@ -53,19 +61,20 @@ public class ImageVideoUserActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        ApiService.apiService.getAllImageUser(1).enqueue(new Callback<ResponseObject<List<Image>>>() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onResponse(Call<ResponseObject<List<Image>>> call, Response<ResponseObject<List<Image>>> response) {
-                if (response.isSuccessful()) {
-                    for (int i = 0; i < response.body().getData().size(); ++i) {
-                        Image image = response.body().getData().get(i);
-                        list.add(image);
-                    }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot i : snapshot.child("images/idUser" + user.getIdUser()).getChildren()) {
+                    list.add(i.getValue(String.class));
+                    System.out.println(i.getValue(String.class));
                 }
                 gridView.setAdapter(adapter);
             }
+
             @Override
-            public void onFailure(Call<ResponseObject<List<Image>>> call, Throwable t) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

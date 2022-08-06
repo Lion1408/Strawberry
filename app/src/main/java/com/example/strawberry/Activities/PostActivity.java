@@ -1,23 +1,22 @@
 package com.example.strawberry.Activities;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
+import com.example.strawberry.Interfaces.ImageOnClick;
 import com.example.strawberry.Interfaces.PostOnClick;
-import com.example.strawberry.Model.Data;
-import com.example.strawberry.Model.Message;
 import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
@@ -55,6 +54,22 @@ public class PostActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recy_user_post);
         ViewAdapter viewAdapter = new ViewAdapter(list, getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        viewAdapter.setImageOnClick(new ImageOnClick() {
+            @Override
+            public void onclickImage(String image) {
+                Dialog dialog = new Dialog(PostActivity.this, R.style.Theme_Strawberry);
+                dialog.setContentView(R.layout.dialog_show_image);
+                ImageView img, backImage;
+                img = dialog.findViewById(R.id.showImage);
+                backImage = dialog.findViewById(R.id.backImage);
+                Glide.with(img).load(image).into(img);
+                backImage.setOnClickListener(v -> {
+                    dialog.dismiss();
+                });
+                dialog.show();
+            }
+        });
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -83,6 +98,7 @@ public class PostActivity extends AppCompatActivity {
                         postcmt.setFullName(userID.getFullName());
                         postcmt.setIdLog(userID.getIdUser());
                         postcmt.setTime(date.getTime() + "");
+                        postcmt.setIdCmt(n);
                         postcmt.setContent(binding.contentComment.getText().toString());
                         databaseReference.child("comments/post" + post1.getIdPost() + "/comment" + n).setValue(postcmt);
                         databaseReference.
@@ -108,32 +124,41 @@ public class PostActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 Post post = snapshot.child("posts/post" + post1.getIdPost()).getValue(Post.class);
-                User userPost = snapshot.child("users/idUser" + post.getIdUser()).getValue(User.class);
-                User userID = snapshot.child("users/idUser" + user.getIdUser()).getValue(User.class);
-                if (user.getIdUser() == post1.getIdUser()) {
-                    binding.contenPost.setText("Bài viết của bạn");
-                } else {
-                    binding.contenPost.setText("Bài viết của " + userPost.getFullName());
+                if (post != null) {
+                    User userPost = snapshot.child("users/idUser" + post.getIdUser()).getValue(User.class);
+                    if (user.getIdUser() == post1.getIdUser()) {
+                        binding.contenPost.setText("Bài viết của bạn");
+                    } else {
+                        binding.contenPost.setText("Bài viết của " + userPost.getFullName());
+                    }
+                    if (snapshot.child("reactions/post" + post1.getIdPost() + "/idUser" + user.getIdUser()).getValue() != null) {
+                        post1.setActionReact(true);
+                    } else {
+                        post1.setActionReact(false);
+                    }
+                    post.setLinkAvt(userPost.getLinkAvt());
+                    post.setItemType(Constants.POST);
+                    post.setActionReact(post1.getActionReact());
+                    post.setIdLog(user.getIdUser());
+                    post.setStatusUser(userPost.getStatus());
+                    list.add(post);
+                    for (DataSnapshot i : snapshot.child("comments/post" + post1.getIdPost()).getChildren()) {
+                        Post post2 = i.getValue(Post.class);
+                        User userID = snapshot.child("users/idUser" + post2.getIdLog()).getValue(User.class);
+                        post2.setLinkAvt(userID.getLinkAvt());
+                        post2.setItemType(Constants.COMMENT);
+                        list.add(post2);
+                    }
+                    if (isFirstCall) {
+                        recyclerView.setAdapter(viewAdapter);
+                        recyclerView.scrollToPosition(list.size() - 1);
+                        isFirstCall = false;
+                    } else {
+                        viewAdapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(list.size() - 1);
+                    }
                 }
-                post.setLinkAvt(userPost.getLinkAvt());
-                post.setItemType(Constants.POST);
-                post.setActionReact(post1.getActionReact());
-                post.setIdLog(user.getIdUser());
-                post.setStatusUser(userPost.getStatus());
-                list.add(post);
-                for (DataSnapshot i : snapshot.child("comments/post" + post1.getIdPost()).getChildren()) {
-                    Post post2 = i.getValue(Post.class);
-                    post2.setItemType(Constants.COMMENT);
-                    list.add(post2);
-                }
-                if (isFirstCall) {
-                    recyclerView.setAdapter(viewAdapter);
-                    recyclerView.scrollToPosition(list.size() - 1);
-                    isFirstCall = false;
-                } else {
-                    viewAdapter.notifyDataSetChanged();
-                    recyclerView.scrollToPosition(list.size() - 1);
-                }
+
             }
 
             @Override

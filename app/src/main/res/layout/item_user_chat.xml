@@ -5,8 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/roomchat"
+    android:background="@drawable/background_layer"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
     android:padding="@dimen/_8sdp"
     >
+
+    <ImageView
+        android:id="@+id/deleteMess"
+        android:layout_width="@dimen/_14sdp"
+        android:layout_height="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_close"
+        android:backgroundTint="@color/text_background_splash"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageProfile"
         android:layout_width="@dimen/_35sdp"
@@ -26,29 +41,15 @@
 
     <TextView
         android:id="@+id/username"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="123"
         android:paddingStart="@dimen/_10sdp"
+        android:text="123"
         android:textColor="@color/text_background_splash"
         android:textSize="@dimen/text_size_small"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/status"
         app:layout_constraintStart_toEndOf="@+id/imageProfile"
         app:layout_constraintTop_toTopOf="@+id/imageProfile" />
-
-    <TextView
-        android:id="@+id/mess"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingStart="@dimen/_10sdp"
-        android:textColor="@color/text_background_splash"
-        android:textSize="@dimen/text_size_small"
-        app:layout_constraintBottom_toBottomOf="@+id/imageProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageProfile" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

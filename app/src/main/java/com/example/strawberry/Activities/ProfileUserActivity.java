@@ -10,18 +10,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.strawberry.Adapters.ViewAdapter;
 import com.example.strawberry.Define.Constants;
-import com.example.strawberry.Interfaces.ApiService;
+import com.example.strawberry.Interfaces.ImageOnClick;
 import com.example.strawberry.Interfaces.InforUserOnClick;
+import com.example.strawberry.Interfaces.OnClickChange;
 import com.example.strawberry.Interfaces.OnClickUpPost;
 import com.example.strawberry.Interfaces.PostOnClick;
-import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.Post;
-import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
 import com.example.strawberry.databinding.ActivityProfileUserBinding;
@@ -38,15 +38,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ProfileUserActivity extends AppCompatActivity {
     ActivityProfileUserBinding binding;
     List <Post> list = new ArrayList<>();
     Boolean isFirstCall = true;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    String linkAvt = "https://firebasestorage.googleapis.com/v0/b/strawberry-7ebce.appspot.com/o/default%2FAnime-chibi%20(7).jpg?alt=media&token=82f0b4dc-d3a0-4b2e-aeb4-b2fb70abab99";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,16 +57,50 @@ public class ProfileUserActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recy_profile_user);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ViewAdapter viewAdapter = new ViewAdapter(list, getApplicationContext());
+        viewAdapter.setOnClickChange(new OnClickChange() {
+            @Override
+            public void OnClickChangeCover() {
+                Intent intent = new Intent(getApplicationContext(), ChangeCoverActivity.class);
+                intent.putExtra("User", user1);
+                startActivity(intent);
+            }
+
+            @Override
+            public void OnClickChangeAvt() {
+                Intent intent = new Intent(getApplicationContext(), ChangeAvatarActivity.class);
+                intent.putExtra("User", user1);
+                startActivity(intent);
+            }
+        });
+        viewAdapter.setImageOnClick(new ImageOnClick() {
+            @Override
+            public void onclickImage(String image) {
+                Dialog dialog = new Dialog(ProfileUserActivity.this, R.style.Theme_Strawberry);
+                dialog.setContentView(R.layout.dialog_show_image);
+                ImageView img, backImage;
+                img = dialog.findViewById(R.id.showImage);
+                backImage = dialog.findViewById(R.id.backImage);
+                Glide.with(img).load(image).into(img);
+                backImage.setOnClickListener(v -> {
+                    dialog.dismiss();
+                });
+                dialog.show();
+            }
+        });
         viewAdapter.setInforUserOnClick(new InforUserOnClick() {
             @Override
             public void OnClickImageVideo() {
-
+                Intent intent = new Intent(ProfileUserActivity.this, ImageVideoUserActivity.class);
+                intent.putExtra("User", user1);
+                intent.putExtra("Post", post1);
+                startActivity(intent);
             }
 
             @Override
             public void OnClickInfor() {
                 Intent intent = new Intent(ProfileUserActivity.this, InforUserActivity.class);
                 intent.putExtra("User", user1);
+                intent.putExtra("Post", post1);
                 startActivity(intent);
             }
         });
@@ -133,7 +164,22 @@ public class ProfileUserActivity extends AppCompatActivity {
                 no.setOnClickListener(vv -> {
                     dialog.dismiss();
                 });
+                TextView yes = dialog.findViewById(R.id.yes);
+                yes.setOnClickListener(v -> {
+                    databaseReference.child("posts/post" + post.getIdPost()).removeValue();
+                    databaseReference.child("userPosts/user" + post.getIdUser() + "/post" + post.getIdPost()).removeValue();
+                    databaseReference.child("comments/post" + post.getIdPost()).removeValue();
+                    databaseReference.child("reactions/post" + post.getIdPost()).removeValue();
+                    databaseReference.child("images/idUser" + post.getIdUser() + "/image" + post.getIdPost()).removeValue();
+                    if (post.getContent().equals("Cập nhật ảnh đại diện")) {
+                        databaseReference.child("users/idUser" + user1.getIdUser() + "/linkAvt").setValue(linkAvt);
+                    };
+                    dialog.dismiss();
+                    Constants.showToast("Xoá bài viết thành công!", getApplicationContext());
+                });
+
             }
+
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

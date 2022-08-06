@@ -159,19 +159,17 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_height="@dimen/_200sdp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/conTent"
                 app:layout_constraintStart_toStartOf="@+id/conTent"
                 app:layout_constraintTop_toBottomOf="@+id/conTent" />
-            <VideoView
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/video"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_height="@dimen/_200sdp"
-                android:orientation="vertical"
-                android:visibility="visible"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/conTent"
                 app:layout_constraintStart_toStartOf="@+id/conTent"

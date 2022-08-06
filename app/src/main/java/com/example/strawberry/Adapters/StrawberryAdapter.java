@@ -27,10 +27,8 @@ public class StrawberryAdapter extends FragmentStatePagerAdapter {
             case 1 :
                 return new WatchFragment();
             case 2:
-                return new GroupFragment();
-            case 3:
                 return new NotificationFragment();
-            case 4 :
+            case 3 :
                 return new MenuFragment();
             default:
                 return new HomeFragment();
@@ -39,6 +37,6 @@ public class StrawberryAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 4;
     }
 }

@@ -5,13 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.strawberry.Adapters.MessAdapter;
 import com.example.strawberry.Adapters.UserChatAdapter;
+import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Interfaces.OnClickUserChat;
 import com.example.strawberry.Model.Message;
 import com.example.strawberry.Model.User;
@@ -60,6 +65,27 @@ public class ChatActivity extends AppCompatActivity {
                 intent.putExtra("Userchat", userChat);
                 intent.putExtra("User", user);
                 startActivity(intent);
+            }
+
+            @Override
+            public void onDel(UserChat userChat) {
+                Dialog dialog = new Dialog(ChatActivity.this);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setContentView(R.layout.dialog_check);
+                dialog.show();
+                TextView title = dialog.findViewById(R.id.contentCheck);
+                TextView no = dialog.findViewById(R.id.no);
+                TextView yes = dialog.findViewById(R.id.yes);
+                title.setText("Xoá tin nhắn");
+                no.setOnClickListener(vv -> {
+                    dialog.dismiss();
+                });
+                yes.setOnClickListener(vv -> {
+                    databaseReference.child("chats/idUser" + user.getIdUser() + "/idUser" + userChat.getIdUser()).removeValue();
+                    databaseReference.child("chats/idUser" + userChat.getIdUser() + "/idUser" + user.getIdUser()).removeValue();
+                    Constants.showToast("Xoá tin nhắn thành công!", ChatActivity.this);
+                    dialog.dismiss();
+                });
             }
         });
         databaseReference.addValueEventListener(new ValueEventListener() {

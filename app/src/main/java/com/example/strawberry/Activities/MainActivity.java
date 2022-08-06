@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.strawberry.Adapters.StrawberryAdapter;
@@ -20,6 +21,7 @@ import com.example.strawberry.Adapters.StrawberryAdapter;
 import com.example.strawberry.Define.Constants;
 import com.example.strawberry.Fragments.HomeFragment;
 import com.example.strawberry.Fragments.MenuFragment;
+import com.example.strawberry.Fragments.NotificationFragment;
 import com.example.strawberry.Model.Data;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 intentHome.putExtra("User", user);
                 Intent intentMenu = new Intent(getApplicationContext(), MenuFragment.class);
                 intentMenu.putExtra("User", user);
+                Intent intentNoti = new Intent(getApplicationContext(), NotificationFragment.class);
+                intentNoti.putExtra("User", user);
             }
 
             @Override
@@ -60,9 +64,8 @@ public class MainActivity extends AppCompatActivity {
         binding.viewpaper.setAdapter(adapter);
         binding.bottomNav.add(new MeowBottomNavigation.Model(0, R.drawable.ic_home));
         binding.bottomNav.add(new MeowBottomNavigation.Model(1, R.drawable.ic_watch));
-        binding.bottomNav.add(new MeowBottomNavigation.Model(2, R.drawable.ic_group));
-        binding.bottomNav.add(new MeowBottomNavigation.Model(3, R.drawable.ic_notification));
-        binding.bottomNav.add(new MeowBottomNavigation.Model(4, R.drawable.ic_menu));
+        binding.bottomNav.add(new MeowBottomNavigation.Model(2, R.drawable.ic_notification));
+        binding.bottomNav.add(new MeowBottomNavigation.Model(3, R.drawable.ic_menu));
         binding.bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
@@ -72,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.setOnReselectListener(v -> {});
         binding.bottomNav.setOnClickMenuListener(v -> {});
         binding.bottomNav.show(0, true);
-        binding.bottomNav.setCount(3, "9");
         binding.viewpaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -94,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
                     case 3 :
                         binding.bottomNav.show(3, true);
                         break;
-                    case 4:
-                        binding.bottomNav.show(4, true);
-                        break;
                 }
             }
 
@@ -108,26 +107,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                databaseReference.child("users/idUser" + user.getIdUser() + "/status").setValue(true);
-            }
-        }, 2000);
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseReference.child("users/idUser" + user.getIdUser() + "/status").setValue(false);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                databaseReference.child("users/idUser" + user.getIdUser() + "/status").setValue(false);
-            }
-        }, 400);
+    protected void onStart() {
+        super.onStart();
+        if (user.getIdUser() != null) {
+            databaseReference.child("users/idUser" + user.getIdUser() + "/status").setValue(true);
+        }
     }
 }

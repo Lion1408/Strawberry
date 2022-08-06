@@ -32,6 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                                 User user = response.body().getData().getUser();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("User", user);
+                                databaseReference.child("users/idUser" + user.getIdUser() + "/status").setValue(true);
                                 startActivity(intent);
                                 finishAffinity();
                             } else {

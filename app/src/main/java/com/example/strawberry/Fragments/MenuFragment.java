@@ -56,7 +56,6 @@ public class MenuFragment extends Fragment {
 
             }
         });
-
         binding.logout.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), SignInActivity.class));
             Constants.showToast("Đăng xuất thành công!", getContext());
@@ -79,4 +78,5 @@ public class MenuFragment extends Fragment {
         });
         return view;
     }
+
 }

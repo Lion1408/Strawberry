@@ -8,14 +8,15 @@ import java.util.ArrayList;
 
 public class User implements Parcelable{
     private String firstName, lastName, fullName, email, password,
-            linkAvt, linkCover, gender, birthday, address, biography;
+            linkAvt, linkCover, gender, birthday, address, biography,
+            place;
     private Integer idUser;
     private Boolean status;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String fullName, String email, String password, String linkAvt, String linkCover, String gender, String birthday, String address, String biography, Integer idUser, Boolean status) {
+    public User(String firstName, String lastName, String fullName, String email, String password, String linkAvt, String linkCover, String gender, String birthday, String address, String biography, String place, Integer idUser, Boolean status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
@@ -27,6 +28,7 @@ public class User implements Parcelable{
         this.birthday = birthday;
         this.address = address;
         this.biography = biography;
+        this.place = place;
         this.idUser = idUser;
         this.status = status;
     }
@@ -43,6 +45,7 @@ public class User implements Parcelable{
         birthday = in.readString();
         address = in.readString();
         biography = in.readString();
+        place = in.readString();
         if (in.readByte() == 0) {
             idUser = null;
         } else {
@@ -50,6 +53,34 @@ public class User implements Parcelable{
         }
         byte tmpStatus = in.readByte();
         status = tmpStatus == 0 ? null : tmpStatus == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(fullName);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(linkAvt);
+        dest.writeString(linkCover);
+        dest.writeString(gender);
+        dest.writeString(birthday);
+        dest.writeString(address);
+        dest.writeString(biography);
+        dest.writeString(place);
+        if (idUser == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(idUser);
+        }
+        dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -152,6 +183,14 @@ public class User implements Parcelable{
         this.biography = biography;
     }
 
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
     public Integer getIdUser() {
         return idUser;
     }
@@ -182,35 +221,9 @@ public class User implements Parcelable{
                 ", birthday='" + birthday + '\'' +
                 ", address='" + address + '\'' +
                 ", biography='" + biography + '\'' +
+                ", place='" + place + '\'' +
                 ", idUser=" + idUser +
                 ", status=" + status +
                 '}';
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(firstName);
-        parcel.writeString(lastName);
-        parcel.writeString(fullName);
-        parcel.writeString(email);
-        parcel.writeString(password);
-        parcel.writeString(linkAvt);
-        parcel.writeString(linkCover);
-        parcel.writeString(gender);
-        parcel.writeString(birthday);
-        parcel.writeString(address);
-        parcel.writeString(biography);
-        if (idUser == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(idUser);
-        }
-        parcel.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
     }
 }

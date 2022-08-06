@@ -111,6 +111,7 @@ public class SignInActivity extends AppCompatActivity {
                         User user = response.body().getData().getUser();
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                         intent.putExtra("User", user);
+                        databaseReference.child("users/idUser" + user.getIdUser() + "/status").setValue(true);
                         startActivity(intent);
                         if (binding.iconSavepassword.getContentDescription().equals("show")) {
                             SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();

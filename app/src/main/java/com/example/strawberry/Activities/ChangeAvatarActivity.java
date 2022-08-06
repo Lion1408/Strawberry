@@ -4,29 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.strawberry.Define.Constants;
-import com.example.strawberry.Define.RealPathUtil;
-import com.example.strawberry.Interfaces.ApiService;
-import com.example.strawberry.Model.Data;
-import com.example.strawberry.Model.ListImage;
 import com.example.strawberry.Model.Post;
-import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
-import com.example.strawberry.databinding.ActivityUpPostBinding;
+import com.example.strawberry.R;
+import com.example.strawberry.databinding.ActivityChangeAvatarBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -38,30 +25,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class UpPostActivity extends AppCompatActivity {
-    ActivityUpPostBinding binding;
+public class ChangeAvatarActivity extends AppCompatActivity {
+    ActivityChangeAvatarBinding binding;
     Uri imageUri = null;
     Integer n = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityUpPostBinding.inflate(getLayoutInflater());
+        binding = ActivityChangeAvatarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         User user = getIntent().getParcelableExtra("User");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -80,12 +54,12 @@ public class UpPostActivity extends AppCompatActivity {
             }
         });
         binding.post.setOnClickListener(v -> {
-            if (imageUri == null && binding.content.getText().toString().trim().isEmpty()) {
-                Constants.showToast("Nhập nội dung hoặc chọn ảnh", getApplicationContext());
+            if (imageUri == null) {
+                Constants.showToast("Chưa chọn ảnh!", getApplicationContext());
             } else {
                 Post post = new Post();
                 Date date = new Date();
-                post.setContent(binding.content.getText().toString().trim());
+                post.setContent("Cập nhật ảnh đại diện");
                 post.setComment(0);
                 post.setIdUser(user.getIdUser());
                 post.setReaction(0);
@@ -107,6 +81,7 @@ public class UpPostActivity extends AppCompatActivity {
                                     storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
+                                            databaseReference.child("users/idUser" + user.getIdUser() + "/linkAvt").setValue(uri.toString());
                                             post.setLinkImage(uri.toString());
                                             post.setIdPost(n);
                                             databaseReference.child("posts/post" + n).setValue(post);
@@ -114,7 +89,8 @@ public class UpPostActivity extends AppCompatActivity {
                                             databaseReference.child("images/idUser" + user.getIdUser() + "/image" + n).setValue(uri.toString());
                                             databaseReference.child("notifications/post" + post.getIdPost()).setValue(post);
                                             finish();
-                                            Constants.showToast("Đăng bài thành công!", getApplicationContext());
+                                            Constants.showToast("Cập nhật ảnh đại diện thành công!", getApplicationContext());
+
                                         }
                                     });
                                 }
@@ -128,7 +104,6 @@ public class UpPostActivity extends AppCompatActivity {
                     post.setIdPost(n);
                     databaseReference.child("posts/" + "post" + n).setValue(post);
                     databaseReference.child("userPosts/user" + user.getIdUser() + "/post" + n).setValue(post);
-                    databaseReference.child("notifications/post" + post.getIdPost()).setValue(post);
                     finish();
                     Constants.showToast("Đăng bài thành công!", getApplicationContext());
                 }

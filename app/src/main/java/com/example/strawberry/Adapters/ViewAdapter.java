@@ -1,19 +1,12 @@
 package com.example.strawberry.Adapters;
 
 
-import android.app.Dialog;
-
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.DhcpInfo;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,21 +14,25 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.strawberry.Activities.InforUserActivity;
-import com.example.strawberry.Activities.SignInActivity;
 import com.example.strawberry.Define.Constants;
+import com.example.strawberry.Interfaces.ImageOnClick;
 import com.example.strawberry.Interfaces.InforUserOnClick;
+import com.example.strawberry.Interfaces.OnClickChange;
 import com.example.strawberry.Interfaces.OnClickUpPost;
+import com.example.strawberry.Interfaces.OnClickVideo;
 import com.example.strawberry.Interfaces.PostOnClick;
 import com.example.strawberry.Model.Post;
 import com.example.strawberry.R;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,6 +42,20 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private PostOnClick postOnClick;
     private InforUserOnClick inforUserOnClick;
     private OnClickUpPost onClickUpPost;
+    private ImageOnClick imageOnClick;
+    private OnClickChange onClickChange;
+    private OnClickVideo onClickVideo;
+
+    public void setOnClickVideo(OnClickVideo onClickVideo) {
+        this.onClickVideo = onClickVideo;
+    }
+
+    public void setOnClickChange(OnClickChange onClickChange) {
+        this.onClickChange = onClickChange;
+    }
+    public void setImageOnClick(ImageOnClick imageOnClick) {
+        this.imageOnClick = imageOnClick;
+    }
 
     public void PostOnClick(PostOnClick postOnClick) {
         this.postOnClick = postOnClick;
@@ -67,6 +78,10 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
     }
 
+    public void setList(List<Post> list) {
+        this.list = list;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -85,6 +100,9 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewType == Constants.COMMENT) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
             return new CommentViewHolder(view);
+        } else if (viewType == Constants.NOTIFICATION) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
+            return new NotiViewHolder(view);
         }
         return null;
     }
@@ -148,6 +166,9 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 time = s + " giây trước";
             }
+            if (post.getIdLog() == 0) {
+                time = "time up";
+            }
             holder.time.setText(time);
             Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
             if (post.getIdUser() == post.getIdLog()) {
@@ -159,11 +180,21 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 postOnClick.OnClickDelete(post);
             });
             if (!post.getLinkVideo().equals("null")) {
-                Uri uri = Uri.parse(post.getLinkVideo());
-                holder.video.setVideoURI(uri);
-                holder.video.start();
-                holder.video.setVisibility(View.VISIBLE);
-                holder.img.setVisibility(View.GONE);
+                holder.video.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                        String videoId = post.getLinkVideo();
+                        youTubePlayer.cueVideo(videoId, 0);
+                        DefaultPlayerUiController defaultPlayerUiController = new DefaultPlayerUiController(holder.video, youTubePlayer);
+                        holder.video.setCustomPlayerUi(defaultPlayerUiController.getRootView());
+                        defaultPlayerUiController.setFullScreenButtonClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                onClickVideo.OnClick(post.getLinkVideo());
+                            }
+                        });
+                    }
+                });
             }  else if (!post.getLinkImage().equals("null")) {
                 Glide.with(holder.img).load(post.getLinkImage()).into(holder.img);
                 holder.img.setVisibility(View.VISIBLE);
@@ -194,7 +225,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
             holder.img.setOnClickListener(v -> {
-                postOnClick.OnClickPost(post);
+                imageOnClick.onclickImage(post.getLinkImage());
             });
 
             holder.layerReaction.setOnClickListener(v -> {
@@ -218,9 +249,23 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (post.getItemType() == Constants.HEAD_PROFILE_USER) {
             ProfileViewHolder holder = (ProfileViewHolder) x;
             holder.username.setText(post.getFullName());
-            holder.biography.setText("Tiểu sử: " + (post.getBiography() == null?"":post.getBiography()));
             Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
             Glide.with(holder.cover).load(post.getLinkCover()).into(holder.cover);
+            holder.cover.setOnClickListener(v -> {
+                imageOnClick.onclickImage(post.getLinkCover());
+            });
+
+            holder.avt.setOnClickListener(v -> {
+                imageOnClick.onclickImage(post.getLinkAvt());
+            });
+
+            holder.changeCover.setOnClickListener(v -> {
+                onClickChange.OnClickChangeCover();
+            });
+
+            holder.changeAvt.setOnClickListener(v -> {
+                onClickChange.OnClickChangeAvt();
+            });
         }
 
         if (post.getItemType() == Constants.INFOR_USER) {
@@ -241,6 +286,15 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.username.setText(post.getFullName());
             holder.content.setText(post.getContent());
         }
+
+        if (post.getItemType() == Constants.NOTIFICATION) {
+            NotiViewHolder holder = (NotiViewHolder) x;
+            Glide.with(holder.avt).load(post.getLinkAvt()).into(holder.avt);
+            holder.text.setText(post.getFullName() +" có một bài viết mới!");
+            holder.noti.setOnClickListener(v -> {
+                postOnClick.OnClickPost(post);
+            });
+        }
     }
 
     @Override
@@ -253,7 +307,7 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView time, fullname, content, cmt, react, textReact;
         ImageView img, reactImg, deletePost, statusUser;
         ConstraintLayout reactPost, layerReaction, comment;
-        VideoView video;
+        YouTubePlayerView video;
         View viewPost;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -280,12 +334,15 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView username, biography;
         ImageView cover;
         CircleImageView avt;
+        ImageView changeCover, changeAvt;
         public ProfileViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.userName);
-            biography = itemView.findViewById(R.id.biography);
+
             avt = itemView.findViewById(R.id.avtUser);
             cover = itemView.findViewById(R.id.imgCoverUser);
+            changeCover = itemView.findViewById(R.id.changeCover);
+            changeAvt = itemView.findViewById(R.id.changeAvt);
         }
     }
 
@@ -313,13 +370,23 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class CommentViewHolder extends RecyclerView.ViewHolder {
         CircleImageView avtComment;
         TextView content, username;
-        ImageView deleteComment;
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             avtComment = itemView.findViewById(R.id.avtComment);
             content = itemView.findViewById(R.id.textComment);
-            deleteComment = itemView.findViewById(R.id.deleteComment);
             username = itemView.findViewById(R.id.fullName);
+        }
+    }
+
+    public class NotiViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView avt;
+        TextView text;
+        ConstraintLayout noti;
+        public NotiViewHolder(@NonNull View itemView) {
+            super(itemView);
+            avt = itemView.findViewById(R.id.avtnoti);
+            text = itemView.findViewById(R.id.noti);
+            noti = itemView.findViewById(R.id.notiFy);
         }
     }
 }
