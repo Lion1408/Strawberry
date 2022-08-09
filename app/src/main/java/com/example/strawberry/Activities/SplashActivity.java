@@ -69,6 +69,8 @@ public class SplashActivity extends AppCompatActivity {
                                 finishAffinity();
                             } else {
                                 Constants.showToast(Constants.ERROR_LOGIN, SplashActivity.this);
+                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                                finishAffinity();
                             }
                         }
 

@@ -67,6 +67,7 @@ public class ListChatActivity extends AppCompatActivity {
                 list.clear();
                 for (DataSnapshot i: snapshot.child("users").getChildren()) {
                     UserChat userChat = i.getValue(UserChat.class);
+                    userChat.setCheck(false);
                     list.add(userChat);
                 }
                 if (isFirstCall) {

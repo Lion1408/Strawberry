@@ -83,7 +83,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout11"
+                android:id="@+id/friend"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:text="Nhóm"
+                    android:text="Bạn bè"
                     android:textColor="@color/text_background_splash"
                     android:textSize="@dimen/text_size_small"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -116,14 +116,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout12"
+                android:id="@+id/changePassword"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/background_item_menu"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout11"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout11"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
+                app:layout_constraintEnd_toEndOf="@+id/friend"
+                app:layout_constraintStart_toStartOf="@+id/friend"
+                app:layout_constraintTop_toBottomOf="@+id/friend">
 
                 <ImageView
                     android:id="@+id/imageView12"
@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:text="Cài đặt tài khoản"
+                    android:text="Đổi mật khẩu"
                     android:textColor="@color/text_background_splash"
                     android:textSize="@dimen/text_size_small"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -149,14 +149,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout13"
+                android:id="@+id/language"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/background_item_menu"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout12"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout12"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
+                app:layout_constraintEnd_toEndOf="@+id/changePassword"
+                app:layout_constraintStart_toStartOf="@+id/changePassword"
+                app:layout_constraintTop_toBottomOf="@+id/changePassword">
 
                 <ImageView
                     android:id="@+id/imageView13"
@@ -187,9 +187,9 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/background_item_menu"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout13"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout13"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
+                app:layout_constraintEnd_toEndOf="@+id/language"
+                app:layout_constraintStart_toStartOf="@+id/language"
+                app:layout_constraintTop_toBottomOf="@+id/language">
 
                 <ImageView
                     android:id="@+id/imageView14"

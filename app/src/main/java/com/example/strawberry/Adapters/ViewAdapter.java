@@ -25,10 +25,8 @@ import com.example.strawberry.Model.Post;
 import com.example.strawberry.R;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -190,10 +188,10 @@ public class ViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         defaultPlayerUiController.setFullScreenButtonClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                onClickVideo.OnClick(post.getLinkVideo());
-                            }
+                                onClickVideo.OnClick(post.getLinkVideo());                            }
                         });
                     }
+
                 });
             }  else if (!post.getLinkImage().equals("null")) {
                 Glide.with(holder.img).load(post.getLinkImage()).into(holder.img);

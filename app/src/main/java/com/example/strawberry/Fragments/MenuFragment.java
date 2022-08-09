@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.strawberry.Activities.ChangePasswordActivity;
 import com.example.strawberry.Activities.ProfileUserActivity;
 import com.example.strawberry.Activities.SignInActivity;
 import com.example.strawberry.Define.Constants;
@@ -74,6 +75,18 @@ public class MenuFragment extends Fragment {
             post.setIdLog(user.getIdUser());
             post.setIdUser(user.getIdUser());
             intent.putExtra("Post", post);
+            startActivity(intent);
+        });
+        binding.language.setOnClickListener(v -> {
+            Constants.showToast("Tính năng này chưa hoàn thiện!", getContext());
+        });
+        binding.friend.setOnClickListener(v -> {
+            Constants.showToast("Tính năng này chưa hoàn thiện!", getContext());
+        });
+
+        binding.changePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
+            intent.putExtra("User", user);
             startActivity(intent);
         });
         return view;

@@ -61,6 +61,11 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.Viewho
         holder.roomchat.setOnClickListener(v -> {
             onClickUserChat.onClick(userChat);
         });
+        if (userChat.getCheck()) {
+            holder.deleteMess.setVisibility(View.VISIBLE);
+        } else {
+            holder.deleteMess.setVisibility(View.GONE);
+        }
         holder.deleteMess.setOnClickListener(v -> {
             onClickUserChat.onDel(userChat);
         });

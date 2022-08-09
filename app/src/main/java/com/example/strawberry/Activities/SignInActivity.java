@@ -119,8 +119,12 @@ public class SignInActivity extends AppCompatActivity {
                             editor.putString("password", binding.password.getText().toString().trim());
                             editor.commit();
                             loading(false);
-                            finishAffinity();
+                        } else {
+                            SharedPreferences.Editor editor = getSharedPreferences("Data", Context.MODE_PRIVATE).edit();
+                            editor.clear();
+                            editor.commit();
                         }
+                        finishAffinity();
                     } else {
                         loading(false);
                         Constants.showToast(Constants.ERROR_LOGIN, SignInActivity.this);

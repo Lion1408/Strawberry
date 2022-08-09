@@ -254,9 +254,9 @@ public class HomeFragment extends Fragment {
         if (!list.isEmpty()) newList.add(list.get(0));
         for (int i = 1; i < list.size(); i++) {
             Post post = list.get(i);
-            if (post.getContent().toLowerCase().contains(s.toLowerCase(Locale.ROOT))) {
+            if (post.getContent().toLowerCase().contains(s.toLowerCase())) {
                 newList.add(post);
-            }
+            } else
             if (post.getFullName().toLowerCase().contains(s.toLowerCase())) {
                 newList.add(post);
             }

@@ -9,7 +9,7 @@
     <string name="sign_up">Đăng ký</string>
     <string name="create_a_new_account">Tạo tài khoản mới</string>
     <string name="first_name">Họ</string>
-    <string name="confirm_password">Nhập lại mật khẩu</string>
+    <string name="confirm_password">Xác mật khẩu</string>
     <string name="code">Nhập mã xác thực</string>
     <string name="describe_active">Vui lòng kiểm tra mã xác thực từ email hoặc số điện thoại của bạn!</string>
     <string name="sendcode">Gửi lại mã</string>

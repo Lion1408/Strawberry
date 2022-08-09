@@ -108,6 +108,7 @@ public class ChatActivity extends AppCompatActivity {
                         UserChat userChat = i.getValue(UserChat.class);
                         userChat.setTime(mp.get("time" + "idUser" + userChat.getIdUser()));
                         userChat.setContent(mp.get("content" + "idUser" + userChat.getIdUser()));
+                        userChat.setCheck(true);
                         list.add(userChat);
                     }
                 }

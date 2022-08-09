@@ -13,6 +13,7 @@ import com.example.strawberry.Adapters.ImageAdapter;
 import com.example.strawberry.Interfaces.ApiService;
 import com.example.strawberry.Interfaces.ImageOnClick;
 import com.example.strawberry.Model.Image;
+import com.example.strawberry.Model.Post;
 import com.example.strawberry.Model.ResponseObject;
 import com.example.strawberry.Model.User;
 import com.example.strawberry.R;
@@ -41,6 +42,7 @@ public class ImageVideoUserActivity extends AppCompatActivity {
         binding = ActivityImageUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         User user = getIntent().getParcelableExtra("User");
+        Post post = getIntent().getParcelableExtra("Post");
         gridView = findViewById(R.id.gridview);
         binding.backProfileUser.setOnClickListener(v -> {
             finish();
@@ -65,8 +67,9 @@ public class ImageVideoUserActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                binding.imageUser.setText("Ảnh của " + ((post.getIdUser().equals(user.getIdUser()))?"bạn":post.getFullName()));
                 list.clear();
-                for (DataSnapshot i : snapshot.child("images/idUser" + user.getIdUser()).getChildren()) {
+                for (DataSnapshot i : snapshot.child("images/idUser" + post.getIdUser()).getChildren()) {
                     list.add(i.getValue(String.class));
                     System.out.println(i.getValue(String.class));
                 }

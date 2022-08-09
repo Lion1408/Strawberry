@@ -2,6 +2,7 @@ package com.example.strawberry.Interfaces;
 
 import com.example.strawberry.Model.Image;
 import com.example.strawberry.Model.Data;
+import com.example.strawberry.Model.Password;
 import com.example.strawberry.Model.Reaction;
 import com.example.strawberry.Model.ReactionDTO;
 import com.example.strawberry.Model.UserDTO;
@@ -85,4 +86,6 @@ public interface ApiService {
     Call <RequestBody> upPost(@Path("idUser") Integer idUser,
                               @Part MultipartBody.Part fileImages);
 
+    @POST("/api/v1/users/{id}/change-password")
+    Call<ResponseObject<Password>> changePassword(@Path("id") Integer idUser, @Body Password password);
 }

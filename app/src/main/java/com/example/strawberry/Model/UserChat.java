@@ -6,17 +6,18 @@ import android.os.Parcelable;
 public class UserChat implements Parcelable {
     private String fullName, linkAvt, time, content;
     private Integer idUser;
-    private Boolean status;
+    private Boolean status, check;
     public UserChat() {
     }
 
-    public UserChat(String fullName, String linkAvt, String time, String content, Integer idUser, Boolean status) {
+    public UserChat(String fullName, String linkAvt, String time, String content, Integer idUser, Boolean status, Boolean check) {
         this.fullName = fullName;
         this.linkAvt = linkAvt;
         this.time = time;
         this.content = content;
         this.idUser = idUser;
         this.status = status;
+        this.check = check;
     }
 
     protected UserChat(Parcel in) {
@@ -31,6 +32,8 @@ public class UserChat implements Parcelable {
         }
         byte tmpStatus = in.readByte();
         status = tmpStatus == 0 ? null : tmpStatus == 1;
+        byte tmpCheck = in.readByte();
+        check = tmpCheck == 0 ? null : tmpCheck == 1;
     }
 
     @Override
@@ -46,6 +49,7 @@ public class UserChat implements Parcelable {
             dest.writeInt(idUser);
         }
         dest.writeByte((byte) (status == null ? 0 : status ? 1 : 2));
+        dest.writeByte((byte) (check == null ? 0 : check ? 1 : 2));
     }
 
     @Override
@@ -111,5 +115,26 @@ public class UserChat implements Parcelable {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Boolean getCheck() {
+        return check;
+    }
+
+    public void setCheck(Boolean check) {
+        this.check = check;
+    }
+
+    @Override
+    public String toString() {
+        return "UserChat{" +
+                "fullName='" + fullName + '\'' +
+                ", linkAvt='" + linkAvt + '\'' +
+                ", time='" + time + '\'' +
+                ", content='" + content + '\'' +
+                ", idUser=" + idUser +
+                ", status=" + status +
+                ", check=" + check +
+                '}';
     }
 }

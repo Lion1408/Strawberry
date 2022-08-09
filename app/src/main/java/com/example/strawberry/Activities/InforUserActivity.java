@@ -38,7 +38,9 @@ public class InforUserActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                user = snapshot.child("users/idUser" + user1.getIdUser()).getValue(User.class);
+                user = snapshot.child("users/idUser" + post.getIdUser()).getValue(User.class);
+                binding.infoUser.setText(user.getFullName());
+                binding.fullName.setText("Tên :" + (user.getFullName() == null?"":user.getFullName()));
                 binding.gender.setText(getString(R.string.gender) + " " + (user.getGender()==null?"":user.getGender()));
                 binding.birthday.setText(getString(R.string.birthday) + " " + (user.getBirthday()==null?"":user.getBirthday()));
                 binding.place.setText(getString(R.string.place) + " " + (user.getPlace()==null?"":user.getPlace()));
@@ -57,17 +59,20 @@ public class InforUserActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.setContentView(R.layout.dialog_edit_infor_user);
             TextView confirmChange;
-            EditText textgender, textbirthday, textplace;
+            EditText textgender, textbirthday, textplace, textfullname;
+            textfullname = dialog.findViewById(R.id.textFullname);
             textgender = dialog.findViewById(R.id.textGender);
             textbirthday = dialog.findViewById(R.id.textBirthday);
             textplace = dialog.findViewById(R.id.textPlace);
             confirmChange = dialog.findViewById(R.id.confirmChange);
             confirmChange.setOnClickListener(vv -> {
                 dialog.dismiss();
+                binding.fullName.setText("Tên : " + textfullname.getText());
                 binding.gender.setText(getString(R.string.gender) + " " + textgender.getText());
                 binding.birthday.setText(getString(R.string.birthday) + " "+  textbirthday.getText());
                 binding.place.setText(getString(R.string.place) + " " + textplace.getText());
                 Constants.showToast("Cập nhật thành công", getApplicationContext());
+                databaseReference.child("users/idUser" + user.getIdUser() + "/fullName").setValue(textfullname.getText().toString());
                 databaseReference.child("users/idUser" + user.getIdUser() + "/gender").setValue(textgender.getText().toString());
                 databaseReference.child("users/idUser" + user.getIdUser() + "/birthday").setValue(textbirthday.getText().toString());
                 databaseReference.child("users/idUser" + user.getIdUser() + "/place").setValue(textplace.getText().toString());
